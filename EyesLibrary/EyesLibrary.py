@@ -18,38 +18,41 @@
 import os
 import httplib
 import base64
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import InvalidElementStateException
 from robot.libraries.BuiltIn import BuiltIn
 from applitools import logger
 from applitools.logger import StdoutLogger
+from applitools.logger import FileLogger
 from applitools.geometry import Region
 from applitools.eyes import Eyes, BatchInfo
-from applitools.utils import _image_utils
-from applitools._webdriver import EyesScreenshot
+# from applitools.images import Eyes as ImageEyes
+# from applitools.utils import image_utils
+# from applitools.core import EyesScreenshot
 from version import VERSION
 
 _version_ = VERSION
 
 
-class RobotAppEyes:
+class EyesLibrary:
     """
-    Robot-AppEyes is a visual verfication library for Robot Framework that leverages
-    the Eyes-Selenium and Selenium2 libraries.
+    EyesLibrary is a visual verfication library for Robot Framework that leverages
+    the Eyes-Selenium and Selenium/Appium libraries.
 
 
 
     *Before running tests*
 
-    Prior to running tests, RobotAppEyes must first be imported into your Robot test suite.
+    Prior to running tests, EyesLibrary must first be imported into your Robot test suite.
 
     Example:
-        | Library | RobotAppEyes |
+        | Library | EyesLibrary |
 
 
 
-    In order to run the Robot-AppEyes library and return results, you have to create a free account https://applitools.com/sign-up/ with Applitools.
-    You can retreive your API key from the applitools website and that will need to be passed in your Open Eyes Session keyword.
+    In order to run EyesLibrary and return results, you have to create a free account https://applitools.com/sign-up/ with Applitools.
+    You can retrieve your API key from the applitools website and that will need to be passed in your Open Eyes Session keyword.
 
 
 
@@ -77,10 +80,10 @@ class RobotAppEyes:
                           appname,
                           testname,
                           apikey,
+                          library='SeleniumLibrary',
                           width=None,
                           height=None,
                           osname=None,
-                          browsername=None,
                           matchlevel=None,
                           includeEyesLog=False,
                           httpDebugLog=False,
@@ -90,11 +93,11 @@ class RobotAppEyes:
                           parentbranch=None):
         """
         Starts a session with the Applitools Eyes Website.
-
         Arguments:
                 |  Application Name (string)            | The name of the application under test.                                                                     |
                 |  Test Name (string)                   | The test name.                                                                                              |
-                |  API Key (string)                     | User's Applitools Eyes key.                                                                                 |
+                |  API Key (string)                     | User's Applitools Eyes key.   
+                |  Library (default=SeleniumLibrary)    | Library to test (Either SeleniumLibrary or AppiumLibrary)                                                                                |
                 |  (Optional) Width (int)               | The width of the browser window e.g. 1280                                                                   |
                 |  (Optional) Height (int)              | The height of the browser window e.g. 1000                                                                  |
                 |  (Optional) Operating System (string) | The operating system of the test, can be used to override the OS name to allow cross OS verfication         |
@@ -104,34 +107,34 @@ class RobotAppEyes:
                 |  HTTP Debug Log (default=False)       | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.              |
                 |  Branch Name (default=False)          | The branch to use to check test                                                                             |
                 |  Parent Branch (default=False)        | Parent Branch to base the new Branch on                                                                     |
-
-        Creates an instance of the Selenium2Library webdriver.
-        Defines a global driver and sets the Selenium2Library webdriver to the global driver.
-
+        Creates an instance of the AppiumLibrary or SeleniumLibrary webdriver, given the library argument.
+        Defines a global driver and sets the webdriver to the global driver.
         Checks if there has been a width or height value passed in.
         If there no are values passed in, eyes calls the method open without the width and height values.
         Otherwise eyes calls open with the width and height values defined.
-
         The Height resolution should not be greater than 1000, this is currently Applitools maximum setting.
-
         Starts a session with the Applitools Eyes Website. See https://eyes.applitools.com/app/sessions/
-
         Example:
-
         | *Keywords*         |  *Parameters*                                                                                                                                                                                                                    |
-        | Open Browser       |  http://www.navinet.net/ | gc                |                            |                     |        |       |                  |                       |                      |                       |                     |
-        | Open Eyes Session  |  RobotAppEyes_Test |  NaviNet_RobotAppEyes_Test |  YourApplitoolsKey  |  1024  |  768  |  OSOverrideName  |  BrowserOverrideName  |  matchlevel=LAYOUT   |  includeEyesLog=True  |  httpDebugLog=True  |
-        | Check Eyes Window  |  NaviNet Home            |                   |                            |                     |        |       |                  |                       |                      |                       |                     |
+        | Open Browser       |  http://google.com/ | gc                |                            |                     |        |       |                  |                       |                      |                       |                     |
+        | Open Eyes Session  |  EyesLibrary_AppName |  EyesLibrary_TestName |  YourApplitoolsKey  |  1024  |  768  |  OSOverrideName  |  BrowserOverrideName  |  matchlevel=LAYOUT   |  includeEyesLog=True  |  httpDebugLog=True  |
+        | Check Eyes Window  |  Google Homepage            |                   |                            |                     |        |       |                  |                       |                      |                       |                     |
         | Close Eyes Session |  False                   |                   |                            |                     |        |       |                  |                       |                      |                       |                     |
-
         """
         global driver
         global eyes
         eyes = Eyes()
         eyes.api_key = apikey
-        s2l = BuiltIn().get_library_instance('Selenium2Library')
-        webdriver = s2l._current_browser()
-        driver = webdriver
+
+        try:
+            libraryInstance = BuiltIn().get_library_instance(library)
+
+            if library == 'AppiumLibrary':
+                driver = libraryInstance._current_application()
+            else:
+                driver = libraryInstance._current_browser()
+        except RuntimeError:
+            raise Exception('%s instance not found' % library)
 
         if includeEyesLog is True:
             logger.set_logger(StdoutLogger())
@@ -140,12 +143,10 @@ class RobotAppEyes:
             httplib.HTTPConnection.debuglevel = 1
         if osname is not None:
             eyes.host_os = osname  # (str)
-        if browsername is not None:
-            eyes.host_app = browsername  # (str)
         if baselineName is not None:
-            eyes.baseline_name = baselineName  # (str)
+            eyes.baseline_branch_name = baselineName  # (str)
         if batchName is not None:
-            batch =BatchInfo(batchName)
+            batch = BatchInfo(batchName)
             eyes.batch = batch
         if matchlevel is not None:
             eyes.match_level = matchlevel
@@ -153,34 +154,31 @@ class RobotAppEyes:
             eyes.parent_branch_name = parentbranch  # (str)
         if branchname is not None:
             eyes.branch_name = branchname  # (str)
+
         if width is None and height is None:
-            eyes.open(driver, appname, testname)
+            driver = eyes.open(driver, appname, testname)
         else:
             intwidth = int(width)
             intheight = int(height)
-            eyes.open(driver, appname, testname, {'width': intwidth, 'height': intheight})
-
+            driver = eyes.open(driver, appname, testname, {
+                'width': intwidth, 'height': intheight})
 
     def check_eyes_window(self, name, force_full_page_screenshot=False,
                           includeEyesLog=False, httpDebugLog=False):
         """
         Takes a snapshot from the browser using the web driver and matches it with
         the expected output.
-
         Arguments:
                 |  Name (string)                                | Name that will be given to region in Eyes.                                                      |
                 |  Force Full Page Screenshot (default=False)   | Will force the browser to take a screenshot of whole page.                                      |
                 |  Include Eyes Log (default=False)             | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.        |
                 |  HTTP Debug Log (default=False)               | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.  |
-
         Example:
-
         | *Keywords*         |  *Parameters*                                                                                                    |
-        | Open Browser       |  http://www.navinet.net/ | gc                |                            |                     |        |       |
-        | Open Eyes Session  |  http://www.navinet.net/ | RobotAppEyes_Test |  NaviNet_RobotAppEyes_Test |  YourApplitoolsKey  |  1024  |  768  |
-        | Check Eyes Window  |  NaviNet Home            | True              |                            |                     |        |       |
+        | Open Browser       |  http://google.com/ | gc                |                            |                     |        |       |
+        | Open Eyes Session  |  EyesLibrary_AppName |  EyesLibrary_TestName |  YourApplitoolsKey  |  1024  |  768  |
+        | Check Eyes Window  |  Google Homepage            | True              |                            |                     |        |       |
         | Close Eyes Session |  False                   |                   |                            |                     |        |       |
-
         """
         if includeEyesLog is True:
             logger.set_logger(StdoutLogger())
@@ -196,22 +194,21 @@ class RobotAppEyes:
         Takes a snapshot of the given region from the browser using the web driver to locate an xpath element
         with a certain width and height and matches it with the expected output.
         The width and the height cannot be greater than the width and the height specified in the open_eyes_session keyword.
-
         Arguments:
-                |  Element (string)                 | This needs to be passed in as an xpath e.g. //*[@id="navbar"]/div/div                          |
+                |  Element (string)                 | This needs to be passed in as an xpath e.g. //*[@id="hplogo"]                          |
                 |  Width (int)                      | The width of the region that is tested e.g. 500                                                |
                 |  Height (int)                     | The height of the region that is tested e.g. 120                                               |
                 |  Name (string)                    | Name that will be given to region in Eyes.                                                     |
                 |  Include Eyes Log (default=False) | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.       |
                 |  HTTP Debug Log (default=False)   | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable. |
         Example:
-
         | *Keywords*         |  *Parameters*                                                                                                        |
-        | Open Browser       |  http://www.navinet.net/     | gc                |                             |                    |        |       |
-        | Open Eyes Session  |  http://www.navinet.net/     | RobotAppEyes_Test |  NaviNet_RobotAppEyes_Test  |  YourApplitoolsKey |  1024  |  768  |
-        | Check Eyes Region  |  //*[@id="navbar"]/div/div   | 500               |  120                        |  NaviNet Navbar    |        |       |
+        | Open Browser       |  http://google.com/     | gc                |                             |                    |        |       |
+        | Open Eyes Session  |  EyesLibrary_AppName |  EyesLibrary_TestName |  YourApplitoolsKey  |  1024  |  768  |
+        | Check Eyes Region  |  //*[@id="hplogo"]   | 500               |  120                        |  Google Logo    |        |       |
         | Close Eyes Session |  False                       |                   |                             |                    |        |       |
         """
+
         if includeEyesLog is True:
             logger.set_logger(StdoutLogger())
             logger.open_()
@@ -230,7 +227,6 @@ class RobotAppEyes:
         """
         Takes a snapshot of the region of the given selector and element value from the browser using the web driver
         and matches it with the expected output. With a choice from four selectors, listed below, to check by.
-
         Arguments:
                 |  Selector (string)                | This will decide what element will be located. The supported selectors include: XPATH, ID, CLASS NAME, CSS SELECTOR  |
                 |  Value (string)                   | The specific value of the selector. e.g. an xpath value //*[@id="navbar"]/div/div                                    |
@@ -238,13 +234,11 @@ class RobotAppEyes:
                 |  Include Eyes Log (default=False) | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                             |
                 |  HTTP Debug Log (default=False)   | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                       |
         Example:
-
         | *Keywords*                    |  *Parameters*                                                                                                    |
-        | Open Browser                  |  http://www.navinet.net/  |  gc                |                             |                    |       |      |
-        | Open Eyes Session             |  http://www.navinet.net/  |  RobotAppEyes_Test |  NaviNet_RobotAppEyes_Test  |  YourApplitoolsKey |  1024 |  768 |
-        | Check Eyes Region By Element  |  CLASS NAME               |  container         |  NaviNetClassElement        |                    |       |      |
+        | Open Browser                  |  http://www.google.com/  |  gc                |                             |                    |       |      |
+        | Open Eyes Session             |  EyesLibrary_AppName |  EyesLibrary_TestName |  YourApplitoolsKey |  1024 |  768 |
+        | Check Eyes Region By Element  |  CLASS NAME               |  container         |  ClassElementName      |                    |       |      |
         | Close Eyes Session            |  False                    |                    |                             |                    |       |      |
-
         """
         if includeEyesLog is True:
             logger.set_logger(StdoutLogger())
@@ -263,14 +257,15 @@ class RobotAppEyes:
         elif selector.upper() == 'CSS SELECTOR':
             searchElement = driver.find_element_by_css_selector(value)
         else:
-            raise InvalidElementStateException('Please select a valid selector: XPATH, ID, CLASS NAME, CSS SELECTOR')
+            raise InvalidElementStateException(
+                'Please select a valid selector: XPATH, ID, CLASS NAME, CSS SELECTOR')
+
         eyes.check_region_by_element(searchElement, name)
 
     def check_eyes_region_by_selector(self, selector, value, name, includeEyesLog=False, httpDebugLog=False):
         """
         Takes a snapshot of the region of the element found by calling find_element(by, value) from the browser using the web driver
         and matches it with the expected output. With a choice from eight selectors, listed below to check by.
-
         Arguments:
                 |  Selector (string)                | This will decide what element will be located. The supported selectors include: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME.    |
                 |  Value (string)                   | The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown                                                                                |
@@ -278,13 +273,11 @@ class RobotAppEyes:
                 |  Include Eyes Log (default=False) | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                                                                              |
                 |  HTTP Debug Log (default=False)   | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                                                                        |
         Example:
-
         | *Keywords*                    |  *Parameters*                                                                                                            |
-        | Open Browser                  |  http://www.navinet.net/  |  gc                       |                            |                    |        |       |
-        | Open Eyes Session             |  http://www.navinet.net/  |  RobotAppEyes_Test        |  NaviNet_RobotAppEyes_Test |  YourApplitoolsKey |  1024  |  768  |
+        | Open Browser                  |  http://www.google.com/  |  gc                       |                            |                    |        |       |
+        | Open Eyes Session             |  EyesLibrary_AppName |  EyesLibrary_TestName |  YourApplitoolsKey |  1024  |  768  |
         | Check Eyes Region By Selector |  CSS SELECTOR             |  .first.expanded.dropdown |  NaviNetCssElement         |                    |        |       |
         | Close Eyes Session            |  False                    |                           |                            |                    |        |       |
-
         """
         if includeEyesLog is True:
             logger.set_logger(StdoutLogger())
@@ -311,72 +304,79 @@ class RobotAppEyes:
         elif selector.upper() == 'CLASS NAME':
             searchElement = By.CLASS_NAME
         else:
-            raise InvalidElementStateException('Please select a valid selector: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME')
+            raise InvalidElementStateException(
+                'Please select a valid selector: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME')
 
         eyes.check_region_by_selector(searchElement, value, name)
 
-    def compare_image(self, path, imagename=None, ignore_mismatch=False, includeEyesLog=False, httpDebugLog=False):
-        """
-        Select an image and send it to Eyes for comparison. A name can be used in place of the image's file name.
+    # def compare_image(self, path, apikey, imagename=None, ignore_mismatch=False, includeEyesLog=False, httpDebugLog=False):
+    #     """
+    #     Select an image and send it to Eyes for comparison. A name can be used in place of the image's file name.
+    #     Arguments:
+    #             |  Path                             | Path of the image to send to eyes for visual comparison.                                                                   |
+    #             |  imagename (default=None)         | Can manually set the name desired for the image passed in. If no name is passed in it will default file name of the image. |
+    #             |  Include Eyes Log (default=False) | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                                   |
+    #             |  HTTP Debug Log (default=False)   | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                             |
+    #     Example:
+    #     | *Keywords*         |  *Parameters*                                                                                                         |
+    #     | Open Browser       |  http://www.navinet.net/   |  gc                   |                            |                    |        |       |
+    #     | Open Eyes Session  |  http://www.navinet.net/   |  RobotAppEyes_Test    |  NaviNet_RobotAppEyes_Test |  YourApplitoolsKey |  1024  |  768  |
+    #     | Compare Image      |  selenium-screenshot-1.png |  Image Name Example   |                            |                    |        |       |
+    #     | Close Eyes Session |                            |                       |                            |                    |        |       |
+    #     """
+    #     if imagename is None:
+    #         tag = os.path.basename(path)
+    #     else:
+    #         tag = imagename
 
-        Arguments:
-                |  Path                             | Path of the image to send to eyes for visual comparison.                                                                   |
-                |  imagename (default=None)         | Can manually set the name desired for the image passed in. If no name is passed in it will default file name of the image. |
-                |  Include Eyes Log (default=False) | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                                   |
-                |  HTTP Debug Log (default=False)   | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                             |
+    #     eyes = Eyes()
+    #     eyes.api_key = apikey
 
-        Example:
+    #     # eyes.check_image()
+    #     # _prepare_to_check()
+    #     if includeEyesLog is True:
+    #         logger.set_logger(StdoutLogger())
+    #         logger.open_()
+    #     if httpDebugLog is True:
+    #         httplib.HTTPConnection.debuglevel = 1
 
-        | *Keywords*         |  *Parameters*                                                                                                         |
-        | Open Browser       |  http://www.navinet.net/   |  gc                   |                            |                    |        |       |
-        | Open Eyes Session  |  http://www.navinet.net/   |  RobotAppEyes_Test    |  NaviNet_RobotAppEyes_Test |  YourApplitoolsKey |  1024  |  768  |
-        | Compare Image      |  selenium-screenshot-1.png |  Image Name Example   |                            |                    |        |       |
-        | Close Eyes Session |                            |                       |                            |                    |        |       |
-        """
-        if imagename is None:
-            tag = os.path.basename(path)
-        else:
-            tag = imagename
+    #     with open(path, 'rb') as image_file:
+    #         screenshot64 = image_file.read().encode('base64')
+    #         screenshot = image_utils.image_from_base64(screenshot64)
+    #         # screenshotBytes = EyesScreenshot.create_from_image(
+    #         #     screenshot, eyes._driver)
+    #     title = eyes.get_title()
+    #     app_output = {'title': title, 'screenshot64': None}
+    #     user_inputs = []
+    #     prepare_match_data = eyes.match_window_task._create_match_data_bytes(
+    #         app_output, user_inputs, tag, ignore_mismatch, screenshotBytes)
 
-        eyes._prepare_to_check()
-        if includeEyesLog is True:
-            logger.set_logger(StdoutLogger())
-            logger.open_()
-        if httpDebugLog is True:
-            httplib.HTTPConnection.debuglevel = 1
+    #     eyes_base._match_window_task.match_window(retry_timeout=match_timeout,
+    #                                               tag=tag,
+    #                                               user_inputs=self._user_inputs,
+    #                                               default_match_settings=self.default_match_settings,
+    #                                               target=target,
+    #                                               run_once_after_wait=self._should_match_once_on_timeout)
 
-        with open(path, 'rb') as image_file:
-            screenshot64 = image_file.read().encode('base64')
-            screenshot = _image_utils.png_image_from_bytes(base64.b64decode(screenshot64))
-            screenshotBytes = EyesScreenshot.create_from_image(screenshot, eyes._driver)
-        title = eyes.get_title()
-        app_output = {'title': title, 'screenshot64': None}
-        user_inputs = []
-        prepare_match_data = eyes._match_window_task._create_match_data_bytes(
-            app_output, user_inputs, tag, ignore_mismatch, screenshotBytes)
-        eyes._match_window_task._agent_connector.match_window(
-            eyes._match_window_task._running_session, prepare_match_data)
+    #     # eyes._match_window_task._agent_connector.match_window(
+    #     #     eyes._match_window_task._running_session, prepare_match_data)
+
+    #     eyes.close()
+    #     eyes.abort_if_not_closed()
 
     def close_eyes_session(self, includeEyesLog=False, httpDebugLog=False):
         """
         Closes a session and returns the results of the session.
         If a test is running, aborts it. Otherwise, does nothing.
-
-        The RobotAppEyesTest.txt test will fail after the first run, this is because a baseline is being created and will be accepted automatically by Applitools Eyes.
-        A second test run will show a successful comparison between screens and the test will pass.
-
         Arguments:
                 |  Include Eyes Log (default=False) | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.        |
                 |  HTTP Debug Log (default=False)   | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.  |
-
         Example:
-
         | *Keywords*                    |  *Parameters*                                                                                                         |
-        | Open Browser                  |  http://www.navinet.net/  |  gc                    |                            |                    |        |       |
-        | Open Eyes Session             |  http://www.navinet.net/  |  RobotAppEyes_Test     |  NaviNet_RobotAppEyes_Test |  YourApplitoolsKey |  1024  |  768  |
-        | Check Eyes Region By Selector |  LINK TEXT                |  RESOURCES             |  NaviNetLinkTextElement    |                    |        |       |
+        | Open Browser                  |  http://google.com/  |  gc                    |                            |                    |        |       |
+        | Open Eyes Session             |  EyesLibrary_AppName |  EyesLibrary_TestName |  YourApplitoolsKey  |  1024  |  768  |
+        | Check Eyes Region By Selector |  LINK TEXT                |  RESOURCES             |  LinkTextElement    |                    |        |       |
         | Close Eyes Session            |                           |                        |                            |                    |        |       |
-
         """
         if includeEyesLog is True:
             logger.set_logger(StdoutLogger())
@@ -387,15 +387,13 @@ class RobotAppEyes:
         eyes.close()
         eyes.abort_if_not_closed()
 
-
     def eyes_session_is_open(self):
         """
         Returns True if an Applitools Eyes session is currently running, otherwise it will return False.
-
         | *Keywords*        |  *Parameters*                                                                                                       |
-        | Open Browser      |  http://www.navinet.net/  |  gc                  |                            |                    |        |       |
-        | Open Eyes Session |  http://www.navinet.net/  |  RobotAppEyes_Test   |  NaviNet_RobotAppEyes_Test |  YourApplitoolsKey |  1024  |  768  |
+        | Open Browser      |  http://google.com/  |  gc                  |                            |                    |        |       |
+        | Open Eyes Session |  EyesLibrary_AppName |  EyesLibrary_TestName |  YourApplitoolsKey  |  1024  |  768  |
         | ${isOpen}=        |  Eyes Session Is Open     |                      |                            |                    |        |       |
         | Run Keyword If    |  ${isOpen}==True          | Close Eyes Session   |                            |                    |        |       |
         """
-        return eyes.is_open()
+        return eyes._is_open

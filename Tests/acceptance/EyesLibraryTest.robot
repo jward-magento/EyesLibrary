@@ -48,7 +48,6 @@ ${True}                                             True
 
 
 *** Test Cases ***
-
 RobotAppEyes 1.0 Test
     Open Browser                                    ${Applitools-url}     gc
     Open Eyes Session                               ${Applitools-AppName}    ${Applitools-TestName}1.0     ${Applitools-Key}      width=${Width}      height=${Height}   includeEyesLog=${True}
