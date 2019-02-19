@@ -26,13 +26,13 @@ from applitools import logger
 from applitools.logger import StdoutLogger
 from applitools.logger import FileLogger
 from applitools.geometry import Region
-from applitools.eyes import Eyes, BatchInfo
-# from applitools.images import Eyes as ImageEyes
-# from applitools.utils import image_utils
-# from applitools.core import EyesScreenshot
-from version import VERSION
+from applitools.selenium.eyes import Eyes
+from applitools.core.eyes_base import BatchInfo
+from robot.api import logger as loggerRobot
 
-_version_ = VERSION
+#from applitools.images import Eyes as ImageEyes
+#from applitools.utils import image_utils
+#from applitools.core import EyesScreenshot
 
 
 class EyesLibrary:
@@ -73,14 +73,13 @@ class EyesLibrary:
     | NAME              | Check Eyes Region By Selector `|` NAME              `|` my_element               `|`  NameElement             | Matches by @name attribute                      |
     | TAG NAME          | Check Eyes Region By Selector `|` TAG NAME          `|` div                      `|`  TagNameElement          | Matches by HTML tag name                        |
     """
-    ROBOT_LIBRARY_SCOPE = 'GLOBAL'
-    ROBOT_LIBRARY_VERSION = VERSION
 
     def open_eyes_session(self,
                           appname,
                           testname,
                           apikey,
                           library='SeleniumLibrary',
+                          package='selenium',
                           width=None,
                           height=None,
                           osname=None,
@@ -123,6 +122,12 @@ class EyesLibrary:
         """
         global driver
         global eyes
+
+        # if package is 'selenium':
+        #     eyes = Eyes()
+        # else:
+        #     eyes = ImageEyes()
+
         eyes = Eyes()
         eyes.api_key = apikey
 
@@ -156,10 +161,14 @@ class EyesLibrary:
             eyes.branch_name = branchname  # (str)
 
         if width is None and height is None:
+            # driver = eyes.open(appname, testname)
             driver = eyes.open(driver, appname, testname)
         else:
             intwidth = int(width)
             intheight = int(height)
+            # driver = eyes.open(appname, testname, {
+            #     'width': intwidth, 'height': intheight})
+
             driver = eyes.open(driver, appname, testname, {
                 'width': intwidth, 'height': intheight})
 
@@ -218,27 +227,70 @@ class EyesLibrary:
         intwidth = int(width)
         intheight = int(height)
 
-        searchElement = driver.find_element_by_xpath(element)
+        #searchElement = driver.find_element_by_xpath(element)
+        searchElement = eyes._driver.find_element(By.XPATH, element)
+
         location = searchElement.location
+
         region = Region(location["x"], location["y"], intwidth, intheight)
         eyes.check_region(region, name)
 
-    def check_eyes_region_by_element(self, selector, value, name, includeEyesLog=False, httpDebugLog=False):
+    def get_element(self, selector, value):
         """
-        Takes a snapshot of the region of the given selector and element value from the browser using the web driver
-        and matches it with the expected output. With a choice from four selectors, listed below, to check by.
+        Returns a WebElement, given the selector and value.
         Arguments:
-                |  Selector (string)                | This will decide what element will be located. The supported selectors include: XPATH, ID, CLASS NAME, CSS SELECTOR  |
-                |  Value (string)                   | The specific value of the selector. e.g. an xpath value //*[@id="navbar"]/div/div                                    |
+                |  Selector (string)                | This will decide what element will be located. The supported selectors include: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME.    |
+                |  Value (string)                   | The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown                         
+                |  Name (string)                    | Name that will be given to region in Eyes.                                                                           |
+                |  Include Eyes Log (default=False) | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                             |
+                |  HTTP Debug Log (default=False)   | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                       |
+        Example:
+        | *Keywords*                    |  *Parameters*                                                                                  |
+        | Open Browser                  |  http://www.google.com/  |  gc                |                             |                    |       |      |
+        | Open Eyes Session  |  EyesLibrary_AppName |  EyesLibrary_TestName |  YourApplitoolsKey  |  1024  |  768  |               
+        | Get Element            |  CLASS NAME |  ClassElementName | 
+        | Close Eyes Session            |  False                    |                    |                             |                    |       |      |
+        """
+
+        searchElement = None
+
+        if selector.upper() == 'CSS SELECTOR':
+            searchElement = By.CSS_SELECTOR
+        elif selector.upper() == 'XPATH':
+            searchElement = By.XPATH
+        elif selector.upper() == 'ID':
+            searchElement = By.ID
+        elif selector.upper() == 'LINK TEXT':
+            searchElement = By.LINK_TEXT
+        elif selector.upper() == 'PARTIAL LINK TEXT':
+            searchElement = By.PARTIAL_LINK_TEXT
+        elif selector.upper() == 'NAME':
+            searchElement = By.NAME
+        elif selector.upper() == 'TAG NAME':
+            searchElement = By.TAG_NAME
+        elif selector.upper() == 'CLASS NAME':
+            searchElement = By.CLASS_NAME
+        else:
+            raise InvalidElementStateException(
+                'Please select a valid selector: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME')
+
+        return eyes._driver.find_element(searchElement, value)
+
+    def check_eyes_region_by_element(self, element, name, includeEyesLog=False, httpDebugLog=False):
+        """
+        Takes a snapshot of the region of the given element from the browser using the web driver. Not available to mobile native apps.
+        Arguments:
+                |  Element (EyesWebElement)                | The element to be checked. See Get Element|
                 |  Name (string)                    | Name that will be given to region in Eyes.                                                                           |
                 |  Include Eyes Log (default=False) | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                             |
                 |  HTTP Debug Log (default=False)   | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                       |
         Example:
         | *Keywords*                    |  *Parameters*                                                                                                    |
-        | Open Browser                  |  http://www.google.com/  |  gc                |                             |                    |       |      |
+        | Open Browser                  |  http://www.google.com/  |  gc                |                        
         | Open Eyes Session             |  EyesLibrary_AppName |  EyesLibrary_TestName |  YourApplitoolsKey |  1024 |  768 |
-        | Check Eyes Region By Element  |  CLASS NAME               |  container         |  ClassElementName      |                    |       |      |
-        | Close Eyes Session            |  False                    |                    |                             |                    |       |      |
+        | ${element}=    Get Element   |    xpath      |    //*[@id="hplogo"]  |
+        | Check Eyes Region By Element  |  ${element}     |  ElementName      |               
+        | Close Eyes Session            |  False                    |        
         """
         if includeEyesLog is True:
             logger.set_logger(StdoutLogger())
@@ -246,26 +298,13 @@ class EyesLibrary:
         if httpDebugLog is True:
             httplib.HTTPConnection.debuglevel = 1
 
-        searchElement = None
-
-        if selector.upper() == 'XPATH':
-            searchElement = driver.find_element_by_xpath(value)
-        elif selector.upper() == 'ID':
-            searchElement = driver.find_element_by_id(value)
-        elif selector.upper() == 'CLASS NAME':
-            searchElement = driver.find_element_by_class_name(value)
-        elif selector.upper() == 'CSS SELECTOR':
-            searchElement = driver.find_element_by_css_selector(value)
-        else:
-            raise InvalidElementStateException(
-                'Please select a valid selector: XPATH, ID, CLASS NAME, CSS SELECTOR')
-
-        eyes.check_region_by_element(searchElement, name)
+        eyes.check_region_by_element(element, name)
 
     def check_eyes_region_by_selector(self, selector, value, name, includeEyesLog=False, httpDebugLog=False):
         """
         Takes a snapshot of the region of the element found by calling find_element(by, value) from the browser using the web driver
         and matches it with the expected output. With a choice from eight selectors, listed below to check by.
+        Not available to mobile native apps.
         Arguments:
                 |  Selector (string)                | This will decide what element will be located. The supported selectors include: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME.    |
                 |  Value (string)                   | The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown                                                                                |
@@ -309,60 +348,55 @@ class EyesLibrary:
 
         eyes.check_region_by_selector(searchElement, value, name)
 
-    # def compare_image(self, path, apikey, imagename=None, ignore_mismatch=False, includeEyesLog=False, httpDebugLog=False):
-    #     """
-    #     Select an image and send it to Eyes for comparison. A name can be used in place of the image's file name.
-    #     Arguments:
-    #             |  Path                             | Path of the image to send to eyes for visual comparison.                                                                   |
-    #             |  imagename (default=None)         | Can manually set the name desired for the image passed in. If no name is passed in it will default file name of the image. |
-    #             |  Include Eyes Log (default=False) | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                                   |
-    #             |  HTTP Debug Log (default=False)   | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                             |
-    #     Example:
-    #     | *Keywords*         |  *Parameters*                                                                                                         |
-    #     | Open Browser       |  http://www.navinet.net/   |  gc                   |                            |                    |        |       |
-    #     | Open Eyes Session  |  http://www.navinet.net/   |  RobotAppEyes_Test    |  NaviNet_RobotAppEyes_Test |  YourApplitoolsKey |  1024  |  768  |
-    #     | Compare Image      |  selenium-screenshot-1.png |  Image Name Example   |                            |                    |        |       |
-    #     | Close Eyes Session |                            |                       |                            |                    |        |       |
-    #     """
-    #     if imagename is None:
-    #         tag = os.path.basename(path)
-    #     else:
-    #         tag = imagename
+    def compare_image(self, path, imagename=None, ignore_mismatch=False):
+        """
+        Select an image and send it to Eyes for comparison. A name can be used in place of the image's file name.
+        Arguments:
+                |  Path                             | Path of the image to send to eyes for visual comparison.                                                                   |
+                |  imagename (default=None)         | Can manually set the name desired for the image passed in. If no name is passed in it will default file name of the image. |
+                |  Include Eyes Log (default=False) | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                                   |
+                |  HTTP Debug Log (default=False)   | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                             |
+        Example:
+        | *Keywords*         |  *Parameters*                                                                                                         |
+        | Open Browser       |  http://www.navinet.net/   |  gc                   |                            |                    |        |       |
+        | Open Eyes Session  |  http://www.navinet.net/   |  RobotAppEyes_Test    |  NaviNet_RobotAppEyes_Test |  YourApplitoolsKey |  1024  |  768  |
+        | Compare Image      |  selenium-screenshot-1.png |  Image Name Example   |                            |                    |        |       |
+        | Close Eyes Session |                            |                       |                            |                    |        |       |
+        """
+        if imagename is None:
+            tag = os.path.basename(path)
+        else:
+            tag = imagename
 
-    #     eyes = Eyes()
-    #     eyes.api_key = apikey
+        #eyes = Eyes()
+        #eyes.api_key = apikey
+        #outdriver = eyes.open(app_name, test_name)
 
-    #     # eyes.check_image()
-    #     # _prepare_to_check()
-    #     if includeEyesLog is True:
-    #         logger.set_logger(StdoutLogger())
-    #         logger.open_()
-    #     if httpDebugLog is True:
-    #         httplib.HTTPConnection.debuglevel = 1
+        eyes.check_image(path, tag)
 
-    #     with open(path, 'rb') as image_file:
-    #         screenshot64 = image_file.read().encode('base64')
-    #         screenshot = image_utils.image_from_base64(screenshot64)
-    #         # screenshotBytes = EyesScreenshot.create_from_image(
-    #         #     screenshot, eyes._driver)
-    #     title = eyes.get_title()
-    #     app_output = {'title': title, 'screenshot64': None}
-    #     user_inputs = []
-    #     prepare_match_data = eyes.match_window_task._create_match_data_bytes(
-    #         app_output, user_inputs, tag, ignore_mismatch, screenshotBytes)
+        # with open(path, 'rb') as image_file:
+        #     screenshot64 = image_file.read().encode('base64')
+        #     screenshot = image_utils.image_from_base64(screenshot64)
+        # screenshotBytes = EyesScreenshot.create_from_image(
+        #     screenshot, eyes._driver)
+        # title = eyes.get_title()
+        # app_output = {'title': title, 'screenshot64': None}
+        # user_inputs = []
+        # prepare_match_data = eyes.match_window_task._create_match_data_bytes(
+        #     app_output, user_inputs, tag, ignore_mismatch, screenshotBytes)
 
-    #     eyes_base._match_window_task.match_window(retry_timeout=match_timeout,
-    #                                               tag=tag,
-    #                                               user_inputs=self._user_inputs,
-    #                                               default_match_settings=self.default_match_settings,
-    #                                               target=target,
-    #                                               run_once_after_wait=self._should_match_once_on_timeout)
+        # eyes_base._match_window_task.match_window(retry_timeout=match_timeout,
+        #                                           tag=tag,
+        #                                           user_inputs=self._user_inputs,
+        #                                           default_match_settings=self.default_match_settings,
+        #                                           target=target,
+        #                                           run_once_after_wait=self._should_match_once_on_timeout)
 
-    #     # eyes._match_window_task._agent_connector.match_window(
-    #     #     eyes._match_window_task._running_session, prepare_match_data)
+        # # eyes._match_window_task._agent_connector.match_window(
+        # #     eyes._match_window_task._running_session, prepare_match_data)
 
-    #     eyes.close()
-    #     eyes.abort_if_not_closed()
+        # eyes.close()
+        # eyes.abort_if_not_closed()
 
     def close_eyes_session(self, includeEyesLog=False, httpDebugLog=False):
         """
@@ -396,4 +430,4 @@ class EyesLibrary:
         | ${isOpen}=        |  Eyes Session Is Open     |                      |                            |                    |        |       |
         | Run Keyword If    |  ${isOpen}==True          | Close Eyes Session   |                            |                    |        |       |
         """
-        return eyes._is_open
+        return eyes.is_open

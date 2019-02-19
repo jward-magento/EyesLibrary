@@ -14,8 +14,8 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-from EyesLibrary import EyesLibrary
-from version import VERSION
+from EyesLibrary.eyeslibrary import EyesLibrary
+from EyesLibrary.version import VERSION
 
 _version_ = VERSION
 
@@ -26,3 +26,4 @@ class EyesLibrary(EyesLibrary):
     the Eyes-Selenium and Selenium/Appium libraries.
     """
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
+    ROBOT_LIBRARY_VERSION = VERSION

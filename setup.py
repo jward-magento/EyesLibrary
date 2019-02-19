@@ -15,45 +15,51 @@
 #  limitations under the License.
 
 import sys
-from distutils.core import setup
+#from distutils.core import setup
+from setuptools import setup
 from os.path import join, dirname
 
-sys.path.append(join(dirname(__file__), 'RobotAppEyes'))
+sys.path.append(join(dirname(__file__), 'EyesLibrary'))
 
-execfile(join(dirname(__file__), 'RobotAppEyes', 'version.py'))
+execfile("EyesLibrary/version.py")
+
+# execfile(join(dirname(__file__), 'EyesLibrary', 'version.py'))
+
+# version_file = open("EyesLibrary/version.py")
+# VERSION = version_file.read().strip()
 
 DESCRIPTION = """
-Robot-AppEyes is a visual verfication library for Robot Framework
-that leverages the Eyes-Selenium and Selenium2 libraries.
+EyesLibrary is a visual verification library for Robot Framework
+that leverages the Eyes-Selenium and Selenium/Appium libraries.
 """[1:-1]
 
-setup(name='Robot-AppEyes',
+setup(name='EyesLibrary',
       version=VERSION,
       description='Visual Verification testing library for Robot Framework',
       long_description=DESCRIPTION,
-      author='Thomas Armstrong, Simon McMorran, Gareth Nixon, Adam Simmons',
-      author_email='<tarmstrong@navinet.net>, <smcmorran@navinet.net>, <gnixon@navinet.net>, <asimmons@navinet.net>',
-      url='https://github.com/NaviNet/Robot-AppEyes',
+      url='https://github.com/joel-oliveira/EyesLibrary',
       license='Apache License 2.0',
-      keywords='robotframework testing testautomation eyes-selenium selenium2 visual-verification',
+      keywords='robotframework testing testautomation eyes-selenium selenium appium visual-verification',
       platforms='any',
       classifiers=[
           "License :: OSI Approved :: Apache Software License",
-          "Programming Language :: Python",
-          "Development Status :: 4 - Beta",
+          "Programming Language :: Python :: 2.7.14",
+          "Development Status :: 3 - Alpha",
           "Intended Audience :: Developers",
-          "Programming Language :: Python :: 2.7",
           "Topic :: Software Development :: Testing",
           "Topic :: Software Development :: Quality Assurance"
       ],
       install_requires=[
-          'robotframework >= 2.8.7',
-          'robotframework-selenium2library >= 1.7.4',
-          'eyes-selenium >= 3.2'
+          'robotframework >= 3.1.1',
+          'eyes-selenium >= 3.15.2'
       ],
-      packages=['RobotAppEyes'],
-      data_files=[('AppEyesTests', ['Tests/acceptance/RobotAppEyesTest.txt', 'Tests/acceptance/pictureOne.png',
-                                    'Tests/acceptance/pictureTwo.png', 'doc/RobotAppEyes-KeywordDocumentation.html',
-                                    'doc/ChangeLog.txt'])],
-      download_url='https://github.com/NaviNet/Robot-AppEyes/tarball/1.2',
+      packages=['EyesLibrary'],
+      data_files=[
+          ('tests/acceptance', ['tests/acceptance/mobile_app.robot',
+                                'tests/acceptance/mobile_browser.robot',
+                                'tests/acceptance/mobile_hybrid_app.robot',
+                                'tests/acceptance/web.robot']),
+          ('doc', ['doc/ChangeLog.txt',
+                   "doc/EyesLibrary-KeywordDocumentation.html"])
+      ]
       )
