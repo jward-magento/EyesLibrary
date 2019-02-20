@@ -97,15 +97,29 @@ within the variable \${Applitools-Key}, remove 'YourApplitoolsKey' and replace w
 
 ## Running the Demo
 
-The test file EyesLibraryTest.robot, is an easily executable test for Robot Framework using EyesLibrary.
+At _tests/acceptance_ directory, you can find Robot Framework tests for:
+
+- Web
+- Mobile Browser
+- Mobile Native App
+- Mobile Hybrid App
+
+Before running the tests, your Applitools Api Key must be set in _tests/acceptance/resources/common.robot_, by replacing "YourApplitoolsApiKey" with your own key.
+
+The mobile tests are to be executed on Android.
+Before running the Mobile Hybrid App tests, you need to install the Demo App (APK found at _tests/resources_) in your device.
 
 <!-- TODO: Publish Keyword Documentation
 For in depth detail on how the keywords function, read the Keyword documentation found here : [Keyword Documentation](http://navinet.github.io/Robot-AppEyes/RobotAppEyes-KeywordDocumentation.html) -->
 
 **Remember to include your Applitools API key otherwise the
-test will not run.** To run the test, open a command prompt within the _Tests/acceptance_ folder and run:
+test will not run.** To run a test, open a command prompt within the _tests/acceptance_ folder and run:
 
-    robot EyesLibraryTest.robot
+    robot FILENAME.robot
+
+For example, to run the Test Suite for Web:
+
+    robot web.robot
 
 **Note:** It is assumed that anyone who wants to use this demo script is already able to execute robot tests using Google Chrome.
 
