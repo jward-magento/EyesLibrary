@@ -95,8 +95,8 @@ class EyesLibrary:
         Arguments:
                 |  Application Name (string)            | The name of the application under test.                                                                     |
                 |  Test Name (string)                   | The test name.                                                                                              |
-                |  API Key (string)                     | User's Applitools Eyes key.   
-                |  Library (default=SeleniumLibrary)    | Library to test (Either SeleniumLibrary or AppiumLibrary)                                                                                |
+                |  API Key (string)                     | User's Applitools Eyes key.                                                                                 |
+                |  Library (default=SeleniumLibrary)    | Library to test (Either SeleniumLibrary or AppiumLibrary)                                                   |
                 |  (Optional) Width (int)               | The width of the browser window e.g. 1280                                                                   |
                 |  (Optional) Height (int)              | The height of the browser window e.g. 1000                                                                  |
                 |  (Optional) Operating System (string) | The operating system of the test, can be used to override the OS name to allow cross OS verfication         |
@@ -115,10 +115,10 @@ class EyesLibrary:
         Starts a session with the Applitools Eyes Website. See https://eyes.applitools.com/app/sessions/
         Example:
         | *Keywords*         |  *Parameters*                                                                                                                                                                                                                    |
-        | Open Browser       |  http://google.com/ | gc                |                            |                     |        |       |                  |                       |                      |                       |                     |
+        | Open Browser       |  http://google.com/ | gc                |                       
         | Open Eyes Session  |  EyesLibrary_AppName |  EyesLibrary_TestName |  YourApplitoolsKey  |  1024  |  768  |  OSOverrideName  |  BrowserOverrideName  |  matchlevel=LAYOUT   |  includeEyesLog=True  |  httpDebugLog=True  |
-        | Check Eyes Window  |  Google Homepage            |                   |                            |                     |        |       |                  |                       |                      |                       |                     |
-        | Close Eyes Session |  False                   |                   |                            |                     |        |       |                  |                       |                      |                       |                     |
+        | Check Eyes Window  |  Google Homepage            |                              
+        | Close Eyes Session |  False                   |                              
         """
         global driver
         global eyes
@@ -184,10 +184,10 @@ class EyesLibrary:
                 |  HTTP Debug Log (default=False)               | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.  |
         Example:
         | *Keywords*         |  *Parameters*                                                                                                    |
-        | Open Browser       |  http://google.com/ | gc                |                            |                     |        |       |
+        | Open Browser       |  http://google.com/ | gc                |     
         | Open Eyes Session  |  EyesLibrary_AppName |  EyesLibrary_TestName |  YourApplitoolsKey  |  1024  |  768  |
-        | Check Eyes Window  |  Google Homepage            | True              |                            |                     |        |       |
-        | Close Eyes Session |  False                   |                   |                            |                     |        |       |
+        | Check Eyes Window  |  Google Homepage            | True              |  
+        | Close Eyes Session |  False                   |     
         """
         if includeEyesLog is True:
             logger.set_logger(StdoutLogger())
@@ -212,10 +212,10 @@ class EyesLibrary:
                 |  HTTP Debug Log (default=False)   | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable. |
         Example:
         | *Keywords*         |  *Parameters*                                                                                                        |
-        | Open Browser       |  http://google.com/     | gc                |                             |                    |        |       |
-        | Open Eyes Session  |  EyesLibrary_AppName |  EyesLibrary_TestName |  YourApplitoolsKey  |  1024  |  768  |
-        | Check Eyes Region  |  //*[@id="hplogo"]   | 500               |  120                        |  Google Logo    |        |       |
-        | Close Eyes Session |  False                       |                   |                             |                    |        |       |
+        | Open Browser       |  http://google.com/     | gc                 | 
+        | Open Eyes Session  |  EyesLibrary_AppName |  EyesLibrary_TestName |  YourApplitoolsKey    |  1024  |  768  |
+        | Check Eyes Region  |  //*[@id="hplogo"]   | 500                   |  120                        |  Google Logo    |  
+        | Close Eyes Session |  False                       | 
         """
 
         if includeEyesLog is True:
@@ -240,16 +240,13 @@ class EyesLibrary:
         Returns a WebElement, given the selector and value.
         Arguments:
                 |  Selector (string)                | This will decide what element will be located. The supported selectors include: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME.    |
-                |  Value (string)                   | The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown                         
-                |  Name (string)                    | Name that will be given to region in Eyes.                                                                           |
-                |  Include Eyes Log (default=False) | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                             |
-                |  HTTP Debug Log (default=False)   | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                       |
+                |  Value (string)                   | The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown                                  |
         Example:
         | *Keywords*                    |  *Parameters*                                                                                  |
-        | Open Browser                  |  http://www.google.com/  |  gc                |                             |                    |       |      |
+        | Open Browser                  |  http://www.google.com/  |  gc                |                     
         | Open Eyes Session  |  EyesLibrary_AppName |  EyesLibrary_TestName |  YourApplitoolsKey  |  1024  |  768  |               
         | Get Element            |  CLASS NAME |  ClassElementName | 
-        | Close Eyes Session            |  False                    |                    |                             |                    |       |      |
+        | Close Eyes Session            |  False                    |            
         """
 
         searchElement = None
@@ -280,7 +277,7 @@ class EyesLibrary:
         """
         Takes a snapshot of the region of the given element from the browser using the web driver. Not available to mobile native apps.
         Arguments:
-                |  Element (EyesWebElement)                | The element to be checked. See Get Element|
+                |  Element (EyesWebElement)                | The element to be checked. See `Get Element`   |
                 |  Name (string)                    | Name that will be given to region in Eyes.                                                                           |
                 |  Include Eyes Log (default=False) | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                             |
                 |  HTTP Debug Log (default=False)   | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                       |
@@ -313,10 +310,10 @@ class EyesLibrary:
                 |  HTTP Debug Log (default=False)   | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                                                                        |
         Example:
         | *Keywords*                    |  *Parameters*                                                                                                            |
-        | Open Browser                  |  http://www.google.com/  |  gc                       |                            |                    |        |       |
+        | Open Browser                  |  http://www.google.com/  |  gc                       |     
         | Open Eyes Session             |  EyesLibrary_AppName |  EyesLibrary_TestName |  YourApplitoolsKey |  1024  |  768  |
-        | Check Eyes Region By Selector |  CSS SELECTOR             |  .first.expanded.dropdown |  NaviNetCssElement         |                    |        |       |
-        | Close Eyes Session            |  False                    |                           |                            |                    |        |       |
+        | Check Eyes Region By Selector |  CSS SELECTOR             |  .first.expanded.dropdown |  CssElement         |     
+        | Close Eyes Session            |  False                    |                                   
         """
         if includeEyesLog is True:
             logger.set_logger(StdoutLogger())
@@ -358,9 +355,8 @@ class EyesLibrary:
                 |  HTTP Debug Log (default=False)   | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                             |
         Example:
         | *Keywords*         |  *Parameters*                                                                                                         |
-        | Open Browser       |  http://www.navinet.net/   |  gc                   |                            |                    |        |       |
-        | Open Eyes Session  |  http://www.navinet.net/   |  RobotAppEyes_Test    |  NaviNet_RobotAppEyes_Test |  YourApplitoolsKey |  1024  |  768  |
-        | Compare Image      |  selenium-screenshot-1.png |  Image Name Example   |                            |                    |        |       |
+        | Open Eyes Session  |  EyesLibrary_AppName    |  EyesLibrary_TestName |  YourApplitoolsKey |  1024  |  768  |
+        | Compare Image      |  screenshot-1.png |  Image Name Example   |      package=images                      |                    |        |       |
         | Close Eyes Session |                            |                       |                            |                    |        |       |
         """
         if imagename is None:
@@ -407,10 +403,10 @@ class EyesLibrary:
                 |  HTTP Debug Log (default=False)   | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.  |
         Example:
         | *Keywords*                    |  *Parameters*                                                                                                         |
-        | Open Browser                  |  http://google.com/  |  gc                    |                            |                    |        |       |
+        | Open Browser                  |  http://google.com/  |  gc                    |        
         | Open Eyes Session             |  EyesLibrary_AppName |  EyesLibrary_TestName |  YourApplitoolsKey  |  1024  |  768  |
-        | Check Eyes Region By Selector |  LINK TEXT                |  RESOURCES             |  LinkTextElement    |                    |        |       |
-        | Close Eyes Session            |                           |                        |                            |                    |        |       |
+        | Check Eyes Region By Selector |  LINK TEXT                |  RESOURCES             |  LinkTextElement    |    
+        | Close Eyes Session            |                           |                                 
         """
         if includeEyesLog is True:
             logger.set_logger(StdoutLogger())
@@ -425,9 +421,9 @@ class EyesLibrary:
         """
         Returns True if an Applitools Eyes session is currently running, otherwise it will return False.
         | *Keywords*        |  *Parameters*                                                                                                       |
-        | Open Browser      |  http://google.com/  |  gc                  |                            |                    |        |       |
+        | Open Browser      |  http://google.com/  |  gc                  | 
         | Open Eyes Session |  EyesLibrary_AppName |  EyesLibrary_TestName |  YourApplitoolsKey  |  1024  |  768  |
-        | ${isOpen}=        |  Eyes Session Is Open     |                      |                            |                    |        |       |
-        | Run Keyword If    |  ${isOpen}==True          | Close Eyes Session   |                            |                    |        |       |
+        | ${isOpen}=        |  Eyes Session Is Open     |          
+        | Run Keyword If    |  ${isOpen}==True          | Close Eyes Session   |              
         """
         return eyes.is_open
