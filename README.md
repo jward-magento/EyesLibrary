@@ -132,8 +132,4 @@ For example, to run the Test Suite for Web:
 
 ## Getting Help
 
-The [user group for Robot Framework](http://groups.google.com/group/robotframework-users) is the best place to get help. Include in the post:
-
-- Full description of what you are trying to do and expected outcome
-- Version number of EyesLibrary, Robot Framework, and SeleniumLibrary/AppiumLibrary
-- Traceback or other debug output containing error information
+To be defined.

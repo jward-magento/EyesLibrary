@@ -26,9 +26,8 @@ from applitools import logger
 from applitools.logger import StdoutLogger
 from applitools.logger import FileLogger
 from applitools.geometry import Region
-from applitools.selenium.eyes import Eyes
-from applitools.core.eyes_base import BatchInfo
-from robot.api import logger as loggerRobot
+from applitools.eyes import Eyes, BatchInfo
+from applitools.selenium.webelement import EyesWebElement
 
 #from applitools.images import Eyes as ImageEyes
 #from applitools.utils import image_utils
@@ -58,20 +57,17 @@ class EyesLibrary:
 
     *Using Selectors*
 
-    Using the keyword Check Eyes Region By Element. The first four strategies are supported: _CSS SELECTOR_, _XPATH_, _ID_ and _CLASS NAME_.
-
-
     Using the keyword Check Eyes Region By Selector. *All* the following strategies are supported:
 
-    | *Strategy*        | *Example*                                                                                                     | *Description*                                   |
-    | CSS SELECTOR      | Check Eyes Region By Selector `|` CSS SELECTOR      `|` .first.expanded.dropdown `|`  CssElement              | Matches by CSS Selector                         |
-    | XPATH             | Check Eyes Region By Selector `|` XPATH             `|` //div[@id='my_element']  `|`  XpathElement            | Matches with arbitrary XPath expression         |
-    | ID                | Check Eyes Region By Selector `|` ID                `|` my_element               `|`  IdElement               | Matches by @id attribute                        |
-    | CLASS NAME        | Check Eyes Region By Selector `|` CLASS NAME        `|` element-search           `|`  ClassElement            | Matches by @class attribute                     |
-    | LINK TEXT         | Check Eyes Region By Selector `|` LINK TEXT         `|` My Link                  `|`  LinkTextElement         | Matches anchor elements by their link text      |
-    | PARTIAL LINK TEXT | Check Eyes Region By Selector `|` PARTIAL LINK TEXT `|` My Li                    `|`  PartialLinkTextElement  | Matches anchor elements by partial link text    |
-    | NAME              | Check Eyes Region By Selector `|` NAME              `|` my_element               `|`  NameElement             | Matches by @name attribute                      |
-    | TAG NAME          | Check Eyes Region By Selector `|` TAG NAME          `|` div                      `|`  TagNameElement          | Matches by HTML tag name                        |
+    | *Strategy*        | *Example*                                                                                                      | *Description*                                   |
+    | CSS SELECTOR      | Check Eyes Region By Selector `|` .first.expanded.dropdown `|`  CssElement      `       |` CSS SELECTOR        | Matches by CSS Selector                         |
+    | XPATH             | Check Eyes Region By Selector `|` //div[@id='my_element']  `|`  XpathElement   `        |` XPATH               | Matches with arbitrary XPath expression         |
+    | ID                | Check Eyes Region By Selector `|` my_element               `|`  IdElement    `          |` ID                  | Matches by @id attribute                        |
+    | CLASS NAME        | Check Eyes Region By Selector `|` element-search           `|`  ClassElement   `        |` CLASS NAME          | Matches by @class attribute                     |
+    | LINK TEXT         | Check Eyes Region By Selector `|` My Link                  `|`  LinkTextElement      `  |` LINK TEXT           | Matches anchor elements by their link text      |
+    | PARTIAL LINK TEXT | Check Eyes Region By Selector `|` My Li                    `|`  PartialLinkTextElement` |` PARTIAL LINK TEXT   | Matches anchor elements by partial link text    |
+    | NAME              | Check Eyes Region By Selector `|` my_element               `|`  NameElement    `        |` NAME                | Matches by @name attribute                      |
+    | TAG NAME          | Check Eyes Region By Selector `|` div                      `|`  TagNameElement       `  |` TAG NAME            | Matches by HTML tag name                        |
     """
 
     def open_eyes_session(self,
@@ -79,7 +75,7 @@ class EyesLibrary:
                           testname,
                           apikey,
                           library='SeleniumLibrary',
-                          package='selenium',
+                          # package='selenium',
                           width=None,
                           height=None,
                           osname=None,
@@ -198,15 +194,16 @@ class EyesLibrary:
         eyes.force_full_page_screenshot = force_full_page_screenshot
         eyes.check_window(name)
 
-    def check_eyes_region(self, element, width, height, name, includeEyesLog=False, httpDebugLog=False):
+    def check_eyes_region(self, left, top, width, height, name, includeEyesLog=False, httpDebugLog=False):
         """
-        Takes a snapshot of the given region from the browser using the web driver to locate an xpath element
-        with a certain width and height and matches it with the expected output.
+        Takes a snapshot of the given region from the browser using a Region object (identified by left, top, width, height)
+        and matches it with the expected output.
         The width and the height cannot be greater than the width and the height specified in the open_eyes_session keyword.
         Arguments:
-                |  Element (string)                 | This needs to be passed in as an xpath e.g. //*[@id="hplogo"]                          |
-                |  Width (int)                      | The width of the region that is tested e.g. 500                                                |
-                |  Height (int)                     | The height of the region that is tested e.g. 120                                               |
+                |  Left (float)                      | The left coordinate of the region that is tested e.g. 100                                                |
+                |  Top (float)                     | The top coordinate of the region that is tested e.g. 150                                               |
+                |  Width (float)                      | The width of the region that is tested e.g. 500                                                |
+                |  Height (float)                     | The height of the region that is tested e.g. 120                                               |
                 |  Name (string)                    | Name that will be given to region in Eyes.                                                     |
                 |  Include Eyes Log (default=False) | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.       |
                 |  HTTP Debug Log (default=False)   | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable. |
@@ -214,7 +211,7 @@ class EyesLibrary:
         | *Keywords*         |  *Parameters*                                                                                                        |
         | Open Browser       |  http://google.com/     | gc                 | 
         | Open Eyes Session  |  EyesLibrary_AppName |  EyesLibrary_TestName |  YourApplitoolsKey    |  1024  |  768  |
-        | Check Eyes Region  |  //*[@id="hplogo"]   | 500                   |  120                        |  Google Logo    |  
+        | Check Eyes Region  |  100   | 150   | 500                   |  120                        |  Google Logo    |  
         | Close Eyes Session |  False                       | 
         """
 
@@ -224,60 +221,14 @@ class EyesLibrary:
         if httpDebugLog is True:
             httplib.HTTPConnection.debuglevel = 1
 
-        intwidth = int(width)
-        intheight = int(height)
-
-        #searchElement = driver.find_element_by_xpath(element)
-        searchElement = eyes._driver.find_element(By.XPATH, element)
-
-        location = searchElement.location
-
-        region = Region(location["x"], location["y"], intwidth, intheight)
+        region = Region(float(left), float(top), float(width), float(height))
         eyes.check_region(region, name)
-
-    def get_element(self, selector, value):
-        """
-        Returns a WebElement, given the selector and value.
-        Arguments:
-                |  Selector (string)                | This will decide what element will be located. The supported selectors include: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME.    |
-                |  Value (string)                   | The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown                                  |
-        Example:
-        | *Keywords*                    |  *Parameters*                                                                                  |
-        | Open Browser                  |  http://www.google.com/  |  gc                |                     
-        | Open Eyes Session  |  EyesLibrary_AppName |  EyesLibrary_TestName |  YourApplitoolsKey  |  1024  |  768  |               
-        | Get Element            |  CLASS NAME |  ClassElementName | 
-        | Close Eyes Session            |  False                    |            
-        """
-
-        searchElement = None
-
-        if selector.upper() == 'CSS SELECTOR':
-            searchElement = By.CSS_SELECTOR
-        elif selector.upper() == 'XPATH':
-            searchElement = By.XPATH
-        elif selector.upper() == 'ID':
-            searchElement = By.ID
-        elif selector.upper() == 'LINK TEXT':
-            searchElement = By.LINK_TEXT
-        elif selector.upper() == 'PARTIAL LINK TEXT':
-            searchElement = By.PARTIAL_LINK_TEXT
-        elif selector.upper() == 'NAME':
-            searchElement = By.NAME
-        elif selector.upper() == 'TAG NAME':
-            searchElement = By.TAG_NAME
-        elif selector.upper() == 'CLASS NAME':
-            searchElement = By.CLASS_NAME
-        else:
-            raise InvalidElementStateException(
-                'Please select a valid selector: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME')
-
-        return eyes._driver.find_element(searchElement, value)
 
     def check_eyes_region_by_element(self, element, name, includeEyesLog=False, httpDebugLog=False):
         """
         Takes a snapshot of the region of the given element from the browser using the web driver. Not available to mobile native apps.
         Arguments:
-                |  Element (EyesWebElement)                | The element to be checked. See `Get Element`   |
+                |  Element (WebElement)                | The Web Element to be checked. See `Get Element`   |
                 |  Name (string)                    | Name that will be given to region in Eyes.                                                                           |
                 |  Include Eyes Log (default=False) | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                             |
                 |  HTTP Debug Log (default=False)   | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                       |
@@ -285,7 +236,7 @@ class EyesLibrary:
         | *Keywords*                    |  *Parameters*                                                                                                    |
         | Open Browser                  |  http://www.google.com/  |  gc                |                        
         | Open Eyes Session             |  EyesLibrary_AppName |  EyesLibrary_TestName |  YourApplitoolsKey |  1024 |  768 |
-        | ${element}=    Get Element   |    xpath      |    //*[@id="hplogo"]  |
+        | ${element}=    Get Element   |    //*[@id="hplogo"]  |
         | Check Eyes Region By Element  |  ${element}     |  ElementName      |               
         | Close Eyes Session            |  False                    |        
         """
@@ -295,24 +246,27 @@ class EyesLibrary:
         if httpDebugLog is True:
             httplib.HTTPConnection.debuglevel = 1
 
+        if not isinstance(element, EyesWebElement):
+            element = EyesWebElement(element, driver)
+
         eyes.check_region_by_element(element, name)
 
-    def check_eyes_region_by_selector(self, selector, value, name, includeEyesLog=False, httpDebugLog=False):
+    def check_eyes_region_by_selector(self, value, name, selector="id", includeEyesLog=False, httpDebugLog=False):
         """
         Takes a snapshot of the region of the element found by calling find_element(by, value) from the browser using the web driver
         and matches it with the expected output. With a choice from eight selectors, listed below to check by.
         Not available to mobile native apps.
         Arguments:
-                |  Selector (string)                | This will decide what element will be located. The supported selectors include: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME.    |
                 |  Value (string)                   | The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown                                                                                |
                 |  Name (string)                    | Name that will be given to region in Eyes.                                                                                                                            |
+                |  Selector (default=id)            | This will decide what element will be located. The supported selectors include: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME.    |
                 |  Include Eyes Log (default=False) | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                                                                              |
                 |  HTTP Debug Log (default=False)   | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                                                                        |
         Example:
         | *Keywords*                    |  *Parameters*                                                                                                            |
         | Open Browser                  |  http://www.google.com/  |  gc                       |     
         | Open Eyes Session             |  EyesLibrary_AppName |  EyesLibrary_TestName |  YourApplitoolsKey |  1024  |  768  |
-        | Check Eyes Region By Selector |  CSS SELECTOR             |  .first.expanded.dropdown |  CssElement         |     
+        | Check Eyes Region By Selector |    .first.expanded.dropdown |  CssElement         |     CSS SELECTOR             |
         | Close Eyes Session            |  False                    |                                   
         """
         if includeEyesLog is True:

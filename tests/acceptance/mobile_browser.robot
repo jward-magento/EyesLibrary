@@ -1,11 +1,11 @@
 *** Settings ***
-Library          AppiumLibrary
-Library          EyesLibrary
-Resource         resources/common.robot
-Resource         resources/mobile.robot
+Library     AppiumLibrary
+Library     EyesLibrary
+Resource    resources/common.robot
+Resource    resources/mobile.robot
 
 *** Variable ***
-${LOGO XPATH}    //*[@id="hplogo"]
+&{LOGO}     id=hplogo                 xpath=//*[@id="hplogo"]
 
 *** Test Cases ***
 Check Window
@@ -15,18 +15,19 @@ Check Window
 
 Check Region
     [Setup]                          Setup                                  Mobile Browser - Check Region
-    Check Eyes Region                ${LOGO XPATH}                          300                                          50               Google Logo
+    ${location}=                     Get Element Location                   ${LOGO.id}
+    Check Eyes Region                ${location['x']}                       ${location['y']}                             300           50               Google Logo
     [Teardown]                       Teardown
 
 Check Region By Element
     [Setup]                          Setup                                  Mobile Browser - Check Region By Element
-    ${logo}=                         EyesLibrary.Get Element                xpath                                        ${LOGO XPATH}
+    ${logo}=                         Get Webelement                         ${LOGO.id}
     Check Eyes Region By Element     ${logo}                                Google Logo
     [Teardown]                       Teardown
 
 Check Region By Selector
     [Setup]                          Setup                                  Mobile Browser - Check Region By Selector
-    Check Eyes Region By Selector    xpath                                  ${LOGO XPATH}                                Google Logo
+    Check Eyes Region By Selector    ${LOGO.id}                             Google Logo
     [Teardown]                       Teardown
 
 Is Session Open
@@ -46,7 +47,7 @@ Setup
     ...                              automationName=UiAutomator2
     Go To Url                        http://www.google.pt
     Set Location                     10                                     10
-    Open Eyes Session                EyesLibrary                            ${test name}                                 ${API KEY}       AppiumLibrary
+    Open Eyes Session                EyesLibrary                            ${test name}                                 ${API KEY}    AppiumLibrary    includeEyesLog=true
 
 Teardown
     Close Application

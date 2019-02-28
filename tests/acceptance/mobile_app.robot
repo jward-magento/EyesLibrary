@@ -15,7 +15,8 @@ Check Window
 
 Check Region
     [Setup]               Setup                            Mobile App - Check Region
-    Check Eyes Region     ${NEXT PAGE BUTTON.xpath}        150                                      150           Next Page Button
+    ${location}=          Get Element Location             xpath=${NEXT PAGE BUTTON.xpath}
+    Check Eyes Region     ${location['x']}                 ${location['y']}                         150           150              Next Page Button
     [Teardown]            Teardown
 
 Is Session Open
@@ -36,7 +37,7 @@ Setup
     ...                   deviceName=${DEVICE NAME}
     ...                   platformName=${PLATFORM NAME}
     ...                   automationName=UiAutomator2
-    Open Eyes Session     EyesLibrary                      ${test name}                             ${API KEY}    AppiumLibrary       includeEyesLog=true
+    Open Eyes Session     EyesLibrary                      ${test name}                             ${API KEY}    AppiumLibrary    includeEyesLog=true
 
 Teardown
     Close Application
