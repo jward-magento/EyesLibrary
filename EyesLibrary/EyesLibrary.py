@@ -29,14 +29,10 @@ from applitools.geometry import Region
 from applitools.eyes import Eyes, BatchInfo
 from applitools.selenium.webelement import EyesWebElement
 
-#from applitools.images import Eyes as ImageEyes
-#from applitools.utils import image_utils
-#from applitools.core import EyesScreenshot
-
 
 class EyesLibrary:
     """
-    EyesLibrary is a visual verfication library for Robot Framework that leverages
+    EyesLibrary is a visual verification library for Robot Framework that leverages
     the Eyes-Selenium and Selenium/Appium libraries.
 
 
@@ -298,55 +294,6 @@ class EyesLibrary:
                 'Please select a valid selector: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME')
 
         eyes.check_region_by_selector(searchElement, value, name)
-
-    def compare_image(self, path, imagename=None, ignore_mismatch=False):
-        """
-        Select an image and send it to Eyes for comparison. A name can be used in place of the image's file name.
-        Arguments:
-                |  Path                             | Path of the image to send to eyes for visual comparison.                                                                   |
-                |  imagename (default=None)         | Can manually set the name desired for the image passed in. If no name is passed in it will default file name of the image. |
-                |  Include Eyes Log (default=False) | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                                   |
-                |  HTTP Debug Log (default=False)   | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                             |
-        Example:
-        | *Keywords*         |  *Parameters*                                                                                                         |
-        | Open Eyes Session  |  EyesLibrary_AppName    |  EyesLibrary_TestName |  YourApplitoolsKey |  1024  |  768  |
-        | Compare Image      |  screenshot-1.png |  Image Name Example   |      package=images                      |                    |        |       |
-        | Close Eyes Session |                            |                       |                            |                    |        |       |
-        """
-        if imagename is None:
-            tag = os.path.basename(path)
-        else:
-            tag = imagename
-
-        #eyes = Eyes()
-        #eyes.api_key = apikey
-        #outdriver = eyes.open(app_name, test_name)
-
-        eyes.check_image(path, tag)
-
-        # with open(path, 'rb') as image_file:
-        #     screenshot64 = image_file.read().encode('base64')
-        #     screenshot = image_utils.image_from_base64(screenshot64)
-        # screenshotBytes = EyesScreenshot.create_from_image(
-        #     screenshot, eyes._driver)
-        # title = eyes.get_title()
-        # app_output = {'title': title, 'screenshot64': None}
-        # user_inputs = []
-        # prepare_match_data = eyes.match_window_task._create_match_data_bytes(
-        #     app_output, user_inputs, tag, ignore_mismatch, screenshotBytes)
-
-        # eyes_base._match_window_task.match_window(retry_timeout=match_timeout,
-        #                                           tag=tag,
-        #                                           user_inputs=self._user_inputs,
-        #                                           default_match_settings=self.default_match_settings,
-        #                                           target=target,
-        #                                           run_once_after_wait=self._should_match_once_on_timeout)
-
-        # # eyes._match_window_task._agent_connector.match_window(
-        # #     eyes._match_window_task._running_session, prepare_match_data)
-
-        # eyes.close()
-        # eyes.abort_if_not_closed()
 
     def close_eyes_session(self, includeEyesLog=False, httpDebugLog=False):
         """
