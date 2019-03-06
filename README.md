@@ -106,7 +106,8 @@ At _tests/acceptance_ directory, you can find Robot Framework tests for:
 
 Before running the tests, your Applitools Api Key must be set in _tests/acceptance/resources/common.robot_, by replacing "YourApplitoolsApiKey" with your own key.
 
-The mobile tests are to be executed on Android.
+The mobile tests are to be executed on Android. You must replace the variables in _tests/acceptance/resources/mobile.robot_ with your own.
+
 Before running the Mobile Hybrid App tests, you need to install the Demo App (APK found at _tests/resources_) in your device.
 
 <!-- TODO: Publish Keyword Documentation
@@ -125,10 +126,9 @@ For example, to run the Test Suite for Web:
 
 ## Things to Note When Using Applitools
 
-- The EyesLibraryTest.robot test will fail after the first run because a baseline is being created and will be accepted automatically by Applitools Eyes. A second test run will show a successful comparison between screens and the test will pass.
-- Changing the \${Applitools-AppName} variable value will create a new test entry in Applitools test result screen and a new baseline will be accepted automatically by Applitools Eyes on the first run.
-- The Height resolution should not be greater than 1000 which is currently Applitools maximum setting.
-- Browser zoom should be set to 100%.
+- The tests will be accepted automatically by Applitools Eyes after the first run because a new baseline is being created. A second test run will show a successful comparison between screens.
+- Changing the Applitools' Application Name variable value will create a new test entry in Applitools test result screen and a new baseline will be accepted automatically by Applitools Eyes on the first run.
+- The viewport size should not be set to greater values than the maximum size of the device's window. (For more information on using viewports, https://applitools.com/docs/topics/general-concepts/using-viewports-in-eyes.html)
 
 ## Getting Help
 
