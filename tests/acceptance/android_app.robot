@@ -3,6 +3,7 @@ Library                AppiumLibrary
 Library                EyesLibrary
 Resource               resources/common.robot
 Resource               resources/mobile.robot
+Resource               resources/android.robot
 
 *** Variables ***
 &{NEXT PAGE BUTTON}    xpath=//android.widget.ImageView[@content-desc="next page"]
@@ -18,6 +19,12 @@ Check Region
     ${location}=          Get Element Location             xpath=${NEXT PAGE BUTTON.xpath}
     Check Eyes Region     ${location['x']}                 ${location['y']}                         150           150              Next Page Button
     [Teardown]            Teardown
+
+#Check Region By Element
+#    [Setup]               Setup                            Mobile App - Check Region By Element
+#    ${element}=          Get Webelement            xpath=${NEXT PAGE BUTTON.xpath}
+#    Check Eyes Region By Element     ${element}                Next Page Button
+#    [Teardown]            Teardown
 
 Is Session Open
     [Setup]               Setup                            Mobile App - Opened Session

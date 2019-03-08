@@ -3,6 +3,7 @@ Library     AppiumLibrary
 Library     EyesLibrary
 Resource    resources/common.robot
 Resource    resources/mobile.robot
+Resource    resources/android.robot
 
 *** Variable ***
 &{LOGO}     id=hplogo                 xpath=//*[@id="hplogo"]

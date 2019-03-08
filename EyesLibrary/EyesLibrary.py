@@ -31,23 +31,24 @@ from applitools.selenium.webelement import EyesWebElement
 
 
 class EyesLibrary:
-
-    def open_eyes_session(self,
-                          appname,
-                          testname,
-                          apikey,
-                          library='SeleniumLibrary',
-                          width=None,
-                          height=None,
-                          osname=None,
-                          browsername=None,
-                          matchlevel=None,
-                          includeEyesLog=False,
-                          httpDebugLog=False,
-                          baselineName=None,
-                          batchName=None,
-                          branchname=None,
-                          parentbranch=None):
+    def open_eyes_session(
+        self,
+        appname,
+        testname,
+        apikey,
+        library="SeleniumLibrary",
+        width=None,
+        height=None,
+        osname=None,
+        browsername=None,
+        matchlevel=None,
+        includeEyesLog=False,
+        httpDebugLog=False,
+        baselineName=None,
+        batchName=None,
+        branchname=None,
+        parentbranch=None,
+    ):
         """
         Starts a session with the Applitools Eyes Website. See https://eyes.applitools.com/app/sessions/
 
@@ -87,12 +88,12 @@ class EyesLibrary:
         try:
             libraryInstance = BuiltIn().get_library_instance(library)
 
-            if library == 'AppiumLibrary':
+            if library == "AppiumLibrary":
                 driver = libraryInstance._current_application()
             else:
                 driver = libraryInstance._current_browser()
         except RuntimeError:
-            raise Exception('%s instance not found' % library)
+            raise Exception("%s instance not found" % library)
 
         if includeEyesLog is True:
             logger.set_logger(StdoutLogger())
@@ -121,11 +122,17 @@ class EyesLibrary:
             intwidth = int(width)
             intheight = int(height)
 
-            driver = eyes.open(driver, appname, testname, {
-                'width': intwidth, 'height': intheight})
+            driver = eyes.open(
+                driver, appname, testname, {"width": intwidth, "height": intheight}
+            )
 
-    def check_eyes_window(self, name, force_full_page_screenshot=False,
-                          includeEyesLog=False, httpDebugLog=False):
+    def check_eyes_window(
+        self,
+        name,
+        force_full_page_screenshot=False,
+        includeEyesLog=False,
+        httpDebugLog=False,
+    ):
         """
         Takes a snapshot from the browser using the web driver and matches it with
         the expected output.
@@ -149,7 +156,9 @@ class EyesLibrary:
         eyes.force_full_page_screenshot = force_full_page_screenshot
         eyes.check_window(name)
 
-    def check_eyes_region(self, left, top, width, height, name, includeEyesLog=False, httpDebugLog=False):
+    def check_eyes_region(
+        self, left, top, width, height, name, includeEyesLog=False, httpDebugLog=False
+    ):
         """
         Takes a snapshot of the given region from the browser using a Region object (identified by left, top, width, height)
         and matches it with the expected output.
@@ -179,7 +188,9 @@ class EyesLibrary:
         region = Region(float(left), float(top), float(width), float(height))
         eyes.check_region(region, name)
 
-    def check_eyes_region_by_element(self, element, name, includeEyesLog=False, httpDebugLog=False):
+    def check_eyes_region_by_element(
+        self, element, name, includeEyesLog=False, httpDebugLog=False
+    ):
         """
         Takes a snapshot of the region of the given element from the browser using the web driver. Not available to mobile native apps.
 
@@ -205,7 +216,9 @@ class EyesLibrary:
 
         eyes.check_region_by_element(element, name)
 
-    def check_eyes_region_by_selector(self, value, name, selector="id", includeEyesLog=False, httpDebugLog=False):
+    def check_eyes_region_by_selector(
+        self, value, name, selector="id", includeEyesLog=False, httpDebugLog=False
+    ):
         """
         Takes a snapshot of the region of the element found by calling find_element(by, value) from the browser using the web driver
         and matches it with the expected output. With a choice from eight selectors, listed below to check by.
@@ -231,25 +244,26 @@ class EyesLibrary:
 
         searchElement = None
 
-        if selector.upper() == 'CSS SELECTOR':
+        if selector.upper() == "CSS SELECTOR":
             searchElement = By.CSS_SELECTOR
-        elif selector.upper() == 'XPATH':
+        elif selector.upper() == "XPATH":
             searchElement = By.XPATH
-        elif selector.upper() == 'ID':
+        elif selector.upper() == "ID":
             searchElement = By.ID
-        elif selector.upper() == 'LINK TEXT':
+        elif selector.upper() == "LINK TEXT":
             searchElement = By.LINK_TEXT
-        elif selector.upper() == 'PARTIAL LINK TEXT':
+        elif selector.upper() == "PARTIAL LINK TEXT":
             searchElement = By.PARTIAL_LINK_TEXT
-        elif selector.upper() == 'NAME':
+        elif selector.upper() == "NAME":
             searchElement = By.NAME
-        elif selector.upper() == 'TAG NAME':
+        elif selector.upper() == "TAG NAME":
             searchElement = By.TAG_NAME
-        elif selector.upper() == 'CLASS NAME':
+        elif selector.upper() == "CLASS NAME":
             searchElement = By.CLASS_NAME
         else:
             raise InvalidElementStateException(
-                'Please select a valid selector: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME')
+                "Please select a valid selector: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME"
+            )
 
         eyes.check_region_by_selector(searchElement, value, name)
 
