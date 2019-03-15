@@ -10,6 +10,7 @@ Resource               resources/ios.robot
 
 *** Test Cases ***
 Check Window
+    [Tags]  test
     [Setup]               Setup                            iOS App - Check Window
     Check Eyes Window     Google Calendar
     [Teardown]            Teardown
@@ -33,7 +34,7 @@ Setup
     ...                              platformName=${PLATFORM NAME}
     ...                              platformVersion=${PLATFORM VERSION}
     ...                              deviceName=${DEVICE NAME}
-    ...                              app=/Users/sfnunes/Documents/GitHub/EyesLibrary/tests/resources/TestApp-iphonesimulator.app
+    ...                              app=/Users/sfnunes/Documents/GitHub/EyesLibrary/tests/resources/TestApp-iphonesimulator.zip
     ...                              automationName=XCUITest
     Open Eyes Session     EyesLibrary                      ${test name}                             ${API KEY}    AppiumLibrary    includeEyesLog=true
 

@@ -10,6 +10,7 @@ Resource                 resources/ios.robot
 
 *** Test Cases ***
 Check Window
+    [Tags]  test
     [Setup]                          Setup                                  iOS Hybrid - Check Window
     Check Eyes Window                Main Screen
     [Teardown]                       Teardown
@@ -44,7 +45,7 @@ Setup
     ...                              platformName=${PLATFORM NAME}
     ...                              platformVersion=${PLATFORM VERSION}
     ...                              deviceName=${DEVICE NAME}
-    ...                              app=/Users/sfnunes/Documents/GitHub/EyesLibrary/tests/resources/HelloWorld.app
+    ...                              app=/Users/sfnunes/Documents/GitHub/EyesLibrary/tests/resources/HelloWorld.zip
     ...                              automationName=XCUITest
     @{CONTEXTS}=                     Get Contexts 
     Switch To Context                @{CONTEXTS}[1]
