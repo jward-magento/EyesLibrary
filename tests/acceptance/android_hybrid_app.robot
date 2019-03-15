@@ -11,29 +11,29 @@ Resource                 resources/android.robot
 
 *** Test Cases ***
 Check Window
-    [Setup]                          Setup                                  Mobile Hybrid - Check Window
+    [Setup]                          Setup                                  Android Hybrid - Check Window
     Check Eyes Window                Main Screen
     [Teardown]                       Teardown
 
 Check Region
-    [Setup]                          Setup                                  Mobile Hybrid - Check Region
+    [Setup]                          Setup                                  Android Hybrid - Check Region
     ${location}=                     Get Element Location                   xpath=${SEARCH RESULT ITEM.xpath}
-    Check Eyes Region                ${location['x']}                       ${location['y']}                            200      200    Image Region
+    Check Eyes Region                ${location['x']}                       ${location['y']}                             200      200    Image Region
     [Teardown]                       Teardown
 
 Check Region By Element
-    [Setup]                          Setup                                  Mobile Hybrid - Check Region By Element
+    [Setup]                          Setup                                  Android Hybrid - Check Region By Element
     ${element}=                      Get Webelement                         xpath=${SEARCH RESULT ITEM.xpath}
     Check Eyes Region By Element     ${element}                             Image
     [Teardown]                       Teardown
 
 Check Region By Selector
-    [Setup]                          Setup                                  Mobile Hybrid - Check Region By Selector
-    Check Eyes Region By Selector    ${SEARCH RESULT ITEM.xpath}            Image                                       xpath
+    [Setup]                          Setup                                  Android Hybrid - Check Region By Selector
+    Check Eyes Region By Selector    ${SEARCH RESULT ITEM.xpath}            Image                                        xpath
     [Teardown]                       Teardown
 
 Is Session Open
-    [Setup]                          Setup                                  Mobile Hybrid - Opened Session
+    [Setup]                          Setup                                  Android Hybrid - Opened Session
     ${is open}=                      Eyes Session Is Open
     Should Be True                   ${is open}
     [Teardown]                       Teardown
@@ -50,7 +50,6 @@ Setup
     ...                              deviceName=${DEVICE NAME}
     ...                              platformName=${PLATFORM NAME}
     ...                              automationName=UiAutomator2
-    #...    chromedriverExecutableDir=C:/Users/sfnunes/Downloads/chromedrivers/2.34
     Switch To Context                WEBVIEW_io.appium.gappium.sampleapp
     Set Location                     10                                     10
     Open Eyes Session                EyesLibrary

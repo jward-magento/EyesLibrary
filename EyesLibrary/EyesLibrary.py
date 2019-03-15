@@ -1,20 +1,5 @@
 #!/usr/bin/env python
 
-
-#  Copyright 2013-2014 NaviNet Inc.
-#
-#  Licensed under the Apache License, Version 2.0 (the "License");
-#  you may not use this file except in compliance with the License.
-#  You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-#  Unless required by applicable law or agreed to in writing, software
-#  distributed under the License is distributed on an "AS IS" BASIS,
-#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#  See the License for the specific language governing permissions and
-#  limitations under the License.
-
 import os
 import httplib
 import base64
@@ -202,8 +187,13 @@ class EyesLibrary:
 
         *Example:*
             | ${element}=    Get Element   |    //*[@id="hplogo"]  |
-            | Check Eyes Region By Element  |  ${element}     |  ElementName    |   True  | True  |          
+            | Check Eyes Region By Element  |  ${element}     |  ElementName    |   True  | True  |    
 
+        *Note (Safari on mobile):* 
+        When checking an element, provide osname=iOS and browsername=Safari on `Open Eyes Session`.
+        Due to an issue regarding the height of the address bar not being taken into account when the screenshot is taken, a temporary workaround is in place.
+        In order to screenshot the correct element, it is added the value of 71 to the y coordinate of the element.
+        
         """
         if includeEyesLog is True:
             logger.set_logger(StdoutLogger())
@@ -214,7 +204,23 @@ class EyesLibrary:
         if not isinstance(element, EyesWebElement):
             element = EyesWebElement(element, driver)
 
-        eyes.check_region_by_element(element, name)
+        # Temporary workaround in order to capture the correct element on Safari
+        # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
+        # Current address bar height: 71
+        if eyes.host_app == "Safari" and eyes.host_os == "iOS":
+            location = element.location
+            size = element.size
+
+            eyes.check_region(
+                Region(
+                    location.__getitem__("x"),
+                    location.__getitem__("y") + 71,
+                    size.__getitem__("width"),
+                    size.__getitem__("height"),
+                )
+            )
+        else:
+            eyes.check_region_by_element(element, name)
 
     def check_eyes_region_by_selector(
         self, value, name, selector="id", includeEyesLog=False, httpDebugLog=False
@@ -234,6 +240,11 @@ class EyesLibrary:
 
         *Example:*
             | Check Eyes Region By Selector |    .first.expanded.dropdown |  CssElement         |     CSS SELECTOR             |
+
+        *Note (Safari on mobile):* 
+        When checking an element, provide osname=iOS and browsername=Safari on `Open Eyes Session`.
+        Due to an issue regarding the height of the address bar not being taken into account when the screenshot is taken, a temporary workaround is in place.
+        In order to screenshot the correct element, it is added the value of 71 to the y coordinate of the element.
 
         """
         if includeEyesLog is True:
@@ -265,7 +276,24 @@ class EyesLibrary:
                 "Please select a valid selector: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME"
             )
 
-        eyes.check_region_by_selector(searchElement, value, name)
+        # Temporary workaround in order to capture the correct element on Safari
+        # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
+        # Current address bar height: 71
+        if eyes.host_app == "Safari" and eyes.host_os == "iOS":
+            element = driver.find_element(searchElement, value)
+            location = element.location
+            size = element.size
+
+            eyes.check_region(
+                Region(
+                    location.__getitem__("x"),
+                    location.__getitem__("y") + 71,
+                    size.__getitem__("width"),
+                    size.__getitem__("height"),
+                )
+            )
+        else:
+            eyes.check_region_by_selector(searchElement, value, name)
 
     def close_eyes_session(self, includeEyesLog=False, httpDebugLog=False):
         """

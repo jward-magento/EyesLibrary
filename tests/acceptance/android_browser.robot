@@ -6,33 +6,33 @@ Resource    resources/mobile.robot
 Resource    resources/android.robot
 
 *** Variable ***
-&{LOGO}     id=hplogo                 xpath=//*[@id="hplogo"]
+&{LOGO}     id=hplogo                  xpath=//*[@id="hplogo"]
 
 *** Test Cases ***
 Check Window
-    [Setup]                          Setup                                  Mobile Browser - Check Window
+    [Setup]                          Setup                                  Android Browser - Check Window
     Check Eyes Window                Google Homepage
     [Teardown]                       Teardown
 
 Check Region
-    [Setup]                          Setup                                  Mobile Browser - Check Region
+    [Setup]                          Setup                                  Android Browser - Check Region
     ${location}=                     Get Element Location                   ${LOGO.id}
-    Check Eyes Region                ${location['x']}                       ${location['y']}                             300           50               Google Logo
+    Check Eyes Region                ${location['x']}                       ${location['y']}                              300           200              Google Logo
     [Teardown]                       Teardown
 
 Check Region By Element
-    [Setup]                          Setup                                  Mobile Browser - Check Region By Element
+    [Setup]                          Setup                                  Android Browser - Check Region By Element
     ${logo}=                         Get Webelement                         ${LOGO.id}
     Check Eyes Region By Element     ${logo}                                Google Logo
     [Teardown]                       Teardown
 
 Check Region By Selector
-    [Setup]                          Setup                                  Mobile Browser - Check Region By Selector
+    [Setup]                          Setup                                  Android Browser - Check Region By Selector
     Check Eyes Region By Selector    ${LOGO.id}                             Google Logo
     [Teardown]                       Teardown
 
 Is Session Open
-    [Setup]                          Setup                                  Mobile Browser - Opened Session
+    [Setup]                          Setup                                  Android Browser - Opened Session
     ${is open}=                      Eyes Session Is Open
     Should Be True                   ${is open}
     [Teardown]                       Teardown
@@ -48,7 +48,7 @@ Setup
     ...                              automationName=UiAutomator2
     Go To Url                        http://www.google.pt
     Set Location                     10                                     10
-    Open Eyes Session                EyesLibrary                            ${test name}                                 ${API KEY}    AppiumLibrary    includeEyesLog=true
+    Open Eyes Session                EyesLibrary                            ${test name}                                  ${API KEY}    AppiumLibrary    includeEyesLog=true
 
 Teardown
     Close Application

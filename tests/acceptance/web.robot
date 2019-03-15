@@ -41,8 +41,6 @@ Setup
     [Arguments]                      ${test name}
     Open Browser                     http://www.google.com      gc
     Open Eyes Session                EyesLibrary                ${test name}                      ${API KEY}
-    #Open Eyes Session    EyesLibrary_AppName   EyesLibrary_TestName   ${API KEY}   SeleniumLibrary   1024    768    OSOverrideName    BrowserOverrideName    LAYOUT     includeEyesLog=True    httpDebugLog=False    branchname=BranchName     parentbranch=ParentBranch   
-    
 
 Teardown
     Close All Browsers

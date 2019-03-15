@@ -11,22 +11,21 @@ Resource    resources/ios.robot
 *** Test Cases ***
 Check Window
     [Setup]                          Setup                                  iOS Browser - Check Window
-    Check Eyes Window   Window
-    [Teardown]  
+    Check Eyes Window                Window
+    [Teardown]                       Teardown
 
 Check Region
     [Setup]                          Setup                                  iOS Browser - Check Region
     ${location}=                     Get Element Location                   ${LOGO.id}
-    Check Eyes Region                ${location['x']}                       ${location['y']}                             300           300               Google Logo
+    Check Eyes Region                ${location['x']}                       ${location['y']}                          300           300              Google Logo
     [Teardown]                       Teardown
 
 Check Region Test
     [Setup]                          Setup                                  iOS Browser Test - Check Region
-    Check Eyes Region                0                       0                             300           300               Google Logo
+    Check Eyes Region                0                                      0                                         300           300              Google Logo
     [Teardown]                       Teardown
 
 Check Region By Element
-    [Tags]  test
     [Setup]                          Setup                                  iOS Browser - Check Region By Element
     ${location}=                     Get Element Location                   ${LOGO.id}
     ${logo}=                         Get Webelement                         ${LOGO.id}
@@ -43,7 +42,7 @@ Is Session Open
     ${is open}=                      Eyes Session Is Open
     Should Be True                   ${is open}
     [Teardown]                       Teardown
-    
+
 *** Keywords ***
 Setup
     [Arguments]                      ${test name}
@@ -54,7 +53,7 @@ Setup
     ...                              browserName=Safari
     ...                              automationName=XCUITest
     Go To Url                        http://www.google.pt
-    Open Eyes Session                EyesLibrary                            ${test name}                                 ${API KEY}    AppiumLibrary    includeEyesLog=true
+    Open Eyes Session                EyesLibrary                            ${test name}                              ${API KEY}    AppiumLibrary    includeEyesLog=true
 
 Teardown
     Close Application
