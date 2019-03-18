@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 
-from EyesLibrary.eyeslibrary import EyesLibrary
-from EyesLibrary.version import VERSION
+from .keywords import SessionKeywords, CheckKeywords
+from .utils import variables
+from .version import VERSION
 
 _version_ = VERSION
 
 
-class EyesLibrary(EyesLibrary):
+class EyesLibrary(SessionKeywords, CheckKeywords):
     """
     EyesLibrary is a visual verification library for Robot Framework that leverages
     the Eyes-Selenium and Selenium/Appium libraries.
@@ -60,3 +61,6 @@ class EyesLibrary(EyesLibrary):
 
     ROBOT_LIBRARY_SCOPE = "GLOBAL"
     ROBOT_LIBRARY_VERSION = VERSION
+
+    variables.init()
+

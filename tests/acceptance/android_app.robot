@@ -38,7 +38,7 @@ Setup
     ...                   deviceName=${DEVICE NAME}
     ...                   platformName=${PLATFORM NAME}
     ...                   automationName=UiAutomator2
-    Open Eyes Session     EyesLibrary                      ${test name}                             ${API KEY}    AppiumLibrary    includeEyesLog=true
+    Open Eyes Session     EyesLibrary                      ${test name}                             ${API KEY}    AppiumLibrary    enableEyesLog=true
 
 Teardown
     Close Application

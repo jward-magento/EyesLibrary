@@ -40,7 +40,9 @@ Is Session Open
 Setup
     [Arguments]                      ${test name}
     Open Browser                     http://www.google.com      gc
-    Open Eyes Session                EyesLibrary                ${test name}                      ${API KEY}
+    #Open Browser                     http://www.google.com      ff
+    Maximize Browser Window
+    Open Eyes Session                EyesLibrary                ${test name}                      ${API KEY}    matchlevel=layout    baselineName=googlePageMax
 
 Teardown
     Close All Browsers

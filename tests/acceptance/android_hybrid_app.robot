@@ -56,7 +56,7 @@ Setup
     ...                              ${test name}
     ...                              ${API KEY}
     ...                              AppiumLibrary
-    ...                              includeEyesLog=true
+    ...                              enableEyesLog=true
     Input Text                       xpath=${SEARCH BAR.xpath}              a
 
 Teardown

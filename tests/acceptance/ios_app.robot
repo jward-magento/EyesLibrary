@@ -36,7 +36,7 @@ Setup
     ...                   deviceName=${DEVICE NAME}
     ...                   app=/Users/sfnunes/Documents/GitHub/EyesLibrary/tests/resources/TestApp-iphonesimulator.zip
     ...                   automationName=XCUITest
-    Open Eyes Session     EyesLibrary                                                                                    ${test name}                ${API KEY}    AppiumLibrary    includeEyesLog=true
+    Open Eyes Session     EyesLibrary                                                                                    ${test name}                ${API KEY}    AppiumLibrary    enableEyesLog=true
 
 Teardown
     Close Application
