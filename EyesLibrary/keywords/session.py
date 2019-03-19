@@ -56,7 +56,7 @@ class SessionKeywords(object):
                 |  Enable Eyes Log (default=False)     | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                    |
                 |  Enable HTTP Debug Log (default=False)       | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.              |
                 |  Baseline Name (default=None)  | Name of the branch where the baseline reference will be taken from and where new and accepted steps will be saved to.                                                  |
-                |  Batch Name (default=None)        | The name of the batch                      
+                |  Batch Name (default=None)        | The name of the batch                      |
                 |  Branch Name (default=None)  | The branch to use to check test                                                                             |
                 |  Parent Branch (default=None)        | Parent Branch to base the new Branch on                                                                     |
         Creates an instance of the AppiumLibrary or SeleniumLibrary webdriver, given the library argument.
