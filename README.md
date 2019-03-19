@@ -91,8 +91,7 @@ See [Robot Framework User Guide](http://code.google.com/p/robotframework/wiki/Us
 **Note** - You must create a [free account](https://applitools.com/sign-up/) with Applitools in order to run the
 EyesLibrary and return results. The Applitools site will
 allow you to sign up and you will then be provide with your own API key.
-This will then need to be added to the Robot test file EyesLibraryTest.robot,
-within the variable \${Applitools-Key}, remove 'YourApplitoolsKey' and replace with your API Key.
+This will then need to be added to the Robot Framework resource file common.robot, by removing 'YourApplitoolsKey' and replacing with your API Key.
 
 ## Running the Demo
 

@@ -8,8 +8,9 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import InvalidElementStateException
 from robot.libraries.BuiltIn import BuiltIn
 from applitools.core import logger
-#from applitools.logger import StdoutLogger
-#from applitools.logger import FileLogger
+
+# from applitools.logger import StdoutLogger
+# from applitools.logger import FileLogger
 from applitools.geometry import Region
 from applitools.eyes import Eyes, BatchInfo
 from applitools.selenium.webelement import EyesWebElement
@@ -103,15 +104,12 @@ class CheckKeywords:
         In order to screenshot the correct element, it is added the value of 71 to the y coordinate of the element.
 
         """
-        
-       
-        logger.info(element)
-        
+
         utils.manage_logging(enable_eyes_log, enable_http_debug_log)
-        #logger.info(element)
+
         if not isinstance(element, EyesWebElement):
             element = EyesWebElement(element, variables.driver)
-        logger.info(element)
+
         # Temporary workaround in order to capture the correct element on Safari
         # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
         # Current address bar height: 71
@@ -131,7 +129,12 @@ class CheckKeywords:
             variables.eyes.check_region_by_element(element, name)
 
     def check_eyes_region_by_selector(
-        self, value, name, selector="id", enable_eyes_log=False, enable_http_debug_log=False
+        self,
+        value,
+        name,
+        selector="id",
+        enable_eyes_log=False,
+        enable_http_debug_log=False,
     ):
         """
         Takes a snapshot of the region of the element found by calling find_element(by, value) from the browser using the web driver
