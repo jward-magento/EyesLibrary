@@ -39,10 +39,11 @@ Is Session Open
 *** Keywords ***
 Setup
     [Arguments]                      ${test name}
-    Open Browser                     http://www.google.com      gc
+    Open Browser                     http://www.google.com      gc    
     #Open Browser                     http://www.google.com      ff
     Maximize Browser Window
-    Open Eyes Session                EyesLibrary                ${test name}                      ${API KEY}    matchlevel=layout    enable_eyes_log=true
+    Open Eyes Session                EyesLibrary                ${test name}                      ${API KEY}    matchlevel=layout    enable_eyes_log=true    enable_http_debug_log=true
+    #Go To    http://www.sapo.pt
     #baselinename=googlePageMax
 
 Teardown

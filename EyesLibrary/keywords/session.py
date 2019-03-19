@@ -11,24 +11,28 @@ from applitools.logger import FileLogger
 from applitools.geometry import Region
 from applitools.eyes import Eyes, BatchInfo
 from applitools.selenium.webelement import EyesWebElement
+from robot.api import logger as loggerRobot
 
 from EyesLibrary.resources import utils, variables
 
 
-class SessionKeywords:
+class SessionKeywords(object):
+
+    library_arguments = {}
+
     def open_eyes_session(
         self,
-        appname,
-        testname,
-        apikey,
-        library="SeleniumLibrary",
+        appname=None,
+        testname=None,
+        apikey=None,
+        library=None,
         width=None,
         height=None,
         osname=None,
         browsername=None,
         matchlevel=None,
-        enable_eyes_log=False,
-        enable_http_debug_log=False,
+        enable_eyes_log=None,
+        enable_http_debug_log=None,
         baselinename=None,
         batchname=None,
         branchname=None,
@@ -36,6 +40,8 @@ class SessionKeywords:
     ):
         """
         Starts a session with the Applitools Eyes Website. See https://eyes.applitools.com/app/sessions/
+        Some of the following arguments may also be defined on library import.~
+        See `Before running tests` or `Importing`
 
                 | *Arguments*                           | *Description*                                                                                               |
                 |  Application Name (string)            | The name of the application under test.                                                                     |
@@ -49,7 +55,9 @@ class SessionKeywords:
                 |  (Optional) Match Level (string)      | The match level for the comparison - can be STRICT, LAYOUT, CONTENT or EXACT                                    |
                 |  Enable Eyes Log (default=False)     | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                    |
                 |  Enable HTTP Debug Log (default=False)       | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.              |
-                |  Baseline Branch Name (default=None)  | The branch to use to check test                                                                             |
+                |  Baseline Name (default=None)  | Name of the branch where the baseline reference will be taken from and where new and accepted steps will be saved to.                                                  |
+                |  Batch Name (default=None)        | The name of the batch                      
+                |  Branch Name (default=None)  | The branch to use to check test                                                                             |
                 |  Parent Branch (default=None)        | Parent Branch to base the new Branch on                                                                     |
         Creates an instance of the AppiumLibrary or SeleniumLibrary webdriver, given the library argument.
 
@@ -59,11 +67,30 @@ class SessionKeywords:
         If there no are values passed in, eyes calls the method open without the width and height values.
         Otherwise, Eyes calls open with the width and height values defined.
 
+        It is mandatory to define at least the Application Name, Test Name and API Key, either through this keyword or when importing the library. 
+
         *Note:* When opening the session on a mobile browser or hybrid app, the context must be set to WEBVIEW in order to retrieve the correct viewport size. Geolocation of the device may have to be set after switching context.
 
         *Example:*                                                                                                                                                                                                                               
                 | Open Eyes Session  |  Eyes_AppName |  Eyes_TestName |  YourApplitoolsKey  | SeleniumLibrary |  1024  |  768  |  OSOverrideName  |  BrowserOverrideName  |  LAYOUT   |  True  |  True  |  BranchName   |  ParentBranch   |
         """
+
+        if appname is None:
+            appname = self.library_arguments["appname"]
+        if testname is None:
+            testname = self.library_arguments["testname"]
+        if apikey is None:
+            apikey = self.library_arguments["apikey"]
+        if library is None:
+            library = self.library_arguments["library"]
+        if osname is None:
+            osname = self.library_arguments["osname"]
+        if browsername is None:
+            browsername = self.library_arguments["browsername"]
+        if matchlevel is None:
+            matchlevel = self.library_arguments["matchlevel"]
+        if enable_eyes_log is None:
+            enable_eyes_log = self.library_arguments["enable_eyes_log"]
 
         variables.eyes = Eyes()
         variables.eyes.api_key = apikey
@@ -77,7 +104,7 @@ class SessionKeywords:
                 driver = libraryInstance._current_browser()
         except RuntimeError:
             raise Exception("%s instance not found" % library)
-        
+
         utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
         if osname is not None:

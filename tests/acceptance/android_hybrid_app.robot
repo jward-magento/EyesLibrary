@@ -1,9 +1,9 @@
 *** Settings ***
-Library                  AppiumLibrary
-Library                  EyesLibrary
 Resource                 resources/common.robot
 Resource                 resources/mobile.robot
 Resource                 resources/android.robot
+Library                  AppiumLibrary    
+Library                  EyesLibrary    EyesLibraryApp    TestNameToOverride    ${API KEY}    AppiumLibrary
 
 *** Variables ***
 &{SEARCH BAR}            xpath=//input[@class="topcoat-search-input search-key"]
@@ -52,11 +52,12 @@ Setup
     ...                              automationName=UiAutomator2
     Switch To Context                WEBVIEW_io.appium.gappium.sampleapp
     Set Location                     10                                     10
-    Open Eyes Session                EyesLibrary
-    ...                              ${test name}
-    ...                              ${API KEY}
-    ...                              AppiumLibrary
-    ...                              enable_eyes_log=true
+    Open Eyes Session                testname=${test name}    library=AppiumLibrary    enable_eyes_log=true  
+    # EyesLibrary
+    #...                              ${test name}
+    #...                              ${API KEY}
+    #...                              AppiumLibrary
+    #...                              enable_eyes_log=true
     Input Text                       xpath=${SEARCH BAR.xpath}              a
 
 Teardown

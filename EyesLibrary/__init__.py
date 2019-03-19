@@ -14,14 +14,27 @@ class EyesLibrary(SessionKeywords, CheckKeywords):
 
     *Before running tests*
 
+     In order to run EyesLibrary and return results, you have to create a free account https://applitools.com/sign-up/ with Applitools.
+    You can retrieve your API key from the applitools website and that will need to be passed in your Open Eyes Session keyword.
+
     Prior to running tests, EyesLibrary must first be imported into your Robot test suite.
 
     Example:
         | Library | EyesLibrary | 
 
-    In order to run EyesLibrary and return results, you have to create a free account https://applitools.com/sign-up/ with Applitools.
-    You can retrieve your API key from the applitools website and that will need to be passed in your Open Eyes Session keyword.
+    You may define the following arguments when importing the library (You may also define them on `Open Eyes Session`):
+    - Application Name (appname)
+    - Test Name (testname)
+    - API Key (apikey)
+    - Library - SeleniumLibrary or AppiumLibrary (library)
+    - Match Level - Strict, Exact, Content or Layout (matchlevel)
+    - Enable Eyes Logs (enable_eyes_log)
+    - OS Name (osname)
+    - Browser Name (browsername)
 
+    Example:
+        | Library | EyesLibrary | AppName | TestName | ApiKey | SeleniumLibrary | Layout | True | Windows | Firefox |
+        
     *Writing tests*
 
     When writing the tests, the following structure must be adopted:
@@ -62,5 +75,28 @@ class EyesLibrary(SessionKeywords, CheckKeywords):
     ROBOT_LIBRARY_SCOPE = "GLOBAL"
     ROBOT_LIBRARY_VERSION = VERSION
 
-    variables.init()
+    def __init__(
+        self,
+        appname=None,
+        testname=None,
+        apikey=None,
+        library="SeleniumLibrary",
+        matchlevel=None,
+        enable_eyes_log=False,
+        osname=None,
+        browsername=None,
+    ):
+
+        self.library_arguments = {
+            "appname": appname,
+            "testname": testname,
+            "apikey": apikey,
+            "library": library,
+            "matchlevel": matchlevel,
+            "enable_eyes_log": enable_eyes_log,
+            "osname": osname,
+            "browsername": browsername,
+        }
+
+        variables.init()
 
