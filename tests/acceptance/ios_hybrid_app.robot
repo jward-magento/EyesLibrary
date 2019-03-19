@@ -52,7 +52,7 @@ Setup
     ...                              ${test name}
     ...                              ${API KEY}
     ...                              AppiumLibrary
-    ...                              enableEyesLog=true
+    ...                              enable_eyes_log=true
 
 Teardown
     Close Application

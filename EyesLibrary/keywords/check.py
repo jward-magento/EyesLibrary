@@ -7,13 +7,14 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import InvalidElementStateException
 from robot.libraries.BuiltIn import BuiltIn
-from applitools import logger
-from applitools.logger import StdoutLogger
-from applitools.logger import FileLogger
+from applitools.core import logger
+#from applitools.logger import StdoutLogger
+#from applitools.logger import FileLogger
 from applitools.geometry import Region
 from applitools.eyes import Eyes, BatchInfo
 from applitools.selenium.webelement import EyesWebElement
 from .session import SessionKeywords
+from robot.api import logger as loggerRobot
 
 from EyesLibrary.resources import variables, utils
 
@@ -23,8 +24,8 @@ class CheckKeywords:
         self,
         name,
         force_full_page_screenshot=False,
-        enableEyesLog=False,
-        enableHttpDebugLog=False,
+        enable_eyes_log=False,
+        enable_http_debug_log=False,
     ):
         """
         Takes a snapshot from the browser using the web driver and matches it with
@@ -40,7 +41,7 @@ class CheckKeywords:
             | Check Eyes Window  |  Google Homepage   |  True   |  True  |   True   |
 
         """
-        utils.manage_logging(enableEyesLog, enableHttpDebugLog)
+        utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
         variables.eyes.force_full_page_screenshot = force_full_page_screenshot
         variables.eyes.check_window(name)
@@ -52,8 +53,8 @@ class CheckKeywords:
         width,
         height,
         name,
-        enableEyesLog=False,
-        enableHttpDebugLog=False,
+        enable_eyes_log=False,
+        enable_http_debug_log=False,
     ):
         """
         Takes a snapshot of the given region from the browser using a Region object (identified by left, top, width, height)
@@ -75,13 +76,13 @@ class CheckKeywords:
 
         """
 
-        utils.manage_logging(enableEyesLog, enableHttpDebugLog)
+        utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
         region = Region(float(left), float(top), float(width), float(height))
         variables.eyes.check_region(region, name)
 
     def check_eyes_region_by_element(
-        self, element, name, enableEyesLog=False, enableHttpDebugLog=False
+        self, element, name, enable_eyes_log=False, enable_http_debug_log=False
     ):
         """
         Takes a snapshot of the region of the given element from the browser using the web driver. Not available to mobile native apps.
@@ -102,11 +103,15 @@ class CheckKeywords:
         In order to screenshot the correct element, it is added the value of 71 to the y coordinate of the element.
 
         """
-        utils.manage_logging(enableEyesLog, enableHttpDebugLog)
-
+        
+       
+        logger.info(element)
+        
+        utils.manage_logging(enable_eyes_log, enable_http_debug_log)
+        #logger.info(element)
         if not isinstance(element, EyesWebElement):
             element = EyesWebElement(element, variables.driver)
-
+        logger.info(element)
         # Temporary workaround in order to capture the correct element on Safari
         # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
         # Current address bar height: 71
@@ -126,7 +131,7 @@ class CheckKeywords:
             variables.eyes.check_region_by_element(element, name)
 
     def check_eyes_region_by_selector(
-        self, value, name, selector="id", enableEyesLog=False, enableHttpDebugLog=False
+        self, value, name, selector="id", enable_eyes_log=False, enable_http_debug_log=False
     ):
         """
         Takes a snapshot of the region of the element found by calling find_element(by, value) from the browser using the web driver
@@ -150,15 +155,15 @@ class CheckKeywords:
         In order to screenshot the correct element, it is added the value of 71 to the y coordinate of the element.
 
         """
-        utils.manage_logging(enableEyesLog, enableHttpDebugLog)
+        utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
-        selectorStrategy = utils.get_selector_strategy(selector)
+        selector_strategy = utils.get_selector_strategy(selector)
 
         # Temporary workaround in order to capture the correct element on Safari
         # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
         # Current address bar height: 71
         if variables.eyes.host_app == "Safari" and variables.eyes.host_os == "iOS":
-            element = variables.driver.find_element(selectorStrategy, value)
+            element = variables.driver.find_element(selector_strategy, value)
             location = element.location
             size = element.size
 
@@ -171,4 +176,4 @@ class CheckKeywords:
                 )
             )
         else:
-            variables.eyes.check_region_by_selector(selectorStrategy, value, name)
+            variables.eyes.check_region_by_selector(selector_strategy, value, name)

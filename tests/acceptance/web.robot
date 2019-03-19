@@ -42,7 +42,8 @@ Setup
     Open Browser                     http://www.google.com      gc
     #Open Browser                     http://www.google.com      ff
     Maximize Browser Window
-    Open Eyes Session                EyesLibrary                ${test name}                      ${API KEY}    matchlevel=layout    baselineName=googlePageMax
+    Open Eyes Session                EyesLibrary                ${test name}                      ${API KEY}    matchlevel=layout    enable_eyes_log=true
+    #baselinename=googlePageMax
 
 Teardown
     Close All Browsers

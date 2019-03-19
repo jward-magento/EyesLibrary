@@ -11,6 +11,7 @@ from applitools.logger import FileLogger
 from applitools.geometry import Region
 from applitools.eyes import Eyes, BatchInfo
 from applitools.selenium.webelement import EyesWebElement
+
 from EyesLibrary.resources import utils, variables
 
 
@@ -26,10 +27,10 @@ class SessionKeywords:
         osname=None,
         browsername=None,
         matchlevel=None,
-        enableEyesLog=False,
-        enableHttpDebugLog=False,
-        baselineName=None,
-        batchName=None,
+        enable_eyes_log=False,
+        enable_http_debug_log=False,
+        baselinename=None,
+        batchname=None,
         branchname=None,
         parentbranch=None,
     ):
@@ -76,17 +77,17 @@ class SessionKeywords:
                 driver = libraryInstance._current_browser()
         except RuntimeError:
             raise Exception("%s instance not found" % library)
-
-        utils.manage_logging(enableEyesLog, enableHttpDebugLog)
+        
+        utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
         if osname is not None:
             variables.eyes.host_os = osname  # (str)
         if browsername is not None:
             variables.eyes.host_app = browsername  # (str)
-        if baselineName is not None:
-            variables.eyes.baseline_branch_name = baselineName  # (str)
-        if batchName is not None:
-            batch = BatchInfo(batchName)
+        if baselinename is not None:
+            variables.eyes.baseline_branch_name = baselinename  # (str)
+        if batchname is not None:
+            batch = BatchInfo(batchname)
             variables.eyes.batch = batch
         if matchlevel is not None:
             variables.eyes.match_level = utils.get_match_level(matchlevel)
@@ -96,16 +97,16 @@ class SessionKeywords:
             variables.eyes.branch_name = branchname  # (str)
 
         if width is None and height is None:
-            driver = variables.eyes.open(driver, appname, testname)
+            variables.driver = variables.eyes.open(driver, appname, testname)
         else:
             intwidth = int(width)
             intheight = int(height)
 
-            driver = variables.eyes.open(
+            variables.driver = variables.eyes.open(
                 driver, appname, testname, {"width": intwidth, "height": intheight}
             )
 
-    def close_eyes_session(self, enableEyesLog=False, enableHttpDebugLog=False):
+    def close_eyes_session(self, enable_eyes_log=False, enable_http_debug_log=False):
         """
         Closes a session and returns the results of the session.
         If a test is running, aborts it. Otherwise, does nothing.
@@ -117,7 +118,7 @@ class SessionKeywords:
         *Example:*
             | Close Eyes Session    |    True   |   True    |                                 
         """
-        utils.manage_logging(enableEyesLog, enableHttpDebugLog)
+        utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
         variables.eyes.close()
         variables.eyes.abort_if_not_closed()

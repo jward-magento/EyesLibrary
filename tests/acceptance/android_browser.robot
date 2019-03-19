@@ -48,7 +48,7 @@ Setup
     ...                              automationName=UiAutomator2
     Go To Url                        http://www.google.pt
     Set Location                     10                                     10
-    Open Eyes Session                EyesLibrary                            ${test name}                                  ${API KEY}    AppiumLibrary    enableEyesLog=true
+    Open Eyes Session                EyesLibrary                            ${test name}                                  ${API KEY}    AppiumLibrary    enable_eyes_log=true
 
 Teardown
     Close Application

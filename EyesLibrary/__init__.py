@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from .keywords import SessionKeywords, CheckKeywords
-from .utils import variables
+from .resources import variables
 from .version import VERSION
 
 _version_ = VERSION
