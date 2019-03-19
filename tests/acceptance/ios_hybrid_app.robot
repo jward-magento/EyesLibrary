@@ -48,9 +48,9 @@ Setup
     ...                              automationName=XCUITest
     @{CONTEXTS}=                     Get Contexts
     Switch To Context                @{CONTEXTS}[1]
-    Open Eyes Session                EyesLibrary
+    Open Eyes Session                ${API KEY}
+    ...                              EyesLibrary
     ...                              ${test name}
-    ...                              ${API KEY}
     ...                              AppiumLibrary
     ...                              enable_eyes_log=true
 

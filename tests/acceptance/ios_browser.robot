@@ -17,12 +17,12 @@ Check Window
 Check Region
     [Setup]                          Setup                                  iOS Browser - Check Region
     ${location}=                     Get Element Location                   ${LOGO.id}
-    Check Eyes Region                ${location['x']}                       ${location['y']}                          300           300              Google Logo
+    Check Eyes Region                ${location['x']}                       ${location['y']}                          300             300              Google Logo
     [Teardown]                       Teardown
 
 Check Region Test
     [Setup]                          Setup                                  iOS Browser Test - Check Region
-    Check Eyes Region                0                                      0                                         300           300              Google Logo
+    Check Eyes Region                0                                      0                                         300             300              Google Logo
     [Teardown]                       Teardown
 
 Check Region By Element
@@ -53,7 +53,7 @@ Setup
     ...                              browserName=Safari
     ...                              automationName=XCUITest
     Go To Url                        http://www.google.pt
-    Open Eyes Session                EyesLibrary                            ${test name}                              ${API KEY}    AppiumLibrary    enable_eyes_log=true
+    Open Eyes Session                ${API KEY}                             EyesLibrary                               ${test name}    AppiumLibrary    enable_eyes_log=true
 
 Teardown
     Close Application

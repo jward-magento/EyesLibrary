@@ -22,9 +22,9 @@ class SessionKeywords(object):
 
     def open_eyes_session(
         self,
+        apikey=None,
         appname=None,
         testname=None,
-        apikey=None,
         library=None,
         width=None,
         height=None,
@@ -44,9 +44,9 @@ class SessionKeywords(object):
         See `Before running tests` or `Importing`
 
                 | *Arguments*                           | *Description*                                                                                               |
-                |  Application Name (string)            | The name of the application under test.                                                                     |
-                |  Test Name (string)                   | The test name.                                                                                              |
                 |  API Key (string)                     | User's Applitools Eyes key.                                                                                 |
+                |  Application Name (string)            | The name of the application under test.                                                                     |
+                |  Test Name (string)                   | The test name.                                                                                              |  
                 |  Library (default=SeleniumLibrary)    | Library to test (Either SeleniumLibrary or AppiumLibrary)                                                   |
                 |  (Optional) Width (int)               | The width of the browser window e.g. 1280                                                                   |
                 |  (Optional) Height (int)              | The height of the browser window e.g. 1000                                                                  |
@@ -72,7 +72,7 @@ class SessionKeywords(object):
         *Note:* When opening the session on a mobile browser or hybrid app, the context must be set to WEBVIEW in order to retrieve the correct viewport size. Geolocation of the device may have to be set after switching context.
 
         *Example:*                                                                                                                                                                                                                               
-                | Open Eyes Session  |  Eyes_AppName |  Eyes_TestName |  YourApplitoolsKey  | SeleniumLibrary |  1024  |  768  |  OSOverrideName  |  BrowserOverrideName  |  LAYOUT   |  True  |  True  |  BranchName   |  ParentBranch   |
+                | Open Eyes Session  |   YourApplitoolsKey  | Eyes_AppName |  Eyes_TestName | SeleniumLibrary |  1024  |  768  |  OSOverrideName  |  BrowserOverrideName  |  LAYOUT   |  True  |  True  |  BranchName   |  ParentBranch   |
         """
 
         if appname is None:

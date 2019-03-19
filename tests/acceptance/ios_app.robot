@@ -18,7 +18,7 @@ Check Window
 Check Region
     [Setup]               Setup                                                                                          iOS App - Check Region
     ${location}=          Get Element Location                                                                           xpath=${BUTTON.xpath}
-    Check Eyes Region     ${location['x']}                                                                               ${location['y']}            200           200              Next Page Button
+    Check Eyes Region     ${location['x']}                                                                               ${location['y']}            200             200              Next Page Button
     [Teardown]            Teardown
 
 Is Session Open
@@ -36,7 +36,7 @@ Setup
     ...                   deviceName=${DEVICE NAME}
     ...                   app=/Users/sfnunes/Documents/GitHub/EyesLibrary/tests/resources/TestApp-iphonesimulator.zip
     ...                   automationName=XCUITest
-    Open Eyes Session     EyesLibrary                                                                                    ${test name}                ${API KEY}    AppiumLibrary    enable_eyes_log=true
+    Open Eyes Session     ${API KEY}                                                                                     EyesLibrary                 ${test name}    AppiumLibrary    enable_eyes_log=true
 
 Teardown
     Close Application

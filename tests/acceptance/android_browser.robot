@@ -17,7 +17,7 @@ Check Window
 Check Region
     [Setup]                          Setup                                  Android Browser - Check Region
     ${location}=                     Get Element Location                   ${LOGO.id}
-    Check Eyes Region                ${location['x']}                       ${location['y']}                              300           200              Google Logo
+    Check Eyes Region                ${location['x']}                       ${location['y']}                              300             200              Google Logo
     [Teardown]                       Teardown
 
 Check Region By Element
@@ -48,7 +48,7 @@ Setup
     ...                              automationName=UiAutomator2
     Go To Url                        http://www.google.pt
     Set Location                     10                                     10
-    Open Eyes Session                EyesLibrary                            ${test name}                                  ${API KEY}    AppiumLibrary    enable_eyes_log=true
+    Open Eyes Session                ${API KEY}                             EyesLibrary                                   ${test name}    AppiumLibrary    enable_eyes_log=true
 
 Teardown
     Close Application

@@ -2,8 +2,8 @@
 Resource                 resources/common.robot
 Resource                 resources/mobile.robot
 Resource                 resources/android.robot
-Library                  AppiumLibrary    
-Library                  EyesLibrary    EyesLibraryApp    TestNameToOverride    ${API KEY}    AppiumLibrary
+Library                  AppiumLibrary
+Library                  EyesLibrary                                                ${API KEY}    EyesLibraryApp    TestNameToOverride    AppiumLibrary
 
 *** Variables ***
 &{SEARCH BAR}            xpath=//input[@class="topcoat-search-input search-key"]
@@ -18,7 +18,7 @@ Check Window
 Check Region
     [Setup]                          Setup                                  Android Hybrid - Check Region
     ${location}=                     Get Element Location                   xpath=${SEARCH RESULT ITEM.xpath}
-    Check Eyes Region                ${location['x']}                       ${location['y']}                             200      200    Image Region
+    Check Eyes Region                ${location['x']}                       ${location['y']}                             200                     200    Image Region
     [Teardown]                       Teardown
 
 Check Region By Element
@@ -52,7 +52,7 @@ Setup
     ...                              automationName=UiAutomator2
     Switch To Context                WEBVIEW_io.appium.gappium.sampleapp
     Set Location                     10                                     10
-    Open Eyes Session                testname=${test name}    library=AppiumLibrary    enable_eyes_log=true  
+    Open Eyes Session                testname=${test name}                  library=AppiumLibrary                        enable_eyes_log=true
     # EyesLibrary
     #...                              ${test name}
     #...                              ${API KEY}

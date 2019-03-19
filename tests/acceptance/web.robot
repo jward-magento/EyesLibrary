@@ -16,7 +16,7 @@ Check Region
     [Setup]                          Setup                      Web - Check Region
     ${x}=                            Get Horizontal Position    ${LOGO.id}
     ${y}=                            Get Vertical Position      ${LOGO.id}
-    Check Eyes Region                ${x}                       ${y}                              400           200    Google Logo
+    Check Eyes Region                ${x}                       ${y}                              400             200                  Google Logo
     [Teardown]                       Teardown
 
 Check Region By Element
@@ -39,11 +39,10 @@ Is Session Open
 *** Keywords ***
 Setup
     [Arguments]                      ${test name}
-    Open Browser                     http://www.google.com      gc    
+    Open Browser                     http://www.google.com      gc
     #Open Browser                     http://www.google.com      ff
     Maximize Browser Window
-    Open Eyes Session                EyesLibrary                ${test name}                      ${API KEY}    matchlevel=layout    enable_eyes_log=true    enable_http_debug_log=true
-    #Go To    http://www.sapo.pt
+    Open Eyes Session                ${API KEY}                 EyesLibrary                       ${test name}    matchlevel=layout    enable_eyes_log=true
     #baselinename=googlePageMax
 
 Teardown

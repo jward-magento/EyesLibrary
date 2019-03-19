@@ -23,9 +23,9 @@ class EyesLibrary(SessionKeywords, CheckKeywords):
         | Library | EyesLibrary | 
 
     You may define the following arguments when importing the library (You may also define them on `Open Eyes Session`):
+    - API Key (apikey)
     - Application Name (appname)
     - Test Name (testname)
-    - API Key (apikey)
     - Library - SeleniumLibrary or AppiumLibrary (library)
     - Match Level - Strict, Exact, Content or Layout (matchlevel)
     - Enable Eyes Logs (enable_eyes_log)
@@ -33,7 +33,7 @@ class EyesLibrary(SessionKeywords, CheckKeywords):
     - Browser Name (browsername)
 
     Example:
-        | Library | EyesLibrary | AppName | TestName | ApiKey | SeleniumLibrary | Layout | True | Windows | Firefox |
+        | Library | EyesLibrary | ApiKey | AppName | TestName | SeleniumLibrary | Layout | True | Windows | Firefox |
         
     *Writing tests*
 
@@ -77,9 +77,9 @@ class EyesLibrary(SessionKeywords, CheckKeywords):
 
     def __init__(
         self,
+        apikey=None,
         appname=None,
         testname=None,
-        apikey=None,
         library="SeleniumLibrary",
         matchlevel=None,
         enable_eyes_log=False,
@@ -88,9 +88,9 @@ class EyesLibrary(SessionKeywords, CheckKeywords):
     ):
 
         self.library_arguments = {
+            "apikey": apikey,
             "appname": appname,
             "testname": testname,
-            "apikey": apikey,
             "library": library,
             "matchlevel": matchlevel,
             "enable_eyes_log": enable_eyes_log,
