@@ -23,64 +23,38 @@ In order to use EyesLibrary, you are required to [sign up](https://applitools.co
 
 ## Installation
 
-This library is not ready yet for installation.
+The recommended **installation** method is using [pip](http://pip-installer.org):
 
-<!--
-#### Using pip
+    pip install robotframework-eyeslibrary
 
-The recommended installation tool is [pip](http://pip-installer.org).
-
-Install pip.
-Enter the following:
-
-    pip install Robot-AppEyes
-
-Append `--upgrade` to update both the library and all
+To **update** both the library and all
 its dependencies to the latest version:
 
-    pip install --upgrade Robot-AppEyes
+    pip install --upgrade robotframework-eyeslibrary
 
-To install a specific version enter:
+To install a **specific version**:
 
-    pip install Robot-AppEyes==(DesiredVersion)
-
-#### Manual Installation
-
-It is also possible to install the package with python, though you will need dependencies to be installed manually.
-you can download the source distribution from PyPI, extract it and
-run the following command:
-
-    python setup.py install
-
-Alternatively you could download the source code, package it and install using next commands:
-
-        python setup.py sdist
-        pip install resulting_package
-        ## dist/robot-appEyes-1.2.zip
+    pip install robotframework-eyeslibrary==(DesiredVersion)
 
 #### Uninstall
 
-To uninstall Robot-AppEyes use the following pip command:
+To uninstall EyesLibrary use the following pip command:
 
-    pip uninstall Robot-AppEyes
-
-However, if the package was installed manually it will need to be uninstalled manually:
-
-1. Navigate to `C:\Python27\Tests` and delete RobotAppEyesTest.txt, pictureOne.png, pictureTwo.png and RobotAppEyes-KeywordDocumentation.html
-
-2. Navigate to `C:\Python27\Lib\site-packages` and delete RobotAppEyes-1.2-py2.7.egg-info and the folder `RobotAppEyes`
+    pip uninstall robotframework-eyeslibrary
 
 ## Directory Layout
 
-_EyesLibrary/EyesLibrary.py_ :
-The Robot Python Library that makes use of the Applitools Eyes Python SDK.
+**EyesLibrary/**
 
-_Tests/acceptance/EyesLibraryTest.txt_ :
-Example test file to display what various keywords from EyesLibrary Library accomplish
+&ensp;&ensp;The Robot Framework Python Library that makes use of the Applitools Eyes Python SDK
 
-_doc/EyesLibrary-KeywordDocumentation.html_ :
-Keyword documentation for the EyesLibrary library.
- -->
+**tests/acceptance/** :
+
+&ensp;&ensp;Test files to display what the keywords from EyesLibrary accomplish
+
+**docs/** :
+
+&ensp;&ensp;Documentation for the EyesLibrary: Keyword Documentation and ChangeLog
 
 ## Usage
 

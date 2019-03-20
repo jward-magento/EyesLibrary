@@ -1,4 +1,4 @@
-Version 1.0 - Initial Release
+Version 1.0 - Robot-AppEyes
 ---------------------
 - Open Eyes Sessions
 - Close Eyes Sessions
@@ -22,3 +22,11 @@ Version 1.2
 - Fixed an issue with the compare image keyword so it can run with the newest versions of eyes-selenium
 - Updated and added another logging parameter to the keywords to return HTTP request information, logs are turned off by default
 - Updated the Open Eyes Session keyword regarding the eyes-selenium change to setting the match level for the screenshots
+
+Version 2.0 - EyesLibrary
+-----------
+- Updated the library's source code in order to use eyes-selenium 3.15.2
+- Removed Compare Image keyword
+- Updated README to make it compliant with the changes, and the Keyword Documentation
+- Organized files and folders and reviewed naming conventions
+- Updated the acceptance tests. Available test suites: web, android/ios browser, android/ios app and android/ios hybrid app

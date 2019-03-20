@@ -53,7 +53,7 @@ class EyesLibrary(SessionKeywords, CheckKeywords):
 
         | *Keywords*         |  *Parameters*                                                                                                                                                                                                                    |
         | Open Browser       |  http://google.com/ | gc                |                       
-        | Open Eyes Session  |  EyesLibrary_AppName |  EyesLibrary_TestName |  YourApplitoolsKey  |
+        | Open Eyes Session  |  YourApplitoolsKey  | EyesLibrary_AppName |  EyesLibrary_TestName |  
         | Check Eyes Window  |  Google Homepage            |                              
         | Close Eyes Session |  
 
