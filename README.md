@@ -111,7 +111,7 @@ When running the mobile tests, you must replace the variables within _tests/acce
 
 Before running the Mobile Hybrid App tests, you need to install the Demo App (APK found at _tests/resources_) in your device.
 
-For in depth detail on how the keywords function, read the Keyword documentation found here : [Keyword Documentation](https://joel-oliveira.github.io/EyesLibrary/)
+For in depth detail on how the keywords function, read the Keyword documentation found here: [Keyword Documentation](https://joel-oliveira.github.io/EyesLibrary/)
 
 **Remember to include your Applitools API key otherwise the
 test will not run.** To run a test, open a command prompt within the _tests/acceptance_ folder and run:
@@ -133,3 +133,16 @@ For example, to run the Test Suite for Web:
 ## Getting Help
 
 To be defined.
+
+## Credits
+
+EyesLibrary was forked from [Robot-AppEyes](https://github.com/NaviNet/Robot-AppEyes) on version 1.2.
+
+Robot-AppEyes authors:
+
+- [Thomas Armstrong](https://github.com/tbarmstrong)
+- [Simon McMorran](https://github.com/SIMcM)
+- [Gareth Nixon](https://github.com/GarethNixon)
+- [Adam Simmons](https://github.com/adamsimmons)
+
+EyesLibrary then emerged as an independent library from the original one, on version 2.0.
