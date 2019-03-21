@@ -37,10 +37,11 @@ class SessionKeywords(object):
         batchname=None,
         branchname=None,
         parentbranch=None,
+        server_url=None,
     ):
         """
         Starts a session with the Applitools Eyes Website. See https://eyes.applitools.com/app/sessions/
-        Some of the following arguments may also be defined on library import.~
+        Some of the following arguments may also be defined on library import.
         See `Before running tests` or `Importing`
 
                 | *Arguments*                           | *Description*                                                                                               |
@@ -59,6 +60,8 @@ class SessionKeywords(object):
                 |  Batch Name (default=None)        | The name of the batch                      |
                 |  Branch Name (default=None)  | The branch to use to check test                                                                             |
                 |  Parent Branch (default=None)        | Parent Branch to base the new Branch on                                                                     |
+                |  Server URL (default=None)        | The URL of the Eyes server. If not provided then your test will run on the public cloud.                                                                     |
+                
         Creates an instance of the AppiumLibrary or SeleniumLibrary webdriver, given the library argument.
 
         Defines a global driver and sets the webdriver to the global driver.
@@ -72,7 +75,7 @@ class SessionKeywords(object):
         *Note:* When opening the session on a mobile browser or hybrid app, the context must be set to WEBVIEW in order to retrieve the correct viewport size. Geolocation of the device may have to be set after switching context.
 
         *Example:*                                                                                                                                                                                                                               
-                | Open Eyes Session  |   YourApplitoolsKey  | Eyes_AppName |  Eyes_TestName | SeleniumLibrary |  1024  |  768  |  OSOverrideName  |  BrowserOverrideName  |  LAYOUT   |  True  |  True  |  BranchName   |  ParentBranch   |
+                | Open Eyes Session  |   YourApplitoolsKey  | Eyes_AppName |  Eyes_TestName | SeleniumLibrary |  1024  |  768  |  OSOverrideName  |  BrowserOverrideName  |  LAYOUT   |  True  |  True  |  BranchName   |  ParentBranch   | https://myserver.com |
         """
 
         if appname is None:
@@ -91,8 +94,14 @@ class SessionKeywords(object):
             matchlevel = self.library_arguments["matchlevel"]
         if enable_eyes_log is None:
             enable_eyes_log = self.library_arguments["enable_eyes_log"]
+        if server_url is None:
+            server_url = self.library_arguments["server_url"]
 
-        variables.eyes = Eyes()
+        if server_url is None:
+            variables.eyes = Eyes()
+        else:
+            variables.eyes = Eyes(server_url)
+
         variables.eyes.api_key = apikey
 
         try:

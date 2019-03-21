@@ -31,9 +31,10 @@ class EyesLibrary(SessionKeywords, CheckKeywords):
     - Enable Eyes Logs (enable_eyes_log)
     - OS Name (osname)
     - Browser Name (browsername)
+    - Server URL (server_url)       
 
     Example:
-        | Library | EyesLibrary | ApiKey | AppName | TestName | SeleniumLibrary | Layout | True | Windows | Firefox |
+        | Library | EyesLibrary | ApiKey | AppName | TestName | SeleniumLibrary | Layout | True | Windows | Firefox | https://myserver.com |
         
     *Writing tests*
 
@@ -85,6 +86,7 @@ class EyesLibrary(SessionKeywords, CheckKeywords):
         enable_eyes_log=False,
         osname=None,
         browsername=None,
+        server_url=None,
     ):
 
         self.library_arguments = {
@@ -96,6 +98,7 @@ class EyesLibrary(SessionKeywords, CheckKeywords):
             "enable_eyes_log": enable_eyes_log,
             "osname": osname,
             "browsername": browsername,
+            "server_url": server_url,
         }
 
         variables.init()
