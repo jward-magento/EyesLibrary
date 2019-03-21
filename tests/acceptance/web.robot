@@ -45,6 +45,11 @@ Batch Test 2
     [Setup]                          Setup with BatchName                      Web - Batch Test 2    Batch Test
     Check Eyes Region By Selector    ${LOGO.id}                 Logo
     [Teardown]                       Teardown
+    
+Full Page Screenshot
+    [Setup]                          Setup with Full Page Screenshot                    Web - Full Page Test
+    Check Eyes Window                Full Page
+    [Teardown]                       Teardown
 
 *** Keywords ***
 Setup
@@ -52,14 +57,19 @@ Setup
     Open Browser                     http://www.google.com      gc
     #Open Browser                     http://www.google.com      ff
     Maximize Browser Window
-    Open Eyes Session                ${API KEY}                 EyesLibrary                       ${test name}    matchlevel=layout    enable_eyes_log=true
-    #baselinename=googlePageMax
+    Open Eyes Session                ${API KEY}                 EyesLibraryBaseline                       ${test name}    matchlevel=layout    enable_eyes_log=true
     
 Setup with BatchName
     [Arguments]                      ${test name}    ${batchname}
     Open Browser                     http://www.google.com      gc
     Maximize Browser Window
     Open Eyes Session                testname=${test name}    matchlevel=layout    enable_eyes_log=true    batchname=${batchname}
+    
+Setup with Full Page Screenshot
+    [Arguments]                      ${test name}
+    Open Browser                     http://www.sapo.pt      gc
+    Maximize Browser Window
+    Open Eyes Session                testname=${test name}    matchlevel=layout    enable_eyes_log=true    force_full_page_screenshot=true    stitchmode=css
 
 Teardown
     Close All Browsers

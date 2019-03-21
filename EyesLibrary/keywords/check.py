@@ -15,6 +15,7 @@ from applitools.geometry import Region
 from applitools.eyes import Eyes, BatchInfo
 from applitools.selenium.webelement import EyesWebElement
 from .session import SessionKeywords
+from applitools.selenium.positioning import StitchMode
 from robot.api import logger as loggerRobot
 
 from EyesLibrary.resources import variables, utils
@@ -24,7 +25,7 @@ class CheckKeywords:
     def check_eyes_window(
         self,
         name,
-        force_full_page_screenshot=False,
+        force_full_page_screenshot=None,
         enable_eyes_log=False,
         enable_http_debug_log=False,
     ):
@@ -44,7 +45,9 @@ class CheckKeywords:
         """
         utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
-        variables.eyes.force_full_page_screenshot = force_full_page_screenshot
+        if force_full_page_screenshot is not None:
+            variables.eyes.force_full_page_screenshot = force_full_page_screenshot
+            
         variables.eyes.check_window(name)
 
     def check_eyes_region(

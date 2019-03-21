@@ -11,6 +11,7 @@ from applitools.logger import FileLogger
 from applitools.geometry import Region
 from applitools.eyes import Eyes, BatchInfo
 from applitools.selenium.webelement import EyesWebElement
+from applitools.selenium.positioning import StitchMode
 from robot.api import logger as loggerRobot
 
 from EyesLibrary.resources import utils, variables
@@ -37,7 +38,9 @@ class SessionKeywords(object):
         batchname=None,
         branchname=None,
         parentbranch=None,
-        server_url=None,
+        serverurl=None,
+        force_full_page_screenshot=False,
+        stitchmode=None,
     ):
         """
         Starts a session with the Applitools Eyes Website. See https://eyes.applitools.com/app/sessions/
@@ -60,7 +63,9 @@ class SessionKeywords(object):
                 |  Batch Name (default=None)        | The name of the batch                      |
                 |  Branch Name (default=None)  | The branch to use to check test                                                                             |
                 |  Parent Branch (default=None)        | Parent Branch to base the new Branch on                                                                     |
-                |  Server URL (default=None)        | The URL of the Eyes server. If not provided then your test will run on the public cloud.                                                                     |
+                |  Server URL (default=None)        | The URL of the Eyes server. If not provided then your test will run on the public cloud.                       |
+                |  Force Full Page Screenshot (default=False)   | Will force the browser to take a screenshot of whole page.                                      |
+                |  Stitch Mode (default=None)        | Type of stitching used for full page screenshots - can be CSS or SCROLL                     |
                 
         Creates an instance of the AppiumLibrary or SeleniumLibrary webdriver, given the library argument.
 
@@ -94,15 +99,16 @@ class SessionKeywords(object):
             matchlevel = self.library_arguments["matchlevel"]
         if enable_eyes_log is None:
             enable_eyes_log = self.library_arguments["enable_eyes_log"]
-        if server_url is None:
-            server_url = self.library_arguments["server_url"]
+        if serverurl is None:
+            serverurl = self.library_arguments["serverurl"]
 
-        if server_url is None:
+        if serverurl is None:
             variables.eyes = Eyes()
         else:
-            variables.eyes = Eyes(server_url)
+            variables.eyes = Eyes(serverurl)
 
         variables.eyes.api_key = apikey
+        variables.eyes.force_full_page_screenshot = force_full_page_screenshot
 
         try:
             libraryInstance = BuiltIn().get_library_instance(library)
@@ -132,6 +138,8 @@ class SessionKeywords(object):
             variables.eyes.parent_branch_name = parentbranch  # (str)
         if branchname is not None:
             variables.eyes.branch_name = branchname  # (str)
+        if stitchmode is not None:
+            variables.eyes.stitch_mode = utils.get_stitch_mode(stitchmode)
 
         if width is None and height is None:
             variables.driver = variables.eyes.open(driver, appname, testname)

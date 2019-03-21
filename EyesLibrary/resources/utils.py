@@ -2,9 +2,9 @@ import httplib
 from applitools.core import logger, StdoutLogger
 from applitools.eyes import MatchLevel
 from applitools.core import EyesIllegalArgument
+from applitools.selenium.positioning import StitchMode
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import InvalidElementStateException
-
 
 
 def get_match_level(matchlevel):
@@ -25,6 +25,22 @@ def get_match_level(matchlevel):
         )
 
     return selected_match_level
+
+
+def get_stitch_mode(stitchmode):
+
+    selected_stitch_mode = None
+
+    if stitchmode.upper() == "CSS":
+        selected_stitch_mode = StitchMode.CSS
+    elif stitchmode.upper() == "SCROLL":
+        selected_stitch_mode = StitchMode.Scroll
+    else:
+        raise EyesIllegalArgument(
+            "Please select a valid match stitch mode: Css, Scroll"
+        )
+
+    return selected_stitch_mode
 
 
 def get_selector_strategy(selector):
@@ -56,7 +72,7 @@ def get_selector_strategy(selector):
 
 
 def manage_logging(enable_eyes_log, enable_http_debug_log):
-    
+
     if enable_eyes_log is True:
         logger.set_logger(StdoutLogger())
         logger.open_()
