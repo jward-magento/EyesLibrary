@@ -114,8 +114,9 @@ class SessionKeywords(object):
         if baselinename is not None:
             variables.eyes.baseline_branch_name = baselinename  # (str)
         if batchname is not None:
-            batch = BatchInfo(batchname)
-            variables.eyes.batch = batch
+            if variables.batch is None or variables.batch.name != batchname:
+                variables.batch = BatchInfo(batchname)
+            variables.eyes.batch = variables.batch
         if matchlevel is not None:
             variables.eyes.match_level = utils.get_match_level(matchlevel)
         if parentbranch is not None:

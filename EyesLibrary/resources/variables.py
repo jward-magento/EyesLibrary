@@ -1,6 +1,8 @@
 def init():
-    global driver
     global eyes
+    global driver
+    global batch
 
     eyes = None
     driver = None
+    batch = None

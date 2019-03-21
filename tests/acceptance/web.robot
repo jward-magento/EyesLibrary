@@ -1,7 +1,7 @@
 *** Settings ***
-Library     SeleniumLibrary
-Library     EyesLibrary
 Resource    resources/common.robot
+Library     SeleniumLibrary
+Library     EyesLibrary    ${API KEY}                 EyesLibrary
 
 *** Variables ***
 &{LOGO}     id=hplogo                 xpath=//*[@id="hplogo"]
@@ -35,6 +35,16 @@ Is Session Open
     ${is open}=                      Eyes Session Is Open
     Should Be True                   ${is open}
     [Teardown]                       Teardown
+    
+Batch Test 1
+    [Setup]                          Setup with BatchName                      Web - Batch Test 1    Batch Test
+    Check Eyes Window                Homepage
+    [Teardown]                       Teardown
+    
+Batch Test 2
+    [Setup]                          Setup with BatchName                      Web - Batch Test 2    Batch Test
+    Check Eyes Region By Selector    ${LOGO.id}                 Logo
+    [Teardown]                       Teardown
 
 *** Keywords ***
 Setup
@@ -44,6 +54,12 @@ Setup
     Maximize Browser Window
     Open Eyes Session                ${API KEY}                 EyesLibrary                       ${test name}    matchlevel=layout    enable_eyes_log=true
     #baselinename=googlePageMax
+    
+Setup with BatchName
+    [Arguments]                      ${test name}    ${batchname}
+    Open Browser                     http://www.google.com      gc
+    Maximize Browser Window
+    Open Eyes Session                testname=${test name}    matchlevel=layout    enable_eyes_log=true    batchname=${batchname}
 
 Teardown
     Close All Browsers
