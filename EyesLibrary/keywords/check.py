@@ -47,8 +47,18 @@ class CheckKeywords:
 
         if force_full_page_screenshot is not None:
             variables.eyes.force_full_page_screenshot = force_full_page_screenshot
-            
-        variables.eyes.check_window(name)
+
+        # Temporary workaround in order to capture the correct element on Safari
+        # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
+        # Current address bar height: 71
+        if variables.eyes.host_app == "Safari" and variables.eyes.host_os == "iOS":
+            size = variables.driver.get_window_size("current")
+
+            variables.eyes.check_region(
+                Region(0, 71, size.__getitem__("width"), size.__getitem__("height"))
+            )
+        else:
+            variables.eyes.check_window(name)
 
     def check_eyes_region(
         self,
