@@ -36,6 +36,6 @@ setup(
         "Topic :: Software Development :: Testing",
         "Topic :: Software Development :: Quality Assurance",
     ],
-    install_requires=["robotframework >= 3.1.1", "eyes-selenium >= 3.15.2"],
+    install_requires=["robotframework >= 3.1.1", "eyes-selenium >= 3.16.2"],
     packages=find_packages(exclude=["tests", "docs"]),
 )

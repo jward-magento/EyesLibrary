@@ -120,9 +120,6 @@ class CheckKeywords:
 
         utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
-        if not isinstance(element, EyesWebElement):
-            element = EyesWebElement(element, variables.driver)
-
         # Temporary workaround in order to capture the correct element on Safari
         # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
         # Current address bar height: 71
