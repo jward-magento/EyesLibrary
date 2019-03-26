@@ -15,15 +15,15 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
     = Table of contents =
     - `Before running tests`
     - `Writing tests`
-    - `Using Selectors`
-    - `Defining Ignore and Floating Regions`
+    - `Using selectors`
+    - `Defining Ignore and Floating regions`
     - `Importing`
     - `Shortcuts`
     - `Keywords`
 
     = Before running tests =
 
-     In order to run EyesLibrary and return results, you have to create a free account https://applitools.com/sign-up/ with Applitools.
+    In order to run EyesLibrary and return results, you have to create a free account https://applitools.com/sign-up/ with Applitools.
     You can retrieve your API key from the applitools website and that will need to be passed in your Open Eyes Session keyword.
 
     Prior to running tests, EyesLibrary must first be imported into your Robot test suite.
@@ -51,7 +51,7 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
 
     | *Open Eyes Session* |
     | A browser or application must be running when opening the session. To open a browser/application, consult the documentation for SeleniumLibrary and/or AppiumLibrary. |
-    | Afterwards, the session may be opened. See `Open Eyes Session`.  |
+    | Afterwards, the session may be opened. See `Open Eyes Session`. |
     | *Visual Checks* |
     | Between opening and closing the session, you can run your visual checks. |
     | See `Check Eyes Region`, `Check Eyes Region By Element`, `Check Eyes Region By Selector` and `Check Eyes Window` |
@@ -61,28 +61,28 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
 
     - Example:
 
-        | *Keywords*         |  *Parameters*       |
-        | Open Browser       |  http://google.com/ | gc                |                       
-        | Open Eyes Session  |  YourApplitoolsKey  | EyesLibrary_AppName |  EyesLibrary_TestName |  
-        | Check Eyes Window  |  Google Homepage            |                              
-        | Close Eyes Session |  
+        | =Keywords=         | =Parameters=       |
+        | Open Browser       | http://google.com/ | gc                  |                       
+        | Open Eyes Session  | YourApplitoolsKey  | EyesLibrary_AppName | EyesLibrary_TestName |
+        | Check Eyes Window  | Google Homepage    |                              
+        | Close Eyes Session | 
 
-    = Using Selectors =
+    == Using selectors ==
 
     Using the keywords `Check Eyes Region By Selector`, `Ignore Region By Selector` or `Floating Region By Selector`.
     The following strategies are supported:
 
-    | *Strategy*        | *Example*                                                                                                      | *Description*                                   |
-    | CSS SELECTOR      | Check Eyes Region By Selector `|` .first.expanded.dropdown `|`  CssElement      `       |` CSS SELECTOR        | Matches by CSS Selector                         |
-    | XPATH             | Check Eyes Region By Selector `|` //div[@id='my_element']  `|`  XpathElement   `        |` XPATH               | Matches with arbitrary XPath expression         |
-    | ID                | Check Eyes Region By Selector `|` my_element               `|`  IdElement    `          |` ID                  | Matches by @id attribute                        |
-    | CLASS NAME        | Check Eyes Region By Selector `|` element-search           `|`  ClassElement   `        |` CLASS NAME          | Matches by @class attribute                     |
-    | LINK TEXT         | Check Eyes Region By Selector `|` My Link                  `|`  LinkTextElement      `  |` LINK TEXT           | Matches anchor elements by their link text      |
-    | PARTIAL LINK TEXT | Check Eyes Region By Selector `|` My Li                    `|`  PartialLinkTextElement` |` PARTIAL LINK TEXT   | Matches anchor elements by partial link text    |
-    | NAME              | Check Eyes Region By Selector `|` my_element               `|`  NameElement    `        |` NAME                | Matches by @name attribute                      |
-    | TAG NAME          | Check Eyes Region By Selector `|` div                      `|`  TagNameElement       `  |` TAG NAME            | Matches by HTML tag name                        |
+    | =Strategy=        | =Example=                                                                                                   | =Description=                                |
+    | CSS SELECTOR      | Check Eyes Region By Selector `|` .first.expanded.dropdown `|` CssElement             `|` CSS SELECTOR      | Matches by CSS Selector                      |
+    | XPATH             | Check Eyes Region By Selector `|` //div[@id='my_element']  `|` XpathElement           `|` XPATH             | Matches with arbitrary XPath expression      |
+    | ID                | Check Eyes Region By Selector `|` my_element               `|` IdElement              `|` ID                | Matches by @id attribute                     |
+    | CLASS NAME        | Check Eyes Region By Selector `|` element-search           `|` ClassElement           `|` CLASS NAME        | Matches by @class attribute                  |
+    | LINK TEXT         | Check Eyes Region By Selector `|` My Link                  `|` LinkTextElement        `|` LINK TEXT         | Matches anchor elements by their link text   |
+    | PARTIAL LINK TEXT | Check Eyes Region By Selector `|` My Li                    `|` PartialLinkTextElement `|` PARTIAL LINK TEXT | Matches anchor elements by partial link text |
+    | NAME              | Check Eyes Region By Selector `|` my_element               `|` NameElement            `|` NAME              | Matches by @name attribute                   |
+    | TAG NAME          | Check Eyes Region By Selector `|` div                      `|` TagNameElement         `|` TAG NAME          | Matches by HTML tag name                     |
     
-    = Defining Ignore and Floating Regions  =
+    == Defining Ignore and Floating regions  ==
 
     A *Ignore Region* defines a region to be ignored on the checks, ie, to always be considered matching.
 
@@ -102,9 +102,9 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
     
     For example, when using `Check Eyes Window` and defining `Ignore Region By Coordinates` and `Floating Region By Selector`.
  
-        | {target}= | Ignore Region By Coordinates   |  20 | 100 | 200 | 100 |
-        | {target}= | Floating Region By Selector    |  //div[@id='my_element']  | xpath |  20 | 10 | 10 | 20 |  {target} |
-        | Check Eyes Window              |  Google Homepage            |    target={target}           |          
+        | {target}=         | Ignore Region By Coordinates | 20                      | 100   | 200 | 100 |
+        | {target}=         | Floating Region By Selector  | //div[@id='my_element'] | xpath | 20  | 10  | 10 | 20 | {target} |
+        | Check Eyes Window | Google Homepage              | target={target}         |          
     
     """
 
