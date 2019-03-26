@@ -20,11 +20,6 @@ Check Region
     Check Eyes Region                ${location['x']}                       ${location['y']}                          300             300              Google Logo
     [Teardown]                       Teardown
 
-Check Region Test
-    [Setup]                          Setup                                  iOS Browser Test - Check Region
-    Check Eyes Region                0                                      0                                         300             300              Google Logo
-    [Teardown]                       Teardown
-
 Check Region By Element
     [Setup]                          Setup                                  iOS Browser - Check Region By Element
     ${location}=                     Get Element Location                   ${LOGO.id}
