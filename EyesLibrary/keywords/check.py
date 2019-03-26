@@ -78,7 +78,7 @@ class CheckKeywords:
         object (identified by left, top, width, height) and matches it with the
         expected output.
 
-        The width and the height cannot be greater than the width and the height specified in the open_eyes_session keyword.
+        The width and the height cannot be greater than the width and the height specified in the `Open Eyes Session` keyword.
 
                 |  *Arguments*                           | *Description*                                                                                                 |
                 |  Left (float)                          | The left coordinate of the region that is tested e.g. 100                                                     |
@@ -170,7 +170,7 @@ class CheckKeywords:
                 |  Name (string)                         | Name that will be given to region in Eyes.                                                                                                                            |
                 |  Selector (default=id)                 | This will decide what element will be located. The supported selectors include: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME.    |
                 |  Enable Eyes Log (default=False)       | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                                                                              |
-                |  Enable HTTP Debug Log (default=False) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                                                                        |                                                                    |
+                |  Enable HTTP Debug Log (default=False) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                                                                        |
         
         *Example:*
             | Check Eyes Region By Selector | .first.expanded.dropdown |  CssElement  |  CSS SELECTOR  | True  | True  |
