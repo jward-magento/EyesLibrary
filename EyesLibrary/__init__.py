@@ -15,8 +15,8 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
     = Table of contents =
     - `Before running tests`
     - `Writing tests`
-    - `Using selectors`
-    - `Defining Ignore and Floating regions`
+        - `Using selectors`
+        - `Defining Ignore and Floating regions`
     - `Importing`
     - `Shortcuts`
     - `Keywords`
@@ -59,7 +59,7 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
     | *Close Eyes Session* |
     | See `Close Eyes Session`. |
 
-    - Example:
+    - Test Case Example:
 
         | =Keywords=         | =Parameters=       |
         | Open Browser       | http://google.com/ | gc                  |                       
@@ -67,7 +67,7 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
         | Check Eyes Window  | Google Homepage    |                              
         | Close Eyes Session | 
 
-    == Using selectors ==
+    = Using selectors =
 
     Using the keywords `Check Eyes Region By Selector`, `Ignore Region By Selector` or `Floating Region By Selector`.
     The following strategies are supported:
@@ -82,7 +82,7 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
     | NAME              | Check Eyes Region By Selector `|` my_element               `|` NameElement            `|` NAME              | Matches by @name attribute                   |
     | TAG NAME          | Check Eyes Region By Selector `|` div                      `|` TagNameElement         `|` TAG NAME          | Matches by HTML tag name                     |
     
-    == Defining Ignore and Floating regions  ==
+    = Defining Ignore and Floating regions =
 
     A *Ignore Region* defines a region to be ignored on the checks, ie, to always be considered matching.
 
