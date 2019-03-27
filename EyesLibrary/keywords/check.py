@@ -26,6 +26,7 @@ class CheckKeywords:
         enable_http_debug_log=False,
         matchtimeout=-1,
         target=None,
+        hidescrollbars=None,
     ):
         """
         Takes a snapshot from the browser using the web driver and matches
@@ -37,6 +38,7 @@ class CheckKeywords:
             | Enable Eyes Log (default=False)            | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                                     |
             | Enable HTTP Debug Log (default=False)      | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                               |
             | Match Timeout (default=None)               | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test        |
+            | Hide Scrollbars (default=None)             | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                 |
 
         *Example:*
             | Check Eyes Window | Google Homepage | True | True | True | 5000 |
@@ -46,6 +48,9 @@ class CheckKeywords:
         if force_full_page_screenshot is not None:
             variables.eyes.force_full_page_screenshot = force_full_page_screenshot
 
+        if hidescrollbars is not None:
+            original_hidescrollbars = variables.eyes.hide_scrollbars
+            variables.eyes.hide_scrollbars = hidescrollbars
         # Temporary workaround in order to capture the correct element on Safari
         # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
         # Current address bar height: 71
@@ -61,6 +66,9 @@ class CheckKeywords:
         else:
             variables.eyes.check_window(name, int(matchtimeout), target)
 
+        if hidescrollbars is not None:
+            variables.eyes.hide_scrollbars = original_hidescrollbars
+
     def check_eyes_region(
         self,
         left,
@@ -72,6 +80,7 @@ class CheckKeywords:
         enable_http_debug_log=False,
         matchtimeout=-1,
         target=None,
+        hidescrollbars=None,
     ):
         """
         Takes a snapshot of the given region from the browser using a Region
@@ -89,6 +98,7 @@ class CheckKeywords:
             | Enable Eyes Log (default=False)       | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                               |
             | Enable HTTP Debug Log (default=False) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                         |
             | Match Timeout (default=None)          | Determines how much time in milliseconds  Eyes continue to retry the matching before declaring a mismatch on this test |
+            | Hide Scrollbars (default=None)        | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                           |
 
         *Example:*
             | Check Eyes Region | 100 | 150 | 500 | 120 | Google Logo | True | True | 5000 |
@@ -96,8 +106,15 @@ class CheckKeywords:
 
         utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
+        if hidescrollbars is not None:
+            original_hidescrollbars = variables.eyes.hide_scrollbars
+            variables.eyes.hide_scrollbars = hidescrollbars
+
         region = Region(float(left), float(top), float(width), float(height))
         variables.eyes.check_region(region, name, matchtimeout, target)
+
+        if hidescrollbars is not None:
+            variables.eyes.hide_scrollbars = original_hidescrollbars
 
     def check_eyes_region_by_element(
         self,
@@ -107,6 +124,7 @@ class CheckKeywords:
         enable_http_debug_log=False,
         matchtimeout=-1,
         target=None,
+        hidescrollbars=None,
     ):
         """
         Takes a snapshot of the region of the given element from the browser
@@ -118,7 +136,8 @@ class CheckKeywords:
             | Enable Eyes Log (default=False)       | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                               |
             | Enable HTTP Debug Log (default=False) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                         |
             | Match Timeout (default=None)          | Determines how much time in milliseconds  Eyes continue to retry the matching before declaring a mismatch on this test |
-            
+            | Hide Scrollbars (default=None)        | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                           |
+
         *Example:*
             | ${element}=                  | Get Element | //*[@id="hplogo"] |
             | Check Eyes Region By Element | ${element}  | ElementName       | True | True | 5000 |
@@ -131,6 +150,9 @@ class CheckKeywords:
 
         utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
+        if hidescrollbars is not None:
+            original_hidescrollbars = variables.eyes.hide_scrollbars
+            variables.eyes.hide_scrollbars = hidescrollbars
         # Temporary workaround in order to capture the correct element on Safari
         # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
         # Current address bar height: 71
@@ -152,6 +174,9 @@ class CheckKeywords:
         else:
             variables.eyes.check_region_by_element(element, name, matchtimeout, target)
 
+        if hidescrollbars is not None:
+            variables.eyes.hide_scrollbars = original_hidescrollbars
+
     def check_eyes_region_by_selector(
         self,
         value,
@@ -161,6 +186,7 @@ class CheckKeywords:
         enable_http_debug_log=False,
         matchtimeout=-1,
         target=None,
+        hidescrollbars=None,
     ):
         """
         Takes a snapshot of the region of the element found by calling
@@ -177,6 +203,7 @@ class CheckKeywords:
             | Enable Eyes Log (default=False)       | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                                                                           |
             | Enable HTTP Debug Log (default=False) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                                                                     |
             | Match Timeout (default=None)          | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test                                              |
+            | Hide Scrollbars (default=None)        | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                                       |
 
         *Example:*
             | Check Eyes Region By Selector | .first.expanded.dropdown | CssElement | CSS SELECTOR | True | True | 5000 |
@@ -187,6 +214,10 @@ class CheckKeywords:
         In order to screenshot the correct element, it is added the value of 71 to the y coordinate of the element.
         """
         utils.manage_logging(enable_eyes_log, enable_http_debug_log)
+
+        if hidescrollbars is not None:
+            original_hidescrollbars = variables.eyes.hide_scrollbars
+            variables.eyes.hide_scrollbars = hidescrollbars
 
         selector_strategy = utils.get_selector_strategy(selector)
 
@@ -213,4 +244,7 @@ class CheckKeywords:
             variables.eyes.check_region_by_selector(
                 selector_strategy, value, name, matchtimeout, target
             )
+
+        if hidescrollbars is not None:
+            variables.eyes.hide_scrollbars = original_hidescrollbars
 
