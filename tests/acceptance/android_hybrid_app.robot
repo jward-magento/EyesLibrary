@@ -12,7 +12,7 @@ Library                  EyesLibrary                                            
 *** Test Cases ***
 Check Window
     [Setup]                          Setup                                  Android Hybrid - Check Window
-    Check Eyes Window                Main Screen
+    Check Eyes Window                Main Screen    matchtimeout=5000
     [Teardown]                       Teardown
 
 Check Region
@@ -52,7 +52,7 @@ Setup
     ...                              automationName=UiAutomator2
     Switch To Context                WEBVIEW_io.appium.gappium.sampleapp
     Set Location                     10                                     10
-    Open Eyes Session                testname=${test name}                  library=AppiumLibrary                        enable_eyes_log=true
+    Open Eyes Session                testname=${test name}                  library=AppiumLibrary                        enable_eyes_log=true    matchtimeout=6000
     # EyesLibrary
     #...                              ${test name}
     #...                              ${API KEY}

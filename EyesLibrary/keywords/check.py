@@ -24,8 +24,8 @@ class CheckKeywords:
         force_full_page_screenshot=None,
         enable_eyes_log=False,
         enable_http_debug_log=False,
+        matchtimeout=-1,
         target=None,
-        match_timeout=None,
     ):
         """
         Takes a snapshot from the browser using the web driver and matches
@@ -36,9 +36,10 @@ class CheckKeywords:
             | Force Full Page Screenshot (default=False) | Will force the browser to take a screenshot of whole page. Define "Stitch Mode" argument on `Open Eyes Session` if necessary |
             | Enable Eyes Log (default=False)            | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                                     |
             | Enable HTTP Debug Log (default=False)      | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                               |
+            | Match Timeout (default=None)               | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test        |
 
         *Example:*
-            | Check Eyes Window | Google Homepage | True | True | True |
+            | Check Eyes Window | Google Homepage | True | True | True | 5000 |
         """
         utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
@@ -54,10 +55,11 @@ class CheckKeywords:
             variables.eyes.check_region(
                 Region(0, 71, size.__getitem__("width"), size.__getitem__("height")),
                 name,
-                target=target,
+                matchtimeout,
+                target,
             )
         else:
-            variables.eyes.check_window(name, target=target)
+            variables.eyes.check_window(name, int(matchtimeout), target)
 
     def check_eyes_region(
         self,
@@ -68,8 +70,8 @@ class CheckKeywords:
         name,
         enable_eyes_log=False,
         enable_http_debug_log=False,
+        matchtimeout=-1,
         target=None,
-        match_timeout=None,
     ):
         """
         Takes a snapshot of the given region from the browser using a Region
@@ -78,24 +80,24 @@ class CheckKeywords:
 
         The width and the height cannot be greater than the width and the height specified in the `Open Eyes Session` keyword.
 
-            | =Arguments=                           | =Description=                                                                                  |
-            | Left (float)                          | The left coordinate of the region that is tested e.g. 100                                      |
-            | Top (float)                           | The top coordinate of the region that is tested e.g. 150                                       |
-            | Width (float)                         | The width of the region that is tested e.g. 500                                                |
-            | Height (float)                        | The height of the region that is tested e.g. 120                                               |
-            | Name (string)                         | Name that will be given to region in Eyes.                                                     |
-            | Enable Eyes Log (default=False)       | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.       |
-            | Enable HTTP Debug Log (default=False) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable. |
-
+            | =Arguments=                           | =Description=                                                                                                          |
+            | Left (float)                          | The left coordinate of the region that is tested e.g. 100                                                              |
+            | Top (float)                           | The top coordinate of the region that is tested e.g. 150                                                               |
+            | Width (float)                         | The width of the region that is tested e.g. 500                                                                        |
+            | Height (float)                        | The height of the region that is tested e.g. 120                                                                       |
+            | Name (string)                         | Name that will be given to region in Eyes.                                                                             |
+            | Enable Eyes Log (default=False)       | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                               |
+            | Enable HTTP Debug Log (default=False) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                         |
+            | Match Timeout (default=None)          | Determines how much time in milliseconds  Eyes continue to retry the matching before declaring a mismatch on this test |
 
         *Example:*
-            | Check Eyes Region | 100 | 150 | 500 | 120 | Google Logo | True | True |
+            | Check Eyes Region | 100 | 150 | 500 | 120 | Google Logo | True | True | 5000 |
         """
 
         utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
         region = Region(float(left), float(top), float(width), float(height))
-        variables.eyes.check_region(region, name, target=target)
+        variables.eyes.check_region(region, name, matchtimeout, target)
 
     def check_eyes_region_by_element(
         self,
@@ -103,22 +105,23 @@ class CheckKeywords:
         name,
         enable_eyes_log=False,
         enable_http_debug_log=False,
+        matchtimeout=-1,
         target=None,
-        match_timeout=None,
     ):
         """
         Takes a snapshot of the region of the given element from the browser
         using the web driver. Not available to mobile native apps.
 
-            | =Arguments=                           | =Description=                                                                                  |
-            | Element (WebElement)                  | The Web Element to be checked.                                                                 |
-            | Name (string)                         | Name that will be given to region in Eyes.                                                     |
-            | Enable Eyes Log (default=False)       | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.       |
-            | Enable HTTP Debug Log (default=False) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable. |
+            | =Arguments=                           | =Description=                                                                                                          |
+            | Element (WebElement)                  | The Web Element to be checked.                                                                                         |
+            | Name (string)                         | Name that will be given to region in Eyes.                                                                             |
+            | Enable Eyes Log (default=False)       | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                               |
+            | Enable HTTP Debug Log (default=False) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                         |
+            | Match Timeout (default=None)          | Determines how much time in milliseconds  Eyes continue to retry the matching before declaring a mismatch on this test |
             
         *Example:*
             | ${element}=                  | Get Element | //*[@id="hplogo"] |
-            | Check Eyes Region By Element | ${element}  | ElementName       | True | True |
+            | Check Eyes Region By Element | ${element}  | ElementName       | True | True | 5000 |
 
         *Note (Safari on mobile):*
         When checking an element, provide osname=iOS and browsername=Safari on `Open Eyes Session`.
@@ -142,10 +145,12 @@ class CheckKeywords:
                     size.__getitem__("width"),
                     size.__getitem__("height"),
                 ),
-                target=target,
+                name,
+                matchtimeout,
+                target,
             )
         else:
-            variables.eyes.check_region_by_element(element, name, target=target)
+            variables.eyes.check_region_by_element(element, name, matchtimeout, target)
 
     def check_eyes_region_by_selector(
         self,
@@ -154,8 +159,8 @@ class CheckKeywords:
         selector="id",
         enable_eyes_log=False,
         enable_http_debug_log=False,
+        matchtimeout=-1,
         target=None,
-        match_timeout=None,
     ):
         """
         Takes a snapshot of the region of the element found by calling
@@ -171,9 +176,10 @@ class CheckKeywords:
             | Selector (default=id)                 | This will decide what element will be located. The supported selectors include: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME. |
             | Enable Eyes Log (default=False)       | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                                                                           |
             | Enable HTTP Debug Log (default=False) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                                                                     |
-        
+            | Match Timeout (default=None)          | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test                                              |
+
         *Example:*
-            | Check Eyes Region By Selector | .first.expanded.dropdown | CssElement | CSS SELECTOR | True | True |
+            | Check Eyes Region By Selector | .first.expanded.dropdown | CssElement | CSS SELECTOR | True | True | 5000 |
 
         *Note (Safari on mobile):*
         When checking an element, provide osname=iOS and browsername=Safari on `Open Eyes Session`.
@@ -199,10 +205,12 @@ class CheckKeywords:
                     size.__getitem__("width"),
                     size.__getitem__("height"),
                 ),
-                target=target,
+                name,
+                matchtimeout,
+                target,
             )
         else:
             variables.eyes.check_region_by_selector(
-                selector_strategy, value, name, target=target
+                selector_strategy, value, name, matchtimeout, target
             )
 
