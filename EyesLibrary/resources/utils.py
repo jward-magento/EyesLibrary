@@ -75,6 +75,5 @@ def manage_logging(enable_eyes_log, enable_http_debug_log):
 
     if enable_eyes_log is True:
         logger.set_logger(StdoutLogger())
-        logger.open_()
     if enable_http_debug_log is True:
         httplib.HTTPConnection.debuglevel = 1
