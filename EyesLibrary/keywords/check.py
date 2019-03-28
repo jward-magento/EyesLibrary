@@ -46,11 +46,11 @@ class CheckKeywords:
         utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
         if force_full_page_screenshot is not None:
-            variables.eyes.force_full_page_screenshot = force_full_page_screenshot
+            variables.eyes.force_full_page_screenshot = bool(force_full_page_screenshot)
 
         if hidescrollbars is not None:
             original_hidescrollbars = variables.eyes.hide_scrollbars
-            variables.eyes.hide_scrollbars = hidescrollbars
+            variables.eyes.hide_scrollbars = bool(hidescrollbars)
         # Temporary workaround in order to capture the correct element on Safari
         # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
         # Current address bar height: 71
@@ -108,7 +108,7 @@ class CheckKeywords:
 
         if hidescrollbars is not None:
             original_hidescrollbars = variables.eyes.hide_scrollbars
-            variables.eyes.hide_scrollbars = hidescrollbars
+            variables.eyes.hide_scrollbars = bool(hidescrollbars)
 
         region = Region(float(left), float(top), float(width), float(height))
         variables.eyes.check_region(region, name, matchtimeout, target)
@@ -152,7 +152,7 @@ class CheckKeywords:
 
         if hidescrollbars is not None:
             original_hidescrollbars = variables.eyes.hide_scrollbars
-            variables.eyes.hide_scrollbars = hidescrollbars
+            variables.eyes.hide_scrollbars = bool(hidescrollbars)
         # Temporary workaround in order to capture the correct element on Safari
         # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
         # Current address bar height: 71
@@ -217,7 +217,7 @@ class CheckKeywords:
 
         if hidescrollbars is not None:
             original_hidescrollbars = variables.eyes.hide_scrollbars
-            variables.eyes.hide_scrollbars = hidescrollbars
+            variables.eyes.hide_scrollbars = bool(hidescrollbars)
 
         selector_strategy = utils.get_selector_strategy(selector)
 

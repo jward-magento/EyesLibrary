@@ -12,7 +12,7 @@ Library                  EyesLibrary                                            
 *** Test Cases ***
 Check Window
     [Setup]                          Setup                                  Android Hybrid - Check Window
-    Check Eyes Window                Main Screen    matchtimeout=5000
+    Check Eyes Window                Main Screen
     [Teardown]                       Teardown
 
 Check Region

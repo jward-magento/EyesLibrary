@@ -57,7 +57,7 @@ class SessionKeywords(object):
             | Library (default=SeleniumLibrary)          | Library to test (Either SeleniumLibrary or AppiumLibrary)                                                                        |
             | (Optional) Width (int)                     | The width of the browser window e.g. 1280                                                                                        |
             | (Optional) Height (int)                    | The height of the browser window e.g. 1000                                                                                       |
-            | (Optional) Operating System (string)       | The operating system of the test, can be used to override the OS name to allow cross OS verfication                              |
+            | (Optional) Operating System (string)       | The operating system of the test, can be used to override the OS name to allow cross OS verification                             |
             | (Optional) Browser Name (string)           | The browser name for the test, can be used to override the browser name to allow cross browser verification                      |
             | (Optional) Match Level (string)            | The match level for the comparison - can be STRICT, LAYOUT, CONTENT or EXACT                                                     |
             | Enable Eyes Log (default=False)            | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                                         |
@@ -125,7 +125,7 @@ class SessionKeywords(object):
         except RuntimeError:
             raise Exception("%s instance not found" % library)
 
-        utils.manage_logging(enable_eyes_log, enable_http_debug_log)
+        utils.manage_logging(bool(enable_eyes_log), bool(enable_http_debug_log))
 
         if osname is not None:
             variables.eyes.host_os = osname
@@ -159,6 +159,8 @@ class SessionKeywords(object):
             variables.driver = variables.eyes.open(
                 driver, appname, testname, {"width": intwidth, "height": intheight}
             )
+
+        utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
     def close_eyes_session(self, enable_eyes_log=False, enable_http_debug_log=False):
         """
