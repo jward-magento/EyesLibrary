@@ -48,7 +48,7 @@ Setup
     ...                              browserName=Safari
     ...                              automationName=XCUITest
     Go To Url                        http://www.google.pt
-    Open Eyes Session                ${API KEY}                             EyesLibrary                               ${test name}    AppiumLibrary    enable_eyes_log=true
+    Open Eyes Session                ${API KEY}                             EyesLibrary                               ${test name}    AppiumLibrary    enable_eyes_log=${true}
 
 Teardown
     Close Application

@@ -22,7 +22,7 @@ class CheckKeywords:
         self,
         name,
         force_full_page_screenshot=None,
-        enable_eyes_log=False,
+        enable_eyes_log=None,
         enable_http_debug_log=False,
         matchtimeout=-1,
         target=None,
@@ -32,25 +32,32 @@ class CheckKeywords:
         Takes a snapshot from the browser using the web driver and matches
         it with the expected output.
 
-            | =Arguments=                                | =Description=                                                                                                                |
-            | Name (string)                              | Name that will be given to region in Eyes.                                                                                   |
-            | Force Full Page Screenshot (default=False) | Will force the browser to take a screenshot of whole page. Define "Stitch Mode" argument on `Open Eyes Session` if necessary |
-            | Enable Eyes Log (default=False)            | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                                     |
-            | Enable HTTP Debug Log (default=False)      | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                               |
-            | Match Timeout (default=None)               | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test        |
-            | Hide Scrollbars (default=None)             | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                 |
+            | =Arguments=                                | =Description=                                                                                                                                     |
+            | Name (string)                              | Name that will be given to region in Eyes.                                                                                                        |
+            | Force Full Page Screenshot (default=False) | Will force the browser to take a screenshot of whole page. Define "Stitch Mode" argument on `Open Eyes Session` if necessary                      |
+            | Enable Eyes Log (default=False)            | Determines if the trace logs of Applitools Eyes SDK are activated for this test. May also be defined on `Open Eyes Session` for the whole session |
+            | Enable HTTP Debug Log (default=False)      | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                                                    |
+            | Match Timeout (default=None)               | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test                             |
+            | Hide Scrollbars (default=None)             | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                      |
 
         *Example:*
             | Check Eyes Window | Google Homepage | True | True | True | 5000 |
+
+        *Note (Safari on mobile):*
+        When checking a window, provide osname=iOS and browsername=Safari on `Open Eyes Session`.
+        Due to an issue regarding the height of the address bar not being taken into account when the screenshot is taken, a temporary workaround is in place.
+        In order to screenshot the correct element, it is added the value of 71 to the y coordinate of the element.
         """
-        utils.manage_logging(enable_eyes_log, enable_http_debug_log)
+        if enable_eyes_log is not None:
+            original_logging = variables.is_logger_open
+            utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
         if force_full_page_screenshot is not None:
-            variables.eyes.force_full_page_screenshot = bool(force_full_page_screenshot)
+            variables.eyes.force_full_page_screenshot = force_full_page_screenshot
 
         if hidescrollbars is not None:
             original_hidescrollbars = variables.eyes.hide_scrollbars
-            variables.eyes.hide_scrollbars = bool(hidescrollbars)
+            variables.eyes.hide_scrollbars = hidescrollbars
         # Temporary workaround in order to capture the correct element on Safari
         # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
         # Current address bar height: 71
@@ -68,6 +75,8 @@ class CheckKeywords:
 
         if hidescrollbars is not None:
             variables.eyes.hide_scrollbars = original_hidescrollbars
+        if enable_eyes_log is not None:
+            utils.manage_logging(original_logging, enable_http_debug_log)
 
     def check_eyes_region(
         self,
@@ -76,7 +85,7 @@ class CheckKeywords:
         width,
         height,
         name,
-        enable_eyes_log=False,
+        enable_eyes_log=None,
         enable_http_debug_log=False,
         matchtimeout=-1,
         target=None,
@@ -103,24 +112,27 @@ class CheckKeywords:
         *Example:*
             | Check Eyes Region | 100 | 150 | 500 | 120 | Google Logo | True | True | 5000 |
         """
-
-        utils.manage_logging(enable_eyes_log, enable_http_debug_log)
+        if enable_eyes_log is not None:
+            original_logging = variables.is_logger_open
+            utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
         if hidescrollbars is not None:
             original_hidescrollbars = variables.eyes.hide_scrollbars
-            variables.eyes.hide_scrollbars = bool(hidescrollbars)
+            variables.eyes.hide_scrollbars = hidescrollbars
 
         region = Region(float(left), float(top), float(width), float(height))
         variables.eyes.check_region(region, name, matchtimeout, target)
 
         if hidescrollbars is not None:
             variables.eyes.hide_scrollbars = original_hidescrollbars
+        if enable_eyes_log is not None:
+            utils.manage_logging(original_logging, enable_http_debug_log)
 
     def check_eyes_region_by_element(
         self,
         element,
         name,
-        enable_eyes_log=False,
+        enable_eyes_log=None,
         enable_http_debug_log=False,
         matchtimeout=-1,
         target=None,
@@ -147,12 +159,13 @@ class CheckKeywords:
         Due to an issue regarding the height of the address bar not being taken into account when the screenshot is taken, a temporary workaround is in place.
         In order to screenshot the correct element, it is added the value of 71 to the y coordinate of the element.
         """
-
-        utils.manage_logging(enable_eyes_log, enable_http_debug_log)
+        if enable_eyes_log is not None:
+            original_logging = variables.is_logger_open
+            utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
         if hidescrollbars is not None:
             original_hidescrollbars = variables.eyes.hide_scrollbars
-            variables.eyes.hide_scrollbars = bool(hidescrollbars)
+            variables.eyes.hide_scrollbars = hidescrollbars
         # Temporary workaround in order to capture the correct element on Safari
         # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
         # Current address bar height: 71
@@ -176,13 +189,15 @@ class CheckKeywords:
 
         if hidescrollbars is not None:
             variables.eyes.hide_scrollbars = original_hidescrollbars
+        if enable_eyes_log is not None:
+            utils.manage_logging(original_logging, enable_http_debug_log)
 
     def check_eyes_region_by_selector(
         self,
         value,
         name,
         selector="id",
-        enable_eyes_log=False,
+        enable_eyes_log=None,
         enable_http_debug_log=False,
         matchtimeout=-1,
         target=None,
@@ -213,11 +228,13 @@ class CheckKeywords:
         Due to an issue regarding the height of the address bar not being taken into account when the screenshot is taken, a temporary workaround is in place.
         In order to screenshot the correct element, it is added the value of 71 to the y coordinate of the element.
         """
-        utils.manage_logging(enable_eyes_log, enable_http_debug_log)
+        if enable_eyes_log is not None:
+            original_logging = variables.is_logger_open
+            utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
         if hidescrollbars is not None:
             original_hidescrollbars = variables.eyes.hide_scrollbars
-            variables.eyes.hide_scrollbars = bool(hidescrollbars)
+            variables.eyes.hide_scrollbars = hidescrollbars
 
         selector_strategy = utils.get_selector_strategy(selector)
 
@@ -247,4 +264,6 @@ class CheckKeywords:
 
         if hidescrollbars is not None:
             variables.eyes.hide_scrollbars = original_hidescrollbars
+        if enable_eyes_log is not None:
+            utils.manage_logging(original_logging, enable_http_debug_log)
 

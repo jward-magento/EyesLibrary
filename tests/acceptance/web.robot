@@ -57,19 +57,19 @@ Setup
     Open Browser                     http://www.google.com      gc
     #Open Browser                     http://www.google.com      ff
     Maximize Browser Window
-    Open Eyes Session                ${API KEY}                 EyesLibraryBaseline                       ${test name}    matchlevel=layout    enable_eyes_log=true
+    Open Eyes Session                ${API KEY}                 EyesLibraryBaseline                       ${test name}    matchlevel=layout    enable_eyes_log=${true}
     
 Setup with BatchName
     [Arguments]                      ${test name}    ${batchname}
     Open Browser                     http://www.google.com      gc
     Maximize Browser Window
-    Open Eyes Session                testname=${test name}    matchlevel=layout    enable_eyes_log=true    batchname=${batchname}
+    Open Eyes Session                testname=${test name}    matchlevel=layout    enable_eyes_log=${true}    batchname=${batchname}
     
 Setup with Full Page Screenshot
     [Arguments]                      ${test name}
     Open Browser                     http://www.sapo.pt      gc
     Maximize Browser Window
-    Open Eyes Session                testname=${test name}    matchlevel=layout    enable_eyes_log=true    force_full_page_screenshot=true    stitchmode=css
+    Open Eyes Session                testname=${test name}    matchlevel=layout    enable_eyes_log=${true}    force_full_page_screenshot=${true}    stitchmode=css
 
 Teardown
     Close All Browsers

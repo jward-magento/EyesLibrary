@@ -125,7 +125,7 @@ class SessionKeywords(object):
         except RuntimeError:
             raise Exception("%s instance not found" % library)
 
-        utils.manage_logging(bool(enable_eyes_log), bool(enable_http_debug_log))
+        utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
         if osname is not None:
             variables.eyes.host_os = osname

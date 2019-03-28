@@ -11,7 +11,7 @@ Resource               resources/android.robot
 *** Test Cases ***
 Check Window
     [Setup]               Setup                            Android App - Check Window
-    Check Eyes Window     Google Calendar
+    Check Eyes Window     Google Calendar    enable_eyes_log=${false}
     [Teardown]            Teardown
 
 Check Region
@@ -58,7 +58,7 @@ Setup
     ...                   deviceName=${DEVICE NAME}
     ...                   platformName=${PLATFORM NAME}
     ...                   automationName=UiAutomator2
-    Open Eyes Session     ${API KEY}                       EyesLibrary                                   ${test name}    AppiumLibrary    enable_eyes_log=true
+    Open Eyes Session     ${API KEY}                       EyesLibrary                                   ${test name}    AppiumLibrary    enable_eyes_log=${true}
 
 Teardown
     Close Application

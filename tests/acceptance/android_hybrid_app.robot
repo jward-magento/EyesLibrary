@@ -46,18 +46,18 @@ Setup
     Open Application                 remote_url=${REMOTE URL}
     ...                              appPackage=${APP PACKAGE}
     ...                              appActivity=${APP ACTIVITY}
-    ...                              nativeWebScreenshot=true
+    ...                              nativeWebScreenshot=${true}
     ...                              deviceName=${DEVICE NAME}
     ...                              platformName=${PLATFORM NAME}
     ...                              automationName=UiAutomator2
     Switch To Context                WEBVIEW_io.appium.gappium.sampleapp
     Set Location                     10                                     10
-    Open Eyes Session                testname=${test name}                  library=AppiumLibrary                        enable_eyes_log=true    matchtimeout=6000
+    Open Eyes Session                testname=${test name}                  library=AppiumLibrary                        enable_eyes_log=${true}    matchtimeout=6000
     # EyesLibrary
     #...                              ${test name}
     #...                              ${API KEY}
     #...                              AppiumLibrary
-    #...                              enable_eyes_log=true
+    #...                              enable_eyes_log=${true}
     Input Text                       xpath=${SEARCH BAR.xpath}              a
 
 Teardown

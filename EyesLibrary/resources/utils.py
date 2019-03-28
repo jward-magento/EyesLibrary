@@ -5,6 +5,7 @@ from applitools.core import EyesIllegalArgument
 from applitools.selenium.positioning import StitchMode
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import InvalidElementStateException
+import variables
 
 
 def get_match_level(matchlevel):
@@ -72,8 +73,13 @@ def get_selector_strategy(selector):
 
 
 def manage_logging(enable_eyes_log, enable_http_debug_log):
-
+    
     if enable_eyes_log is True:
         logger.set_logger(StdoutLogger())
+        variables.is_logger_open = True
+    elif variables.is_logger_open is True and enable_eyes_log is False:
+        logger.close()
+        variables.is_logger_open = False
+
     if enable_http_debug_log is True:
         httplib.HTTPConnection.debuglevel = 1
