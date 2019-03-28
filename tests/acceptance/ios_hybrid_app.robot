@@ -44,7 +44,7 @@ Setup
     ...                              platformName=${PLATFORM NAME}
     ...                              platformVersion=${PLATFORM VERSION}
     ...                              deviceName=${DEVICE NAME}
-    ...                              app=/Users/sfnunes/Documents/GitHub/EyesLibrary/tests/resources/HelloWorld.zip
+    ...                              app=https://github.com/joel-oliveira/EyesLibrary/raw/master/tests/resources/HelloWorld.zip
     ...                              automationName=XCUITest
     @{CONTEXTS}=                     Get Contexts
     Switch To Context                @{CONTEXTS}[1]

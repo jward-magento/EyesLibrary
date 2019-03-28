@@ -34,9 +34,9 @@ Setup
     ...                   platformName=${PLATFORM NAME}
     ...                   platformVersion=${PLATFORM VERSION}
     ...                   deviceName=${DEVICE NAME}
-    ...                   app=/Users/sfnunes/Documents/GitHub/EyesLibrary/tests/resources/TestApp-iphonesimulator.zip
+    ...                   app=https://github.com/joel-oliveira/EyesLibrary/raw/master/tests/resources/TestApp-iphonesimulator.zip
     ...                   automationName=XCUITest
-    Open Eyes Session     ${API KEY}                                                                                     EyesLibrary                 ${test name}    AppiumLibrary    enable_eyes_log=true
+    Open Eyes Session     ${API KEY}                                                                                                EyesLibrary                 ${test name}    AppiumLibrary    enable_eyes_log=true
 
 Teardown
     Close Application
