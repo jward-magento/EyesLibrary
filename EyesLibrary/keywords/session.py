@@ -60,7 +60,7 @@ class SessionKeywords(object):
             | (Optional) Operating System (string)       | The operating system of the test, can be used to override the OS name to allow cross OS verification                             |
             | (Optional) Browser Name (string)           | The browser name for the test, can be used to override the browser name to allow cross browser verification                      |
             | (Optional) Match Level (string)            | The match level for the comparison - can be STRICT, LAYOUT, CONTENT or EXACT                                                     |
-            | Enable Eyes Log (default=False)            | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.                                         |
+            | Enable Eyes Log (default=False)            | Determines if the trace logs of Applitools Eyes SDK are activated for this session.                                              |
             | Enable HTTP Debug Log (default=False)      | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                                   |
             | Baseline Name (default=None)               | Name of the branch where the baseline reference will be taken from and where new and accepted steps will be saved to.            |
             | Batch Name (default=None)                  | The name of the batch                                                                                                            |
