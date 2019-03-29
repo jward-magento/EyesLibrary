@@ -42,7 +42,8 @@ class SessionKeywords(object):
         force_full_page_screenshot=False,
         stitchmode=None,
         matchtimeout=None,
-        hidescrollbars=None,
+        hidescrollbars=False,
+        save_new_tests=True,
     ):
         """
         Starts a session with the Applitools Eyes Website. See https://eyes.applitools.com/app/sessions/.
@@ -70,7 +71,8 @@ class SessionKeywords(object):
             | Force Full Page Screenshot (default=False) | Will force the browser to take a screenshot of whole page.                                                                       |
             | Stitch Mode (default=None)                 | Type of stitching used for full page screenshots - can be CSS or SCROLL                                                          |
             | Match Timeout (default=None)               | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this session's tests |
-            | Hide Scrollbars (default=None)             | Sets if the scrollbars are hidden this session's tests, by passing 'True' or 'False' in the variable.                            |
+            | Hide Scrollbars (default=False)            | Sets if the scrollbars are hidden this session's tests, by passing 'True' or 'False' in the variable.                            |
+            | Save New Tests (default=True)              | Sets if the new tests on this session are automatically accepted, by passing 'True' or 'False' in the variable.                  |
 
         Creates an instance of the AppiumLibrary or SeleniumLibrary webdriver, given the library argument.
 
@@ -147,8 +149,10 @@ class SessionKeywords(object):
             variables.eyes.stitch_mode = utils.get_stitch_mode(stitchmode)
         if matchtimeout is not None:
             variables.eyes.match_timeout = int(matchtimeout)
-        if hidescrollbars is not None:
+        if hidescrollbars is not False:
             variables.eyes.hide_scrollbars = hidescrollbars
+        if save_new_tests is not True:
+            variables.eyes.save_new_tests = save_new_tests
 
         if width is None and height is None:
             variables.driver = variables.eyes.open(driver, appname, testname)
