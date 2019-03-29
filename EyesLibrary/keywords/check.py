@@ -27,18 +27,20 @@ class CheckKeywords:
         matchtimeout=-1,
         target=None,
         hidescrollbars=None,
+        wait_before_screenshots=None,
     ):
         """
         Takes a snapshot from the browser using the web driver and matches
         it with the expected output.
 
-            | =Arguments=                                | =Description=                                                                                                                      |
-            | Name (string)                              | Name that will be given to region in Eyes.                                                                                         |
-            | Force Full Page Screenshot (default=False) | Will force the browser to take a screenshot of whole page. Define "Stitch Mode" argument on `Open Eyes Session` if necessary       |
-            | Enable Eyes Log (default=False)            | Determines if the trace logs of Applitools Eyes SDK are activated for this test. Overrides the argument set on `Open Eyes Session` |
-            | Enable HTTP Debug Log (default=False)      | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                                     |
-            | Match Timeout (default=None)               | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test              |
-            | Hide Scrollbars (default=None)             | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                       |
+            | =Arguments=                                | =Description=                                                                                                                                             |
+            | Name (string)                              | Name that will be given to region in Eyes.                                                                                                                |
+            | Force Full Page Screenshot (default=False) | Will force the browser to take a screenshot of whole page. Define "Stitch Mode" argument on `Open Eyes Session` if necessary                              |
+            | Enable Eyes Log (default=False)            | Determines if the trace logs of Applitools Eyes SDK are activated for this test. Overrides the argument set on `Open Eyes Session`                        |
+            | Enable HTTP Debug Log (default=False)      | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                                                            |
+            | Match Timeout (default=None)               | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test                                     |
+            | Hide Scrollbars (default=None)             | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                              |
+            | Wait Before Screenshots (default=None)     | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session` |
 
         *Example:*
             | Check Eyes Window | Google Homepage | True | True | True | 5000 |
@@ -53,11 +55,19 @@ class CheckKeywords:
             utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
         if force_full_page_screenshot is not None:
+            original_force_full_page_screenshot = (
+                variables.eyes.force_full_page_screenshot
+            )
             variables.eyes.force_full_page_screenshot = force_full_page_screenshot
 
         if hidescrollbars is not None:
             original_hidescrollbars = variables.eyes.hide_scrollbars
             variables.eyes.hide_scrollbars = hidescrollbars
+
+        if wait_before_screenshots is not None:
+            original_wait_before_screenshots = variables.eyes.wait_before_screenshots
+            variables.eyes.wait_before_screenshots = int(wait_before_screenshots)
+
         # Temporary workaround in order to capture the correct element on Safari
         # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
         # Current address bar height: 71
@@ -73,10 +83,16 @@ class CheckKeywords:
         else:
             variables.eyes.check_window(name, int(matchtimeout), target)
 
+        if force_full_page_screenshot is not None:
+            variables.eyes.force_full_page_screenshot = (
+                original_force_full_page_screenshot
+            )
         if hidescrollbars is not None:
             variables.eyes.hide_scrollbars = original_hidescrollbars
         if enable_eyes_log is not None:
             utils.manage_logging(original_logging, enable_http_debug_log)
+        if wait_before_screenshots is not None:
+            variables.eyes.wait_before_screenshots = original_wait_before_screenshots
 
     def check_eyes_region(
         self,
@@ -90,6 +106,7 @@ class CheckKeywords:
         matchtimeout=-1,
         target=None,
         hidescrollbars=None,
+        wait_before_screenshots=None,
     ):
         """
         Takes a snapshot of the given region from the browser using a Region
@@ -98,17 +115,18 @@ class CheckKeywords:
 
         The width and the height cannot be greater than the width and the height specified in the `Open Eyes Session` keyword.
 
-            | =Arguments=                           | =Description=                                                                                                                      |
-            | Left (float)                          | The left coordinate of the region that is tested e.g. 100                                                                          |
-            | Top (float)                           | The top coordinate of the region that is tested e.g. 150                                                                           |
-            | Width (float)                         | The width of the region that is tested e.g. 500                                                                                    |
-            | Height (float)                        | The height of the region that is tested e.g. 120                                                                                   |
-            | Name (string)                         | Name that will be given to region in Eyes.                                                                                         |
-            | Enable Eyes Log (default=False)       | Determines if the trace logs of Applitools Eyes SDK are activated for this test. Overrides the argument set on `Open Eyes Session` |
-            | Enable HTTP Debug Log (default=False) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                                     |
-            | Match Timeout (default=None)          | Determines how much time in milliseconds  Eyes continue to retry the matching before declaring a mismatch on this test             |
-            | Hide Scrollbars (default=None)        | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                       |
-
+            | =Arguments=                            | =Description=                                                                                                                                             |
+            | Left (float)                           | The left coordinate of the region that is tested e.g. 100                                                                                                 |
+            | Top (float)                            | The top coordinate of the region that is tested e.g. 150                                                                                                  |
+            | Width (float)                          | The width of the region that is tested e.g. 500                                                                                                           |
+            | Height (float)                         | The height of the region that is tested e.g. 120                                                                                                          |
+            | Name (string)                          | Name that will be given to region in Eyes.                                                                                                                |
+            | Enable Eyes Log (default=False)        | Determines if the trace logs of Applitools Eyes SDK are activated for this test. Overrides the argument set on `Open Eyes Session`                        |
+            | Enable HTTP Debug Log (default=False)  | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                                                            |
+            | Match Timeout (default=None)           | Determines how much time in milliseconds  Eyes continue to retry the matching before declaring a mismatch on this test                                    |
+            | Hide Scrollbars (default=None)         | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                              |
+            | Wait Before Screenshots (default=None) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session` |
+        
         *Example:*
             | Check Eyes Region | 100 | 150 | 500 | 120 | Google Logo | True | True | 5000 |
         """
@@ -120,6 +138,10 @@ class CheckKeywords:
             original_hidescrollbars = variables.eyes.hide_scrollbars
             variables.eyes.hide_scrollbars = hidescrollbars
 
+        if wait_before_screenshots is not None:
+            original_wait_before_screenshots = variables.eyes.wait_before_screenshots
+            variables.eyes.wait_before_screenshots = int(wait_before_screenshots)
+
         region = Region(float(left), float(top), float(width), float(height))
         variables.eyes.check_region(region, name, matchtimeout, target)
 
@@ -127,6 +149,8 @@ class CheckKeywords:
             variables.eyes.hide_scrollbars = original_hidescrollbars
         if enable_eyes_log is not None:
             utils.manage_logging(original_logging, enable_http_debug_log)
+        if wait_before_screenshots is not None:
+            variables.eyes.wait_before_screenshots = original_wait_before_screenshots
 
     def check_eyes_region_by_element(
         self,
@@ -137,19 +161,21 @@ class CheckKeywords:
         matchtimeout=-1,
         target=None,
         hidescrollbars=None,
+        wait_before_screenshots=None,
     ):
         """
         Takes a snapshot of the region of the given element from the browser
         using the web driver. Not available to mobile native apps.
 
-            | =Arguments=                           | =Description=                                                                                                                      |
-            | Element (WebElement)                  | The Web Element to be checked.                                                                                                     |
-            | Name (string)                         | Name that will be given to region in Eyes.                                                                                         |
-            | Enable Eyes Log (default=False)       | Determines if the trace logs of Applitools Eyes SDK are activated for this test. Overrides the argument set on `Open Eyes Session` |
-            | Enable HTTP Debug Log (default=False) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                                     |
-            | Match Timeout (default=None)          | Determines how much time in milliseconds  Eyes continue to retry the matching before declaring a mismatch on this test             |
-            | Hide Scrollbars (default=None)        | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                       |
-
+            | =Arguments=                            | =Description=                                                                                                                                             |
+            | Element (WebElement)                   | The Web Element to be checked.                                                                                                                            |
+            | Name (string)                          | Name that will be given to region in Eyes.                                                                                                                |
+            | Enable Eyes Log (default=False)        | Determines if the trace logs of Applitools Eyes SDK are activated for this test. Overrides the argument set on `Open Eyes Session`                        |
+            | Enable HTTP Debug Log (default=False)  | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                                                            |
+            | Match Timeout (default=None)           | Determines how much time in milliseconds  Eyes continue to retry the matching before declaring a mismatch on this test                                    |
+            | Hide Scrollbars (default=None)         | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                              |
+            | Wait Before Screenshots (default=None) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session` |
+        
         *Example:*
             | ${element}=                  | Get Element | //*[@id="hplogo"] |
             | Check Eyes Region By Element | ${element}  | ElementName       | True | True | 5000 |
@@ -166,6 +192,11 @@ class CheckKeywords:
         if hidescrollbars is not None:
             original_hidescrollbars = variables.eyes.hide_scrollbars
             variables.eyes.hide_scrollbars = hidescrollbars
+
+        if wait_before_screenshots is not None:
+            original_wait_before_screenshots = variables.eyes.wait_before_screenshots
+            variables.eyes.wait_before_screenshots = int(wait_before_screenshots)
+
         # Temporary workaround in order to capture the correct element on Safari
         # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
         # Current address bar height: 71
@@ -191,6 +222,8 @@ class CheckKeywords:
             variables.eyes.hide_scrollbars = original_hidescrollbars
         if enable_eyes_log is not None:
             utils.manage_logging(original_logging, enable_http_debug_log)
+        if wait_before_screenshots is not None:
+            variables.eyes.wait_before_screenshots = original_wait_before_screenshots
 
     def check_eyes_region_by_selector(
         self,
@@ -202,6 +235,7 @@ class CheckKeywords:
         matchtimeout=-1,
         target=None,
         hidescrollbars=None,
+        wait_before_screenshots=None
     ):
         """
         Takes a snapshot of the region of the element found by calling
@@ -211,15 +245,16 @@ class CheckKeywords:
 
         Not available to mobile native apps.
 
-            | =Arguments=                           | =Description=                                                                                                                                                      |
-            | Value (string)                        | The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown                                                                             |
-            | Name (string)                         | Name that will be given to region in Eyes.                                                                                                                         |
-            | Selector (default=id)                 | This will decide what element will be located. The supported selectors include: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME. |
-            | Enable Eyes Log (default=False)       | Determines if the trace logs of Applitools Eyes SDK are activated for this test. Overrides the argument set on `Open Eyes Session`                                 |
-            | Enable HTTP Debug Log (default=False) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                                                                     |
-            | Match Timeout (default=None)          | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test                                              |
-            | Hide Scrollbars (default=None)        | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                                       |
-
+            | =Arguments=                            | =Description=                                                                                                                                                      |
+            | Value (string)                         | The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown                                                                             |
+            | Name (string)                          | Name that will be given to region in Eyes.                                                                                                                         |
+            | Selector (default=id)                  | This will decide what element will be located. The supported selectors include: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME. |
+            | Enable Eyes Log (default=False)        | Determines if the trace logs of Applitools Eyes SDK are activated for this test. Overrides the argument set on `Open Eyes Session`                                 |
+            | Enable HTTP Debug Log (default=False)  | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                                                                     |
+            | Match Timeout (default=None)           | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test                                              |
+            | Hide Scrollbars (default=None)         | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                                       |
+            | Wait Before Screenshots (default=None) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session`          |
+        
         *Example:*
             | Check Eyes Region By Selector | .first.expanded.dropdown | CssElement | CSS SELECTOR | True | True | 5000 |
 
@@ -235,6 +270,10 @@ class CheckKeywords:
         if hidescrollbars is not None:
             original_hidescrollbars = variables.eyes.hide_scrollbars
             variables.eyes.hide_scrollbars = hidescrollbars
+
+        if wait_before_screenshots is not None:
+            original_wait_before_screenshots = variables.eyes.wait_before_screenshots
+            variables.eyes.wait_before_screenshots = int(wait_before_screenshots)
 
         selector_strategy = utils.get_selector_strategy(selector)
 
@@ -266,4 +305,6 @@ class CheckKeywords:
             variables.eyes.hide_scrollbars = original_hidescrollbars
         if enable_eyes_log is not None:
             utils.manage_logging(original_logging, enable_http_debug_log)
+        if wait_before_screenshots is not None:
+            variables.eyes.wait_before_screenshots = original_wait_before_screenshots
 

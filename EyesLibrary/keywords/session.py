@@ -74,7 +74,7 @@ class SessionKeywords(object):
             | Match Timeout (default=None)               | Determines how much time in milliseconds Eyes continues to retry the matching before declaring a mismatch on this session's tests |
             | Hide Scrollbars (default=False)            | Sets if the scrollbars are hidden this session's tests, by passing 'True' or 'False' in the variable.                             |
             | Save New Tests (default=True)              | Sets if the new tests on this session are automatically accepted, by passing 'True' or 'False' in the variable.                   |
-            | Wait Before Screenshots (default=None)     | Determines the amount of time in milliseconds that Eyes will wait before capturing a screenshot.                                  |
+            | Wait Before Screenshots (default=None)     | Determines the number of milliseconds that Eyes will wait before capturing a screenshot on this sessions's tests                  |
 
         Creates an instance of the AppiumLibrary or SeleniumLibrary webdriver, given the library argument.
 
