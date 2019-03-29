@@ -1,4 +1,6 @@
 import httplib
+import os
+import logging
 from applitools.core import logger, StdoutLogger
 from applitools.eyes import MatchLevel
 from applitools.core import EyesIllegalArgument
@@ -73,7 +75,7 @@ def get_selector_strategy(selector):
 
 
 def manage_logging(enable_eyes_log, enable_http_debug_log):
-    
+
     if enable_eyes_log is True:
         logger.set_logger(StdoutLogger())
         variables.is_logger_open = True
