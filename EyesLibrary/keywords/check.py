@@ -28,6 +28,7 @@ class CheckKeywords:
         target=None,
         hidescrollbars=None,
         wait_before_screenshots=None,
+        send_dom=None
     ):
         """
         Takes a snapshot from the browser using the web driver and matches
@@ -41,6 +42,7 @@ class CheckKeywords:
             | Match Timeout (default=None)               | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test                                     |
             | Hide Scrollbars (default=None)             | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                              |
             | Wait Before Screenshots (default=None)     | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session` |
+            | Send DOM (default=False)                   | Sets if DOM information should be sent for this checkpoint.                                                                                               |    
 
         *Example:*
             | Check Eyes Window | Google Homepage | True | True | True | 5000 |
@@ -68,6 +70,10 @@ class CheckKeywords:
             original_wait_before_screenshots = variables.eyes.wait_before_screenshots
             variables.eyes.wait_before_screenshots = int(wait_before_screenshots)
 
+        if send_dom is not None:
+            original_send_dom = variables.eyes.send_dom
+            variables.eyes.send_dom = send_dom
+
         # Temporary workaround in order to capture the correct element on Safari
         # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
         # Current address bar height: 71
@@ -93,6 +99,8 @@ class CheckKeywords:
             utils.manage_logging(original_logging, enable_http_debug_log)
         if wait_before_screenshots is not None:
             variables.eyes.wait_before_screenshots = original_wait_before_screenshots
+        if send_dom is not None:
+            variables.eyes.send_dom = original_send_dom
 
     def check_eyes_region(
         self,
@@ -107,6 +115,7 @@ class CheckKeywords:
         target=None,
         hidescrollbars=None,
         wait_before_screenshots=None,
+        send_dom=None
     ):
         """
         Takes a snapshot of the given region from the browser using a Region
@@ -126,7 +135,8 @@ class CheckKeywords:
             | Match Timeout (default=None)           | Determines how much time in milliseconds  Eyes continue to retry the matching before declaring a mismatch on this test                                    |
             | Hide Scrollbars (default=None)         | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                              |
             | Wait Before Screenshots (default=None) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session` |
-        
+            | Send DOM (default=False)               | Sets if DOM information should be sent for this checkpoint.                                                                                               |    
+
         *Example:*
             | Check Eyes Region | 100 | 150 | 500 | 120 | Google Logo | True | True | 5000 |
         """
@@ -141,6 +151,10 @@ class CheckKeywords:
         if wait_before_screenshots is not None:
             original_wait_before_screenshots = variables.eyes.wait_before_screenshots
             variables.eyes.wait_before_screenshots = int(wait_before_screenshots)
+        
+        if send_dom is not None:
+            original_send_dom = variables.eyes.send_dom
+            variables.eyes.send_dom = send_dom
 
         region = Region(float(left), float(top), float(width), float(height))
         variables.eyes.check_region(region, name, matchtimeout, target)
@@ -151,6 +165,8 @@ class CheckKeywords:
             utils.manage_logging(original_logging, enable_http_debug_log)
         if wait_before_screenshots is not None:
             variables.eyes.wait_before_screenshots = original_wait_before_screenshots
+        if send_dom is not None:
+            variables.eyes.send_dom = original_send_dom
 
     def check_eyes_region_by_element(
         self,
@@ -162,6 +178,7 @@ class CheckKeywords:
         target=None,
         hidescrollbars=None,
         wait_before_screenshots=None,
+        send_dom=None
     ):
         """
         Takes a snapshot of the region of the given element from the browser
@@ -175,7 +192,8 @@ class CheckKeywords:
             | Match Timeout (default=None)           | Determines how much time in milliseconds  Eyes continue to retry the matching before declaring a mismatch on this test                                    |
             | Hide Scrollbars (default=None)         | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                              |
             | Wait Before Screenshots (default=None) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session` |
-        
+            | Send DOM (default=False)               | Sets if DOM information should be sent for this checkpoint.                                                                                               |    
+
         *Example:*
             | ${element}=                  | Get Element | //*[@id="hplogo"] |
             | Check Eyes Region By Element | ${element}  | ElementName       | True | True | 5000 |
@@ -196,6 +214,10 @@ class CheckKeywords:
         if wait_before_screenshots is not None:
             original_wait_before_screenshots = variables.eyes.wait_before_screenshots
             variables.eyes.wait_before_screenshots = int(wait_before_screenshots)
+        
+        if send_dom is not None:
+            original_send_dom = variables.eyes.send_dom
+            variables.eyes.send_dom = send_dom
 
         # Temporary workaround in order to capture the correct element on Safari
         # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
@@ -224,6 +246,8 @@ class CheckKeywords:
             utils.manage_logging(original_logging, enable_http_debug_log)
         if wait_before_screenshots is not None:
             variables.eyes.wait_before_screenshots = original_wait_before_screenshots
+        if send_dom is not None:
+            variables.eyes.send_dom = original_send_dom
 
     def check_eyes_region_by_selector(
         self,
@@ -235,7 +259,8 @@ class CheckKeywords:
         matchtimeout=-1,
         target=None,
         hidescrollbars=None,
-        wait_before_screenshots=None
+        wait_before_screenshots=None,
+        send_dom=None
     ):
         """
         Takes a snapshot of the region of the element found by calling
@@ -254,7 +279,8 @@ class CheckKeywords:
             | Match Timeout (default=None)           | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test                                              |
             | Hide Scrollbars (default=None)         | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                                       |
             | Wait Before Screenshots (default=None) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session`          |
-        
+            | Send DOM (default=False)               | Sets if DOM information should be sent for this checkpoint.                                                                                                        |    
+
         *Example:*
             | Check Eyes Region By Selector | .first.expanded.dropdown | CssElement | CSS SELECTOR | True | True | 5000 |
 
@@ -274,6 +300,10 @@ class CheckKeywords:
         if wait_before_screenshots is not None:
             original_wait_before_screenshots = variables.eyes.wait_before_screenshots
             variables.eyes.wait_before_screenshots = int(wait_before_screenshots)
+
+        if send_dom is not None:
+            original_send_dom = variables.eyes.send_dom
+            variables.eyes.send_dom = send_dom
 
         selector_strategy = utils.get_selector_strategy(selector)
 
@@ -307,4 +337,6 @@ class CheckKeywords:
             utils.manage_logging(original_logging, enable_http_debug_log)
         if wait_before_screenshots is not None:
             variables.eyes.wait_before_screenshots = original_wait_before_screenshots
+        if send_dom is not None:
+            variables.eyes.send_dom = original_send_dom
 

@@ -45,6 +45,7 @@ class SessionKeywords(object):
         hidescrollbars=False,
         save_new_tests=None,
         wait_before_screenshots=None,
+        send_dom=None,
     ):
         """
         Starts a session with the Applitools Eyes Website. See https://eyes.applitools.com/app/sessions/.
@@ -75,6 +76,7 @@ class SessionKeywords(object):
             | Hide Scrollbars (default=False)            | Sets if the scrollbars are hidden this session's tests, by passing 'True' or 'False' in the variable.                             |
             | Save New Tests (default=True)              | Sets if the new tests on this session are automatically accepted, by passing 'True' or 'False' in the variable.                   |
             | Wait Before Screenshots (default=None)     | Determines the number of milliseconds that Eyes will wait before capturing a screenshot on this sessions's tests                  |
+            | Send DOM (default=False)                   | Sets if DOM information should be sent for this session's checkpoints.                                                            |    
 
         Creates an instance of the AppiumLibrary or SeleniumLibrary webdriver, given the library argument.
 
@@ -112,6 +114,8 @@ class SessionKeywords(object):
             serverurl = self.library_arguments["serverurl"]
         if save_new_tests is None:
             save_new_tests = self.library_arguments["save_new_tests"]
+        if matchtimeout is None:
+            matchtimeout = self.library_arguments["matchtimeout"]
 
         if serverurl is None:
             variables.eyes = Eyes()
@@ -159,6 +163,8 @@ class SessionKeywords(object):
             variables.eyes.save_new_tests = save_new_tests
         if wait_before_screenshots is not None:
             variables.eyes.wait_before_screenshots = int(wait_before_screenshots)
+        if send_dom is not None:
+            variables.eyes.send_dom = send_dom
 
         if width is None and height is None:
             variables.driver = variables.eyes.open(driver, appname, testname)

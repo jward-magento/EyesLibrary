@@ -40,7 +40,8 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
     - Enable Eyes Logs (enable_eyes_log)
     - OS Name (osname)
     - Browser Name (browsername)
-    - Server URL (serverurl)      
+    - Server URL (serverurl)
+    - Match Timeout (matchtimeout)     
     - Save New Tests (save_new_tests)        
 
     Example:
@@ -123,6 +124,7 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
         osname=None,
         browsername=None,
         serverurl=None,
+        matchtimeout=None,
         save_new_tests=True,
     ):
 
@@ -136,6 +138,7 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
             "osname": osname,
             "browsername": browsername,
             "serverurl": serverurl,
+            "matchtimeout": matchtimeout,
             "save_new_tests": save_new_tests,
         }
 
