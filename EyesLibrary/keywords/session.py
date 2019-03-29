@@ -43,7 +43,7 @@ class SessionKeywords(object):
         stitchmode=None,
         matchtimeout=None,
         hidescrollbars=False,
-        save_new_tests=True,
+        save_new_tests=None,
         wait_before_screenshots=None,
     ):
         """
@@ -110,6 +110,8 @@ class SessionKeywords(object):
             enable_eyes_log = self.library_arguments["enable_eyes_log"]
         if serverurl is None:
             serverurl = self.library_arguments["serverurl"]
+        if save_new_tests is None:
+            save_new_tests = self.library_arguments["save_new_tests"]
 
         if serverurl is None:
             variables.eyes = Eyes()
@@ -153,7 +155,7 @@ class SessionKeywords(object):
             variables.eyes.match_timeout = int(matchtimeout)
         if hidescrollbars is not False:
             variables.eyes.hide_scrollbars = hidescrollbars
-        if save_new_tests is not True:
+        if save_new_tests is not None:
             variables.eyes.save_new_tests = save_new_tests
         if wait_before_screenshots is not None:
             variables.eyes.wait_before_screenshots = int(wait_before_screenshots)
