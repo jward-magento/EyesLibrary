@@ -340,3 +340,112 @@ class CheckKeywords:
         if send_dom is not None:
             variables.eyes.send_dom = original_send_dom
 
+    def check_eyes_region_in_frame_by_selector(
+        self,
+        framereference,
+        value,
+        name,
+        selector="id",
+        enable_eyes_log=None,
+        enable_http_debug_log=False,
+        matchtimeout=-1,
+        target=None,
+        hidescrollbars=None,
+        wait_before_screenshots=None,
+        send_dom=None
+    ):
+        """
+        Takes a snapshot of the region of the element found by calling
+        find_element(by, value) inside a specific frame, 
+        and matches it with the expected output. With a choice from eight
+        selectors, to check by on `Using Selectors` section.
+
+            | =Arguments=                            | =Description=                                                                                                                                                      |
+            | Frame Reference                        | Defines the frame to be checked. See below what arguments must be used as frame reference.                                                                         |
+            | Value (string)                         | The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown                                                                             |
+            | Name (string)                          | Name that will be given to region in Eyes.                                                                                                                         |
+            | Selector (default=id)                  | This will decide what element will be located. The supported selectors include: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME. |
+            | Enable Eyes Log (default=False)        | Determines if the trace logs of Applitools Eyes SDK are activated for this test. Overrides the argument set on `Open Eyes Session`                                 |
+            | Enable HTTP Debug Log (default=False)  | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                                                                     |
+            | Match Timeout (default=None)           | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test                                              |
+            | Hide Scrollbars (default=None)         | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                                       |
+            | Wait Before Screenshots (default=None) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session`          |
+            | Send DOM (default=False)               | Sets if DOM information should be sent for this checkpoint.                                                                                                        |    
+
+        *Example:*
+            | Check Eyes Region In Frame By Selector | FrameName | .first.expanded.dropdown | CssElement | CSS SELECTOR | True | True | 5000 |
+
+        *Frame Reference*
+
+        In order to locate the correct frame, you must use one of the following references:
+         - String: Name of the frame
+         - Int: Index of frame, relative to the list of frames on the page
+         - EyesWebElement or WebElement: The frame element
+
+        *Note (Safari on mobile):*
+        When checking an element, provide osname=iOS and browsername=Safari on `Open Eyes Session`.
+        Due to an issue regarding the height of the address bar not being taken into account when the screenshot is taken, a temporary workaround is in place.
+        In order to screenshot the correct element, it is added the value of 71 to the y coordinate of the element.
+
+        """
+
+        if enable_eyes_log is not None:
+            original_logging = variables.is_logger_open
+            utils.manage_logging(enable_eyes_log, enable_http_debug_log)
+
+        if hidescrollbars is not None:
+            original_hidescrollbars = variables.eyes.hide_scrollbars
+            variables.eyes.hide_scrollbars = hidescrollbars
+
+        if wait_before_screenshots is not None:
+            original_wait_before_screenshots = variables.eyes.wait_before_screenshots
+            variables.eyes.wait_before_screenshots = int(wait_before_screenshots)
+
+        if send_dom is not None:
+            original_send_dom = variables.eyes.send_dom
+            variables.eyes.send_dom = send_dom
+
+        if type(framereference) is unicode:
+            try:
+                framereference = int(framereference)
+            except:
+                framereference = str(framereference)
+
+        selector_strategy = utils.get_selector_strategy(selector)
+
+        # Temporary workaround in order to capture the correct element on Safari
+        # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
+        # Current address bar height: 71
+        if variables.eyes.host_app == "Safari" and variables.eyes.host_os == "iOS":
+
+            with variables.driver.switch_to.frame_and_back(framereference):
+
+                element = variables.driver.find_element(selector_strategy, value)
+                location = element.location
+                size = element.size
+
+                variables.eyes.check_region(
+                    Region(
+                        location.__getitem__("x"),
+                        location.__getitem__("y") + 71,
+                        size.__getitem__("width"),
+                        size.__getitem__("height"),
+                    ),
+                    name,
+                    matchtimeout,
+                    target,
+                )
+        else:
+            variables.eyes.check_region_in_frame_by_selector(
+                framereference, selector_strategy, value, name, matchtimeout, target
+            )
+
+        if hidescrollbars is not None:
+            variables.eyes.hide_scrollbars = original_hidescrollbars
+        if enable_eyes_log is not None:
+            utils.manage_logging(original_logging, enable_http_debug_log)
+        if wait_before_screenshots is not None:
+            variables.eyes.wait_before_screenshots = original_wait_before_screenshots
+        if send_dom is not None:
+            variables.eyes.send_dom = original_send_dom
+

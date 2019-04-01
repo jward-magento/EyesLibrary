@@ -71,7 +71,7 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
 
     = Using selectors =
 
-    Using the keywords `Check Eyes Region By Selector`, `Ignore Region By Selector` or `Floating Region By Selector`.
+    Using the keywords `Check Eyes Region By Selector`, `Check Eyes Region In Frame By Selector`, `Ignore Region By Selector`, or `Floating Region By Selector`.
     The following strategies are supported:
 
     | =Strategy=        | =Example=                                                                                                   | =Description=                                |
