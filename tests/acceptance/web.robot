@@ -75,7 +75,6 @@ Setup for Check Region in Frame
     Unselect Frame
     Open Eyes Session                         ${API KEY}                                                          EyesLibraryBaseline                        ${test name}               width=1300                            height=900                 enable_eyes_log=${true}
 
-
 Setup for BatchName
     [Arguments]                               ${test name}                                                        ${batchname}
     Open Browser                              http://www.google.com                                               gc

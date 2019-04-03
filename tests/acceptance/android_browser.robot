@@ -1,6 +1,7 @@
 *** Settings ***
 Library     AppiumLibrary
 Library     EyesLibrary
+Library     SeleniumLibrary
 Resource    resources/common.robot
 Resource    resources/mobile.robot
 Resource    resources/android.robot
@@ -99,7 +100,7 @@ Integrate SeleniumLibrary with AppiumLibrary
 Accept Cookies
     Click Element                                   xpath=//*[@id="sncmp-banner-btn-agree"]
     Select Frame                                    xpath=//iframe[@id="iframeResult"]
-    Select Frame                                    xpath=//iframe[@src="https://www.w3schools.com"]                                                 xpath=//*[text()="LEARN HTML"]
+    Select Frame                                    xpath=//iframe[@src="https://www.w3schools.com"]                                                
     Scroll Element Into View                        xpath=//*[text()="LEARN HTML"]
     Click Element                                   xpath=//*[@id="sncmp-banner-btn-agree"]
     Unselect Frame
