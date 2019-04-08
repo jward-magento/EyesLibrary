@@ -12,106 +12,155 @@ ${SIDE 3 ID}          side3
 
 *** Test Cases ***
 Equilateral Triangle - Chrome
-    [Setup]                          Setup                    Equilateral Triangle             Equilateral Test Draft 1    gc
+    [Setup]                        Setup                    Equilateral Triangle                    Equilateral Test Draft 1         gc
     Check Equilateral Triangle
-    [Teardown]                       Teardown
+    [Teardown]                     Teardown
 
 Equilateral Triangle - Firefox
-    [Setup]                          Setup                    Equilateral Triangle             Equilateral Test Draft 1    ff
+    [Setup]                        Setup                    Equilateral Triangle                    Equilateral Test Draft 1         ff
     Check Equilateral Triangle
-    [Teardown]                       Teardown
-    
+    [Teardown]                     Teardown
+
 Equilateral Triangle - Edge
-    [Setup]                          Setup                    Equilateral Triangle             Equilateral Test Draft 1    edge
+    [Setup]                        Setup                    Equilateral Triangle                    Equilateral Test Draft 1         edge
     Check Equilateral Triangle
-    [Teardown]                       Teardown
+    [Teardown]                     Teardown
 
 Isosceles Triangle - Chrome
-    [Setup]                          Setup                    Isosceles Triangle               Isosceles Test Draft 1      gc
+    [Setup]                        Setup                    Isosceles Triangle                      Isosceles Test Draft 1           gc
     Check Isosceles Triangle
-    [Teardown]                       Teardown
+    [Teardown]                     Teardown
 
 Isosceles Triangle - Firefox
-    [Setup]                          Setup                    Isosceles Triangle               Isosceles Test Draft 1      ff
+    [Setup]                        Setup                    Isosceles Triangle                      Isosceles Test Draft 1           ff
     Check Isosceles Triangle
-    [Teardown]                       Teardown
+    [Teardown]                     Teardown
 
 Isosceles Triangle - Edge
-    [Setup]                          Setup                    Isosceles Triangle               Isosceles Test Draft 1      edge
+    [Setup]                        Setup                    Isosceles Triangle                      Isosceles Test Draft 1           edge
     Check Isosceles Triangle
-    [Teardown]                       Teardown
+    [Teardown]                     Teardown
 
 Scalene Triangle - Chrome
-    [Setup]                          Setup                    Scalene Triangle               Scalene Test Draft 1      gc
+    [Setup]                        Setup                    Scalene Triangle                        Scalene Test Draft 1             gc
     Check Scalene Triangle
-    [Teardown]                       Teardown
+    [Teardown]                     Teardown
 
 Scalene Triangle - Firefox
-    [Setup]                          Setup                    Scalene Triangle               Scalene Test Draft 1      ff
+    [Setup]                        Setup                    Scalene Triangle                        Scalene Test Draft 1             ff
     Check Scalene Triangle
-    [Teardown]                       Teardown
+    [Teardown]                     Teardown
 
 Scalene Triangle - Edge
-    [Setup]                          Setup                    Scalene Triangle               Scalene Test Draft 1      edge
+    [Setup]                        Setup                    Scalene Triangle                        Scalene Test Draft 1             edge
     Check Scalene Triangle
-    [Teardown]                       Teardown
-    
+    [Teardown]                     Teardown
+
 Invalid Triangle - Chrome
-    [Setup]                          Setup                    Invalid Triangle               Invalid Test Draft 1      gc
+    [Setup]                        Setup                    Invalid Triangle                        Invalid Test Draft 1             gc
     Check Invalid Triangle
-    [Teardown]                       Teardown
+    [Teardown]                     Teardown
 
 Invalid Triangle - Firefox
-    [Setup]                          Setup                    Invalid Triangle               Invalid Test Draft 1      ff
+    [Setup]                        Setup                    Invalid Triangle                        Invalid Test Draft 1             ff
     Check Invalid Triangle
-    [Teardown]                       Teardown
+    [Teardown]                     Teardown
 
 Invalid Triangle - Edge
-    [Setup]                          Setup                    Invalid Triangle               Invalid Test Draft 1      edge
+    [Setup]                        Setup                    Invalid Triangle                        Invalid Test Draft 1             edge
     Check Invalid Triangle
-    [Teardown]                       Teardown
-    
-    
+    [Teardown]                     Teardown
+
+
 Equilateral Triangle Baseline - Chrome
-    [Setup]                          Setup                    Equilateral Triangle               Equilateral Test Draft 2      gc
+    [Setup]                        Setup                    Equilateral Triangle                    Equilateral Test Draft 2         gc
     Check Equilateral Triangle
-    [Teardown]                       Teardown
-    
+    [Teardown]                     Teardown
+
 Isosceles Triangle Against Equilateral Triangle - Chrome
-    [Setup]                          Setup                    Equilateral Triangle               Equilateral Test Draft 2      gc
+    [Setup]                        Setup                    Equilateral Triangle                    Equilateral Test Draft 2         gc
     Check Isosceles Triangle
-    [Teardown]                       Teardown
+    [Teardown]                     Teardown
+
+Full Page - Chrome
+    [Setup]                        Setup                    Full Page                               Full Page Test Draft 1           gc
+    Check Eyes Window              Full Page                force_full_page_screenshot=${true}
+    [Teardown]                     Teardown
+
+Full Page - Firefox
+    [Setup]                        Setup                    Full Page                               Full Page Test Draft 1           ff
+    Check Eyes Window              Full Page                force_full_page_screenshot=${true}
+    [Teardown]                     Teardown
+
+Full Page - Edge
+    [Setup]                        Setup                    Full Page                               Full Page Test Draft 1           edge
+    Check Eyes Window              Full Page                force_full_page_screenshot=${true}
+    [Teardown]                     Teardown
+
+Full Page After Drawing One Triangle - Chrome
+    [Setup]                        Setup                    Full Page After Drawing One Triangle    Full Page Test Draft 2           gc
+    Click Element                  reset
+    Draw Triangle                  5                        5                                       9
+    Check Eyes Window              Full Page                force_full_page_screenshot=${true}
+    [Teardown]                     Teardown
+
+Full Page After Drawing One Triangle - Firefox
+    [Setup]                        Setup                    Full Page After Drawing One Triangle    Full Page Test Draft 2           ff
+    Click Element                  reset
+    Draw Triangle                  5                        5                                       9
+    Check Eyes Window              Full Page                force_full_page_screenshot=${true}
+    [Teardown]                     Teardown
+
+Full Page After Drawing One Triangle - Edge
+    [Setup]                        Setup                    Full Page After Drawing One Triangle    Full Page Test Draft 2           edge
+    Click Element                  reset
+    Draw Triangle                  5                        5                                       9
+    Check Eyes Window              Full Page                force_full_page_screenshot=${true}
+    [Teardown]                     Teardown
+
+Full Page Baseline - Chrome
+    [Setup]                        Setup                    Full Page                               Full Page Test Draft 3           gc
+    Check Eyes Window              Full Page                force_full_page_screenshot=${true}
+    [Teardown]                     Teardown
+
+Full Page After Drawing Two Triangles - Chrome
+    [Setup]                        Setup                    Full Page                               Full Page Test Draft 3           gc
+    Click Element                  reset
+    Draw Triangle                  4                        4                                       0
+    Draw Triangle                  9                        10                                      11
+    Check Eyes Window              Full Page                force_full_page_screenshot=${true}
+    [Teardown]                     Teardown
 
 *** Keywords ***
 Setup
-    [Arguments]                      ${test name}             ${baseline name}                 ${browser}
-    Open Browser                     ${URL}                   ${browser}
+    [Arguments]                    ${test name}             ${baseline name}                        ${browser}
+    Open Browser                   ${URL}                   ${browser}
     Maximize Browser Window
-    Open Eyes Session                testname=${test name}    baselinename=${baseline name}
+    Open Eyes Session              testname=${test name}    baselinename=${baseline name}           stitchmode=css
 
 Teardown
     Close All Browsers
     Close Eyes Session
 
 Draw Triangle
-    [Arguments]                      ${side 1}                ${side 2}                        ${side 3}
-    Input Text                       ${SIDE 1 ID}             ${side 1}
-    Input Text                       ${SIDE 2 ID}             ${side 2}
-    Input Text                       ${SIDE 3 ID}             ${side 3}
-    Click Button                     Draw Triangle
+    [Arguments]                    ${side 1}                ${side 2}                               ${side 3}
+    Input Text                     ${SIDE 1 ID}             ${side 1}
+    Input Text                     ${SIDE 2 ID}             ${side 2}
+    Input Text                     ${SIDE 3 ID}             ${side 3}
+    Click Button                   Draw Triangle
 
 Check Equilateral Triangle
-    Draw Triangle                    3                        3                                3
-    Wait Until Keyword Succeeds    30s    5s    Check Eyes Region By Selector    ${TRIANGLE DIV ID}       Equilateral Triangle
+    Draw Triangle                  3                        3                                       3
+    Wait Until Keyword Succeeds    30s                      5s                                      Check Eyes Region By Selector    ${TRIANGLE DIV ID}    Equilateral Triangle
 
 Check Isosceles Triangle
-    Draw Triangle                    4                        4                                5
-    Wait Until Keyword Succeeds    30s    5s    Check Eyes Region By Selector    ${TRIANGLE DIV ID}       Isosceles Triangle
+    Draw Triangle                  4                        4                                       5
+    Wait Until Keyword Succeeds    30s                      5s                                      Check Eyes Region By Selector    ${TRIANGLE DIV ID}    Isosceles Triangle
 
 Check Scalene Triangle
-    Draw Triangle                    3                        6                                4
-    Wait Until Keyword Succeeds    30s    5s    Check Eyes Region By Selector    ${TRIANGLE DIV ID}       Scalene Triangle
-    
+    Draw Triangle                  3                        6                                       4
+    Wait Until Keyword Succeeds    30s                      5s                                      Check Eyes Region By Selector    ${TRIANGLE DIV ID}    Scalene Triangle
+
 Check Invalid Triangle
-    Draw Triangle                    3                        3                                10
-    Wait Until Keyword Succeeds    30s    5s    Check Eyes Region By Selector    ${TRIANGLE DIV ID}       Invalid Triangle
+    Draw Triangle                  3                        3                                       10
+    Wait Until Keyword Succeeds    30s                      5s                                      Check Eyes Region By Selector    ${TRIANGLE DIV ID}    Invalid Triangle
