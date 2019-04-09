@@ -2,8 +2,8 @@
 Library     AppiumLibrary
 Library     EyesLibrary
 Resource    resources/common.robot
-Resource    resources/mobile.robot
 Resource    resources/ios.robot
+Resource    resources/mobile.robot
 
 *** Variable ***
 &{LOGO}     id=hplogo                 xpath=//*[@id="hplogo"]
@@ -53,7 +53,7 @@ Setup
     ...                                       browserName=Safari
     ...                                       automationName=XCUITest
     Go To Url                                 http://www.google.pt
-    Open Eyes Session                         ${API KEY}                                                          EyesLibrary                                        ${test name}      AppiumLibrary    enable_eyes_log=${true}
+    Open Eyes Session                         ${API KEY}                                                          EyesLibrary                                        ${test name}      AppiumLibrary    enable_eyes_log=${true}    osname=iOS    browsername=Safari
 
 Setup for Check Region in Frame
     [Arguments]                               ${test name}

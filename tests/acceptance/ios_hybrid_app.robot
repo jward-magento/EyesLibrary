@@ -2,8 +2,8 @@
 Library        AppiumLibrary
 Library        EyesLibrary
 Resource       resources/common.robot
-Resource       resources/mobile.robot
 Resource       resources/ios.robot
+Resource       resources/mobile.robot
 
 *** Variables ***
 &{TEST DIV}    xpath=//div[@class="app"]
@@ -46,6 +46,8 @@ Setup
     ...                              deviceName=${DEVICE NAME}
     ...                              app=https://github.com/joel-oliveira/EyesLibrary/raw/master/tests/resources/HelloWorld.zip
     ...                              automationName=XCUITest
+    ...                              osname=iOS 
+    ...                              browsername=Safari
     @{CONTEXTS}=                     Get Contexts
     Switch To Context                @{CONTEXTS}[1]
     Open Eyes Session                ${API KEY}
