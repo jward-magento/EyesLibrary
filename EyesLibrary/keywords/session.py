@@ -39,10 +39,10 @@ class SessionKeywords(object):
         branchname=None,
         parentbranch=None,
         serverurl=None,
-        force_full_page_screenshot=False,
+        force_full_page_screenshot=None,
         stitchmode=None,
         matchtimeout=None,
-        hidescrollbars=False,
+        hidescrollbars=None,
         save_new_tests=None,
         wait_before_screenshots=None,
         send_dom=None,
@@ -70,13 +70,13 @@ class SessionKeywords(object):
             | Branch Name (default=None)                 | The branch to use to check test                                                                                                   |
             | Parent Branch (default=None)               | Parent Branch to base the new Branch on                                                                                           |
             | Server URL (default=None)                  | The URL of the Eyes server. If not provided then your test will run on the public cloud.                                          |
-            | Force Full Page Screenshot (default=False) | Will force the browser to take a screenshot of whole page.                                                                        |
+            | Force Full Page Screenshot (default=None)  | Will force the browser to take a screenshot of whole page.                                                                        |
             | Stitch Mode (default=None)                 | Type of stitching used for full page screenshots - can be CSS or SCROLL                                                           |
             | Match Timeout (default=None)               | Determines how much time in milliseconds Eyes continues to retry the matching before declaring a mismatch on this session's tests |
-            | Hide Scrollbars (default=False)            | Sets if the scrollbars are hidden this session's tests, by passing 'True' or 'False' in the variable.                             |
+            | Hide Scrollbars (default=None)             | Sets if the scrollbars are hidden this session's tests, by passing 'True' or 'False' in the variable.                             |
             | Save New Tests (default=True)              | Sets if the new tests on this session are automatically accepted, by passing 'True' or 'False' in the variable.                   |
             | Wait Before Screenshots (default=None)     | Determines the number of milliseconds that Eyes will wait before capturing a screenshot on this sessions's tests                  |
-            | Send DOM (default=False)                   | Sets if DOM information should be sent for this session's checkpoints.                                                            |    
+            | Send DOM (default=None)                    | Sets if DOM information should be sent for this session's checkpoints.                                                            |    
 
         Creates an instance of the AppiumLibrary or SeleniumLibrary webdriver, given the library argument.
 
@@ -123,7 +123,6 @@ class SessionKeywords(object):
             variables.eyes = Eyes(serverurl)
 
         variables.eyes.api_key = apikey
-        variables.eyes.force_full_page_screenshot = force_full_page_screenshot
 
         try:
             libraryInstance = BuiltIn().get_library_instance(library)
@@ -153,12 +152,14 @@ class SessionKeywords(object):
             variables.eyes.parent_branch_name = parentbranch
         if branchname is not None:
             variables.eyes.branch_name = branchname
+        if osname is not None:
+            variables.eyes.host_os = osname
         if stitchmode is not None:
             variables.eyes.stitch_mode = utils.get_stitch_mode(stitchmode)
         if matchtimeout is not None:
             variables.eyes.match_timeout = int(matchtimeout)
-        if hidescrollbars is not False:
-            variables.eyes.hide_scrollbars = hidescrollbars
+        if force_full_page_screenshot is not None:
+            variables.eyes.force_full_page_screenshot = force_full_page_screenshot
         if save_new_tests is not None:
             variables.eyes.save_new_tests = save_new_tests
         if wait_before_screenshots is not None:

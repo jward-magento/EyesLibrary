@@ -36,13 +36,13 @@ class CheckKeywords:
 
             | =Arguments=                                | =Description=                                                                                                                                             |
             | Name (string)                              | Name that will be given to region in Eyes.                                                                                                                |
-            | Force Full Page Screenshot (default=False) | Will force the browser to take a screenshot of whole page. Define "Stitch Mode" argument on `Open Eyes Session` if necessary                              |
+            | Force Full Page Screenshot (default=None)  | Will force the browser to take a screenshot of whole page. Define "Stitch Mode" argument on `Open Eyes Session` if necessary                              |
             | Enable Eyes Log (default=False)            | Determines if the trace logs of Applitools Eyes SDK are activated for this test. Overrides the argument set on `Open Eyes Session`                        |
             | Enable HTTP Debug Log (default=False)      | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                                                            |
             | Match Timeout (default=None)               | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test                                     |
             | Hide Scrollbars (default=None)             | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                              |
             | Wait Before Screenshots (default=None)     | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session` |
-            | Send DOM (default=False)                   | Sets if DOM information should be sent for this checkpoint.                                                                                               |    
+            | Send DOM (default=None)                    | Sets if DOM information should be sent for this checkpoint.                                                                                               |    
 
         *Example:*
             | Check Eyes Window | Google Homepage | True | True | True | 5000 |
@@ -135,7 +135,7 @@ class CheckKeywords:
             | Match Timeout (default=None)           | Determines how much time in milliseconds  Eyes continue to retry the matching before declaring a mismatch on this test                                    |
             | Hide Scrollbars (default=None)         | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                              |
             | Wait Before Screenshots (default=None) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session` |
-            | Send DOM (default=False)               | Sets if DOM information should be sent for this checkpoint.                                                                                               |    
+            | Send DOM (default=None)                | Sets if DOM information should be sent for this checkpoint.                                                                                               |    
 
         *Example:*
             | Check Eyes Region | 100 | 150 | 500 | 120 | Google Logo | True | True | 5000 |
@@ -192,7 +192,7 @@ class CheckKeywords:
             | Match Timeout (default=None)           | Determines how much time in milliseconds  Eyes continue to retry the matching before declaring a mismatch on this test                                    |
             | Hide Scrollbars (default=None)         | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                              |
             | Wait Before Screenshots (default=None) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session` |
-            | Send DOM (default=False)               | Sets if DOM information should be sent for this checkpoint.                                                                                               |    
+            | Send DOM (default=None)                | Sets if DOM information should be sent for this checkpoint.                                                                                               |    
 
         *Example:*
             | ${element}=                  | Get Element | //*[@id="hplogo"] |
@@ -279,7 +279,7 @@ class CheckKeywords:
             | Match Timeout (default=None)           | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test                                              |
             | Hide Scrollbars (default=None)         | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                                       |
             | Wait Before Screenshots (default=None) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session`          |
-            | Send DOM (default=False)               | Sets if DOM information should be sent for this checkpoint.                                                                                                        |    
+            | Send DOM (default=None)                | Sets if DOM information should be sent for this checkpoint.                                                                                                        |    
 
         *Example:*
             | Check Eyes Region By Selector | .first.expanded.dropdown | CssElement | CSS SELECTOR | True | True | 5000 |
@@ -370,7 +370,7 @@ class CheckKeywords:
             | Match Timeout (default=None)           | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test                                              |
             | Hide Scrollbars (default=None)         | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                                       |
             | Wait Before Screenshots (default=None) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session`          |
-            | Send DOM (default=False)               | Sets if DOM information should be sent for this checkpoint.                                                                                                        |    
+            | Send DOM (default=None)                | Sets if DOM information should be sent for this checkpoint.                                                                                                        |    
 
         *Example:*
             | Check Eyes Region In Frame By Selector | FrameName | .first.expanded.dropdown | CssElement | CSS SELECTOR | True | True | 5000 |
