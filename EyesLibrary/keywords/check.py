@@ -28,22 +28,24 @@ class CheckKeywords:
         target=None,
         hidescrollbars=None,
         wait_before_screenshots=None,
-        send_dom=None
+        send_dom=None,
+        matchlevel=None
     ):
         """
         Takes a snapshot from the browser using the web driver and matches
         it with the expected output.
 
-            | =Arguments=                                | =Description=                                                                                                                                             |
-            | Name (string)                              | Name that will be given to region in Eyes.                                                                                                                |
-            | Force Full Page Screenshot (default=None)  | Will force the browser to take a screenshot of whole page. Define "Stitch Mode" argument on `Open Eyes Session` if necessary                              |
-            | Enable Eyes Log (default=False)            | Determines if the trace logs of Applitools Eyes SDK are activated for this test. Overrides the argument set on `Open Eyes Session`                        |
-            | Enable HTTP Debug Log (default=False)      | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                                                            |
-            | Match Timeout (default=None)               | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test                                     |
-            | Hide Scrollbars (default=None)             | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                              |
-            | Wait Before Screenshots (default=None)     | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session` |
-            | Send DOM (default=None)                    | Sets if DOM information should be sent for this checkpoint.                                                                                               |    
-
+            | =Arguments=                               | =Description=                                                                                                                                             |
+            | Name (string)                             | Name that will be given to region in Eyes.                                                                                                                |
+            | Force Full Page Screenshot (default=None) | Will force the browser to take a screenshot of whole page. Define "Stitch Mode" argument on `Open Eyes Session` if necessary                              |
+            | Enable Eyes Log (default=False)           | Determines if the trace logs of Applitools Eyes SDK are activated for this test. Overrides the argument set on `Open Eyes Session`                        |
+            | Enable HTTP Debug Log (default=False)     | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                                                            |
+            | Match Timeout (default=None)              | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test                                     |
+            | Hide Scrollbars (default=None)            | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                              |
+            | Wait Before Screenshots (default=None)    | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session` |
+            | Send DOM (default=None)                   | Sets if DOM information should be sent for this checkpoint.                                                                                               |    
+            | Match Level (default=None)                | The match level for the comparison of this test - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
+        
         *Example:*
             | Check Eyes Window | Google Homepage | True | True | True | 5000 |
 
@@ -74,6 +76,10 @@ class CheckKeywords:
             original_send_dom = variables.eyes.send_dom
             variables.eyes.send_dom = send_dom
 
+        if matchlevel is not None:
+            original_matchlevel = variables.eyes.match_level
+            variables.eyes.match_level = utils.get_match_level(matchlevel)
+
         # Temporary workaround in order to capture the correct element on Safari
         # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
         # Current address bar height: 71
@@ -101,6 +107,8 @@ class CheckKeywords:
             variables.eyes.wait_before_screenshots = original_wait_before_screenshots
         if send_dom is not None:
             variables.eyes.send_dom = original_send_dom
+        if matchlevel is not None:
+            variables.eyes.match_level = original_matchlevel
 
     def check_eyes_region(
         self,
@@ -115,7 +123,9 @@ class CheckKeywords:
         target=None,
         hidescrollbars=None,
         wait_before_screenshots=None,
-        send_dom=None
+        send_dom=None,
+        stitch_content=None,
+        matchlevel=None
     ):
         """
         Takes a snapshot of the given region from the browser using a Region
@@ -136,7 +146,9 @@ class CheckKeywords:
             | Hide Scrollbars (default=None)         | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                              |
             | Wait Before Screenshots (default=None) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session` |
             | Send DOM (default=None)                | Sets if DOM information should be sent for this checkpoint.                                                                                               |    
-
+            | Stitch Content (default=None)          | Determines if Eyes will scroll this region to take a full region screenshot, when the region is scrollable                                                |    
+            | Match Level (default=None)             | The match level for the comparison of this test - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
+        
         *Example:*
             | Check Eyes Region | 100 | 150 | 500 | 120 | Google Logo | True | True | 5000 |
         """
@@ -156,8 +168,16 @@ class CheckKeywords:
             original_send_dom = variables.eyes.send_dom
             variables.eyes.send_dom = send_dom
 
+        if stitch_content is not None:
+            original_stitch_content = variables.stitch_content
+            variables.stitch_content = stitch_content
+
+        if matchlevel is not None:
+            original_matchlevel = variables.eyes.match_level
+            variables.eyes.match_level = utils.get_match_level(matchlevel)
+
         region = Region(float(left), float(top), float(width), float(height))
-        variables.eyes.check_region(region, name, matchtimeout, target)
+        variables.eyes.check_region(region, name, matchtimeout, target, variables.stitch_content)
 
         if hidescrollbars is not None:
             variables.eyes.hide_scrollbars = original_hidescrollbars
@@ -167,6 +187,10 @@ class CheckKeywords:
             variables.eyes.wait_before_screenshots = original_wait_before_screenshots
         if send_dom is not None:
             variables.eyes.send_dom = original_send_dom
+        if stitch_content is not None:
+            variables.stitch_content = original_stitch_content
+        if matchlevel is not None:
+            variables.eyes.match_level = original_matchlevel
 
     def check_eyes_region_by_element(
         self,
@@ -178,7 +202,9 @@ class CheckKeywords:
         target=None,
         hidescrollbars=None,
         wait_before_screenshots=None,
-        send_dom=None
+        send_dom=None,
+        stitch_content=None,
+        matchlevel=None
     ):
         """
         Takes a snapshot of the region of the given element from the browser
@@ -193,7 +219,9 @@ class CheckKeywords:
             | Hide Scrollbars (default=None)         | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                              |
             | Wait Before Screenshots (default=None) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session` |
             | Send DOM (default=None)                | Sets if DOM information should be sent for this checkpoint.                                                                                               |    
-
+            | Stitch Content (default=False)         | Determines if Eyes will scroll this element to take a full element screenshot, when the element is scrollable                                             |    
+            | Match Level (default=None)             | The match level for the comparison of this test - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
+        
         *Example:*
             | ${element}=                  | Get Element | //*[@id="hplogo"] |
             | Check Eyes Region By Element | ${element}  | ElementName       | True | True | 5000 |
@@ -218,6 +246,14 @@ class CheckKeywords:
         if send_dom is not None:
             original_send_dom = variables.eyes.send_dom
             variables.eyes.send_dom = send_dom
+        
+        if stitch_content is not None:
+            original_stitch_content = variables.stitch_content
+            variables.stitch_content = stitch_content
+
+        if matchlevel is not None:
+            original_matchlevel = variables.eyes.match_level
+            variables.eyes.match_level = utils.get_match_level(matchlevel)
 
         # Temporary workaround in order to capture the correct element on Safari
         # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
@@ -236,9 +272,10 @@ class CheckKeywords:
                 name,
                 matchtimeout,
                 target,
+                variables.stitch_content
             )
         else:
-            variables.eyes.check_region_by_element(element, name, matchtimeout, target)
+            variables.eyes.check_region_by_element(element, name, matchtimeout, target, variables.stitch_content)
 
         if hidescrollbars is not None:
             variables.eyes.hide_scrollbars = original_hidescrollbars
@@ -248,6 +285,10 @@ class CheckKeywords:
             variables.eyes.wait_before_screenshots = original_wait_before_screenshots
         if send_dom is not None:
             variables.eyes.send_dom = original_send_dom
+        if stitch_content is not None:
+            variables.stitch_content = original_stitch_content
+        if matchlevel is not None:
+            variables.eyes.match_level = original_matchlevel
 
     def check_eyes_region_by_selector(
         self,
@@ -260,7 +301,9 @@ class CheckKeywords:
         target=None,
         hidescrollbars=None,
         wait_before_screenshots=None,
-        send_dom=None
+        send_dom=None,
+        stitch_content=None,
+        matchlevel=None
     ):
         """
         Takes a snapshot of the region of the element found by calling
@@ -280,7 +323,9 @@ class CheckKeywords:
             | Hide Scrollbars (default=None)         | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                                       |
             | Wait Before Screenshots (default=None) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session`          |
             | Send DOM (default=None)                | Sets if DOM information should be sent for this checkpoint.                                                                                                        |    
-
+            | Stitch Content (default=False)         | Determines if Eyes will scroll this element to take a full element screenshot, when the element is scrollable                                                      |    
+            | Match Level (default=None)             | The match level for the comparison of this test - can be STRICT, LAYOUT, CONTENT or EXACT                                                                          |
+        
         *Example:*
             | Check Eyes Region By Selector | .first.expanded.dropdown | CssElement | CSS SELECTOR | True | True | 5000 |
 
@@ -305,6 +350,14 @@ class CheckKeywords:
             original_send_dom = variables.eyes.send_dom
             variables.eyes.send_dom = send_dom
 
+        if stitch_content is not None:
+            original_stitch_content = variables.stitch_content
+            variables.stitch_content = stitch_content
+
+        if matchlevel is not None:
+            original_matchlevel = variables.eyes.match_level
+            variables.eyes.match_level = utils.get_match_level(matchlevel)
+
         selector_strategy = utils.get_selector_strategy(selector)
 
         # Temporary workaround in order to capture the correct element on Safari
@@ -325,10 +378,11 @@ class CheckKeywords:
                 name,
                 matchtimeout,
                 target,
+                variables.stitch_content
             )
         else:
             variables.eyes.check_region_by_selector(
-                selector_strategy, value, name, matchtimeout, target
+                selector_strategy, value, name, matchtimeout, target, variables.stitch_content
             )
 
         if hidescrollbars is not None:
@@ -339,6 +393,11 @@ class CheckKeywords:
             variables.eyes.wait_before_screenshots = original_wait_before_screenshots
         if send_dom is not None:
             variables.eyes.send_dom = original_send_dom
+        if stitch_content is not None:
+            variables.stitch_content = original_stitch_content
+        if matchlevel is not None:
+            variables.eyes.match_level = original_matchlevel
+
 
     def check_eyes_region_in_frame_by_selector(
         self,
@@ -352,7 +411,9 @@ class CheckKeywords:
         target=None,
         hidescrollbars=None,
         wait_before_screenshots=None,
-        send_dom=None
+        send_dom=None,
+        stitch_content=None,
+        matchlevel=None
     ):
         """
         Takes a snapshot of the region of the element found by calling
@@ -371,7 +432,9 @@ class CheckKeywords:
             | Hide Scrollbars (default=None)         | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                                       |
             | Wait Before Screenshots (default=None) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session`          |
             | Send DOM (default=None)                | Sets if DOM information should be sent for this checkpoint.                                                                                                        |    
-
+            | Stitch Content (default=False)         | Determines if Eyes will scroll this element to take a full element screenshot, when the element is scrollable                                                      |    
+            | Match Level (default=None)             | The match level for the comparison of this test - can be STRICT, LAYOUT, CONTENT or EXACT                                                                          |
+        
         *Example:*
             | Check Eyes Region In Frame By Selector | FrameName | .first.expanded.dropdown | CssElement | CSS SELECTOR | True | True | 5000 |
 
@@ -405,6 +468,14 @@ class CheckKeywords:
             original_send_dom = variables.eyes.send_dom
             variables.eyes.send_dom = send_dom
 
+        if stitch_content is not None:
+            original_stitch_content = variables.stitch_content
+            variables.stitch_content = stitch_content
+
+        if matchlevel is not None:
+            original_matchlevel = variables.eyes.match_level
+            variables.eyes.match_level = utils.get_match_level(matchlevel)
+
         if type(framereference) is unicode:
             try:
                 framereference = int(framereference)
@@ -434,10 +505,11 @@ class CheckKeywords:
                     name,
                     matchtimeout,
                     target,
+                    variables.stitch_content
                 )
         else:
             variables.eyes.check_region_in_frame_by_selector(
-                framereference, selector_strategy, value, name, matchtimeout, target
+                framereference, selector_strategy, value, name, matchtimeout, target, variables.stitch_content
             )
 
         if hidescrollbars is not None:
@@ -448,4 +520,9 @@ class CheckKeywords:
             variables.eyes.wait_before_screenshots = original_wait_before_screenshots
         if send_dom is not None:
             variables.eyes.send_dom = original_send_dom
+        if stitch_content is not None:
+            variables.stitch_content = original_stitch_content
+        if matchlevel is not None:
+            variables.eyes.match_level = original_matchlevel
+
 

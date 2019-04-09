@@ -56,11 +56,26 @@ Full Page Screenshot
     Check Eyes Window                         Full Page
     [Teardown]                                Teardown
 
+Match Level
+    [Setup]                                   Setup                                                               Web - Match Level
+    Check Eyes Window                         Full Page Strict                                                    matchlevel=strict
+    Check Eyes Window                         Full Page Layout
+    [Teardown]                                Teardown
+
+Stitch Content
+    [Setup]                                   Setup for Stitch Mode                                               Stitch Content
+    Check Eyes Region By Selector             overflowing-div-image                                               Div                                        stitch_content=${true}
+    [Teardown]                                Teardown
+
+Sapo Noticias
+    [Setup]                                   Setup for Sapo                                                      Web - Sapo Noticias
+    Check Eyes Region By Selector             noticias                                                            Sapo Noticias
+    [Teardown]                                Teardown
+
 *** Keywords ***
 Setup
     [Arguments]                               ${test name}
     Open Browser                              http://www.google.com                                               gc
-    #Open Browser                     http://www.google.com      ff
     Maximize Browser Window
     Open Eyes Session                         ${API KEY}                                                          EyesLibraryBaseline                        ${test name}               matchlevel=layout                     enable_eyes_log=${true}
 
@@ -86,6 +101,20 @@ Setup for Full Page Screenshot
     Open Browser                              http://www.sapo.pt                                                  gc
     Maximize Browser Window
     Open Eyes Session                         testname=${test name}                                               matchlevel=layout                          enable_eyes_log=${true}    force_full_page_screenshot=${true}    stitchmode=css
+
+Setup for Sapo
+    [Arguments]                               ${test name}
+    Open Browser                              http://www.sapo.pt                                                  gc
+    Maximize Browser Window
+    Wait Until Element Is Visible             xpath=//*[contains(@class, "footer_acceptAll--27fFv")]
+    Click Element                             xpath=//*[contains(@class, "footer_acceptAll--27fFv")]
+    Open Eyes Session                         ${API KEY}                                                          EyesLibrary                                ${test name}               enable_eyes_log=${true}
+
+Setup for Stitch Mode
+    [Arguments]                               ${test name}
+    Open Browser                              http://applitools.github.io/demo/TestPages/FramesTestPage/          gc
+    Maximize Browser Window
+    Open Eyes Session                         ${API KEY}                                                          EyesLibrary                                ${test name}               enable_eyes_log=${true}
 
 Teardown
     Close All Browsers
