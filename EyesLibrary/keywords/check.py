@@ -124,7 +124,6 @@ class CheckKeywords:
         hidescrollbars=None,
         wait_before_screenshots=None,
         send_dom=None,
-        stitch_content=None,
         matchlevel=None
     ):
         """
@@ -146,7 +145,6 @@ class CheckKeywords:
             | Hide Scrollbars (default=None)         | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable.                                                              |
             | Wait Before Screenshots (default=None) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session` |
             | Send DOM (default=None)                | Sets if DOM information should be sent for this checkpoint.                                                                                               |    
-            | Stitch Content (default=None)          | Determines if Eyes will scroll this region to take a full region screenshot, when the region is scrollable                                                |    
             | Match Level (default=None)             | The match level for the comparison of this test - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
         
         *Example:*
@@ -168,16 +166,12 @@ class CheckKeywords:
             original_send_dom = variables.eyes.send_dom
             variables.eyes.send_dom = send_dom
 
-        if stitch_content is not None:
-            original_stitch_content = variables.stitch_content
-            variables.stitch_content = stitch_content
-
         if matchlevel is not None:
             original_matchlevel = variables.eyes.match_level
             variables.eyes.match_level = utils.get_match_level(matchlevel)
 
         region = Region(float(left), float(top), float(width), float(height))
-        variables.eyes.check_region(region, name, matchtimeout, target, variables.stitch_content)
+        variables.eyes.check_region(region, name, matchtimeout, target)
 
         if hidescrollbars is not None:
             variables.eyes.hide_scrollbars = original_hidescrollbars
@@ -187,8 +181,6 @@ class CheckKeywords:
             variables.eyes.wait_before_screenshots = original_wait_before_screenshots
         if send_dom is not None:
             variables.eyes.send_dom = original_send_dom
-        if stitch_content is not None:
-            variables.stitch_content = original_stitch_content
         if matchlevel is not None:
             variables.eyes.match_level = original_matchlevel
 
