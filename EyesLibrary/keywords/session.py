@@ -49,7 +49,7 @@ class SessionKeywords(object):
         stitch_content=False,
     ):
         """
-        Starts a session with the Applitools Eyes Website. See https://eyes.applitools.com/app/sessions/.
+        Starts a session with the Applitools Eyes Website.
 
         Some of the following arguments may also be defined on library import.
         See `Before running tests` or `Importing`

@@ -1,5 +1,17 @@
 # EyesLibrary for Robot Framework
 
+#### Table of Contents
+
+- [Introduction](#Introduction)
+- [Requirements](#Requirements)
+- [Installation](#Installation)
+- [Directory Layout](#Directory%20Layout)
+- [Usage](#Usage)
+- [Running the Demo](#Running%20the%20Demo)
+- [Things to Note When Using Applitools](#Things%20to%20Note%20When%20Using%20Applitools)
+- [Getting Help](#Getting%20Help)
+- [Credits](#Credits)
+
 ## Introduction
 
 EyesLibrary is a Robot Framework Library to automate visual software testing verification. EyesLibrary uses a Python SDK called [Eyes-Selenium](https://pypi.python.org/pypi/eyes-selenium) from the tool [Applitools Eyes](http://applitools.com/), and can be used with the [SeleniumLibrary](https://github.com/robotframework/SeleniumLibrary) and/or the [AppiumLibrary](https://github.com/serhatbolsu/robotframework-appiumlibrary) .
@@ -110,7 +122,7 @@ For example, to run the Test Suite for Web:
 
 ## Getting Help
 
-To be defined.
+To be defined. It might be helpful to read [Applitools Documentation](https://applitools.com/docs).
 
 ## Credits
 

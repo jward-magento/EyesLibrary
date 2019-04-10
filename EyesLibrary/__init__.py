@@ -17,15 +17,18 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
     - `Writing tests`
         - `Using selectors`
         - `Defining Ignore and Floating regions`
+    - `Analysing the tests`
     - `Importing`
     - `Shortcuts`
     - `Keywords`
 
     = Before running tests =
 
-    In order to run EyesLibrary and return results, you have to create a free account https://applitools.com/sign-up/ with Applitools.
-    You can retrieve your API key from the applitools website and that will need to be passed in your Open Eyes Session keyword.
-
+    In order to run EyesLibrary and return results, you have to create a [https://applitools.com/sign-up/ | free account] with Applitools.
+    You can retrieve your API key from the Applitools Eyes Test Manager, that will need to be passed in your Open Eyes Session keyword.
+        
+    You may also want to read [https://applitools.com/docs | Applitools documentation] in order to better understand how Eyes works.
+    
     Prior to running tests, EyesLibrary must first be imported into your Robot test suite.
 
     Example:
@@ -45,23 +48,32 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
     - Save New Tests (save_new_tests)        
 
     Example:
-        | Library | EyesLibrary | ApiKey | AppName | TestName | SeleniumLibrary | Layout | True | Windows | Firefox | https://myserver.com | False |
+        | Library | EyesLibrary | ApiKey | AppName | TestName | SeleniumLibrary | Layout | True | Windows | Firefox | https://myserver.com | 5000 | False |
         
     = Writing tests =
 
     When writing the tests, the following structure must be adopted:
+    
+    1. *Open Eyes Session* 
 
-    | *Open Eyes Session* |
-    | A browser or application must be running when opening the session. To open a browser/application, consult the documentation for SeleniumLibrary and/or AppiumLibrary. |
-    | Afterwards, the session may be opened. See `Open Eyes Session`. |
-    | *Visual Checks* |
-    | Between opening and closing the session, you can run your visual checks. |
-    | See `Check Eyes Region`, `Check Eyes Region By Element`, `Check Eyes Region By Selector` and `Check Eyes Window` |
-    | You can also verify if there's an open session with `Eyes Session Is Open` |
-    | *Close Eyes Session* |
-    | See `Close Eyes Session`. |
+    A browser or application must be running when opening the session. To open a browser/application, consult the documentation for SeleniumLibrary and/or AppiumLibrary.
+    
+    Afterwards, the session may be opened. See `Open Eyes Session`.                                                                                                      
 
-    - Test Case Example:
+    2. *Visual Checks* 
+
+    Between opening and closing the session, you can run your visual checks.
+    
+    See `Check Eyes Region`, `Check Eyes Region By Element`, `Check Eyes Region By Selector` and `Check Eyes Window`.
+    
+    You can also verify if there's an open session with `Eyes Session Is Open`.
+    
+    3. *Close Eyes Session*
+
+    See `Close Eyes Session`.
+    
+    
+    Here's an entire test case example:
 
         | =Keywords=         | =Parameters=       |
         | Open Browser       | http://google.com/ | gc                  |                       
@@ -69,7 +81,7 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
         | Check Eyes Window  | Google Homepage    |                              
         | Close Eyes Session | 
 
-    = Using selectors =
+    == Using selectors ==
 
     Using the keywords `Check Eyes Region By Selector`, `Check Eyes Region In Frame By Selector`, `Ignore Region By Selector`, or `Floating Region By Selector`.
     The following strategies are supported:
@@ -84,13 +96,13 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
     | NAME              | Check Eyes Region By Selector `|` my_element               `|` NameElement            `|` NAME              | Matches by @name attribute                   |
     | TAG NAME          | Check Eyes Region By Selector `|` div                      `|` TagNameElement         `|` TAG NAME          | Matches by HTML tag name                     |
     
-    = Defining Ignore and Floating regions =
+    == Defining Ignore and Floating regions ==
 
     A *Ignore Region* defines a region to be ignored on the checks, ie, to always be considered matching.
 
     A *Floating Region* defines an inner region to be matched and outer bounds in which the inner region can move and still be considered matching.
 
-    To get more details, consult [https://applitools.com/docs/api/eyes-sdk/index-gen/classindex-selenium-python.html| Applitools Eyes Documentation]
+    To get more details, consult [https://applitools.com/docs/api/eyes-sdk/index-gen/classindex-selenium-python.html|Applitools Eyes Documentation]
 
     These regions may be defined using the following keywords:
     - `Ignore Region By Coordinates`
@@ -107,6 +119,12 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
         | {target}=         | Ignore Region By Coordinates | 20                      | 100   | 200 | 100 |
         | {target}=         | Floating Region By Selector  | //div[@id='my_element'] | xpath | 20  | 10  | 10 | 20 | {target} |
         | Check Eyes Window | Google Homepage              | target={target}         |          
+    
+    = Analysing the tests =
+
+    In order to review and analyse the test results, you have to access the  [https://eyes.applitools.com/app/test-results/|Test Manager]
+
+    For more information on it, read the [https://applitools.com/docs/topics/test-manager/tm-overview.html|Test Manager Documentation]
     
     """
 
