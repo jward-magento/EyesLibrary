@@ -29,7 +29,7 @@ class CheckKeywords:
         hidescrollbars=None,
         wait_before_screenshots=None,
         send_dom=None,
-        matchlevel=None
+        matchlevel=None,
     ):
         """
         Takes a snapshot from the browser using the webdriver and matches
@@ -55,32 +55,10 @@ class CheckKeywords:
         Due to an issue regarding the height of the address bar not being taken into account when the screenshot is taken, a temporary workaround is in place.
         In order to screenshot the correct element, it is added the value of 71 to the y coordinate of the element.
         """
-        if enable_eyes_log is not None:
-            original_logging = variables.is_logger_open
-            utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
-        if force_full_page_screenshot is not None:
-            original_force_full_page_screenshot = (
-                variables.eyes.force_full_page_screenshot
-            )
-            variables.eyes.force_full_page_screenshot = force_full_page_screenshot
-
-        if hidescrollbars is not None:
-            original_hidescrollbars = variables.eyes.hide_scrollbars
-            variables.eyes.hide_scrollbars = hidescrollbars
-
-        if wait_before_screenshots is not None:
-            original_wait_before_screenshots = variables.eyes.wait_before_screenshots
-            variables.eyes.wait_before_screenshots = int(wait_before_screenshots)
-
-        if send_dom is not None:
-            original_send_dom = variables.eyes.send_dom
-            variables.eyes.send_dom = send_dom
-
-        if matchlevel is not None:
-            original_matchlevel = variables.eyes.match_level
-            variables.eyes.match_level = utils.get_match_level(matchlevel)
-
+        original_properties = utils.save_current_properties()
+        utils.update_properties(force_full_page_screenshot, enable_eyes_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, None)
+       
         # Temporary workaround in order to capture the correct element on Safari
         # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
         # Current address bar height: 71
@@ -96,21 +74,8 @@ class CheckKeywords:
         else:
             variables.eyes.check_window(name, int(matchtimeout), target)
 
-        if force_full_page_screenshot is not None:
-            variables.eyes.force_full_page_screenshot = (
-                original_force_full_page_screenshot
-            )
-        if hidescrollbars is not None:
-            variables.eyes.hide_scrollbars = original_hidescrollbars
-        if enable_eyes_log is not None:
-            utils.manage_logging(original_logging, enable_http_debug_log)
-        if wait_before_screenshots is not None:
-            variables.eyes.wait_before_screenshots = original_wait_before_screenshots
-        if send_dom is not None:
-            variables.eyes.send_dom = original_send_dom
-        if matchlevel is not None:
-            variables.eyes.match_level = original_matchlevel
-
+        utils.update_properties(**original_properties)
+      
     def check_eyes_region(
         self,
         left,
@@ -125,7 +90,7 @@ class CheckKeywords:
         hidescrollbars=None,
         wait_before_screenshots=None,
         send_dom=None,
-        matchlevel=None
+        matchlevel=None,
     ):
         """
         Takes a snapshot of the given region from the browser using a Region
@@ -152,39 +117,13 @@ class CheckKeywords:
         *Example:*
             | Check Eyes Region | 100 | 150 | 500 | 120 | Google Logo | ${true} | ${true} | 5000 |
         """
-        if enable_eyes_log is not None:
-            original_logging = variables.is_logger_open
-            utils.manage_logging(enable_eyes_log, enable_http_debug_log)
-
-        if hidescrollbars is not None:
-            original_hidescrollbars = variables.eyes.hide_scrollbars
-            variables.eyes.hide_scrollbars = hidescrollbars
-
-        if wait_before_screenshots is not None:
-            original_wait_before_screenshots = variables.eyes.wait_before_screenshots
-            variables.eyes.wait_before_screenshots = int(wait_before_screenshots)
-        
-        if send_dom is not None:
-            original_send_dom = variables.eyes.send_dom
-            variables.eyes.send_dom = send_dom
-
-        if matchlevel is not None:
-            original_matchlevel = variables.eyes.match_level
-            variables.eyes.match_level = utils.get_match_level(matchlevel)
+        original_properties = utils.save_current_properties()
+        utils.update_properties(None, enable_eyes_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, None)
 
         region = Region(float(left), float(top), float(width), float(height))
         variables.eyes.check_region(region, name, matchtimeout, target)
 
-        if hidescrollbars is not None:
-            variables.eyes.hide_scrollbars = original_hidescrollbars
-        if enable_eyes_log is not None:
-            utils.manage_logging(original_logging, enable_http_debug_log)
-        if wait_before_screenshots is not None:
-            variables.eyes.wait_before_screenshots = original_wait_before_screenshots
-        if send_dom is not None:
-            variables.eyes.send_dom = original_send_dom
-        if matchlevel is not None:
-            variables.eyes.match_level = original_matchlevel
+        utils.update_properties(**original_properties)
 
     def check_eyes_region_by_element(
         self,
@@ -197,8 +136,8 @@ class CheckKeywords:
         hidescrollbars=None,
         wait_before_screenshots=None,
         send_dom=None,
-        stitch_content=None,
-        matchlevel=None
+        stitchcontent=None,
+        matchlevel=None,
     ):
         """
         Takes a snapshot of the region of the given element from the browser
@@ -226,29 +165,8 @@ class CheckKeywords:
         Due to an issue regarding the height of the address bar not being taken into account when the screenshot is taken, a temporary workaround is in place.
         In order to screenshot the correct element, it is added the value of 71 to the y coordinate of the element.
         """
-        if enable_eyes_log is not None:
-            original_logging = variables.is_logger_open
-            utils.manage_logging(enable_eyes_log, enable_http_debug_log)
-
-        if hidescrollbars is not None:
-            original_hidescrollbars = variables.eyes.hide_scrollbars
-            variables.eyes.hide_scrollbars = hidescrollbars
-
-        if wait_before_screenshots is not None:
-            original_wait_before_screenshots = variables.eyes.wait_before_screenshots
-            variables.eyes.wait_before_screenshots = int(wait_before_screenshots)
-        
-        if send_dom is not None:
-            original_send_dom = variables.eyes.send_dom
-            variables.eyes.send_dom = send_dom
-        
-        if stitch_content is not None:
-            original_stitch_content = variables.stitch_content
-            variables.stitch_content = stitch_content
-
-        if matchlevel is not None:
-            original_matchlevel = variables.eyes.match_level
-            variables.eyes.match_level = utils.get_match_level(matchlevel)
+        original_properties = utils.save_current_properties()
+        utils.update_properties(None, enable_eyes_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, stitchcontent)
 
         # Temporary workaround in order to capture the correct element on Safari
         # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
@@ -267,23 +185,14 @@ class CheckKeywords:
                 name,
                 matchtimeout,
                 target,
-                variables.stitch_content
+                variables.stitchcontent,
             )
         else:
-            variables.eyes.check_region_by_element(element, name, matchtimeout, target, variables.stitch_content)
+            variables.eyes.check_region_by_element(
+                element, name, matchtimeout, target, variables.stitchcontent
+            )
 
-        if hidescrollbars is not None:
-            variables.eyes.hide_scrollbars = original_hidescrollbars
-        if enable_eyes_log is not None:
-            utils.manage_logging(original_logging, enable_http_debug_log)
-        if wait_before_screenshots is not None:
-            variables.eyes.wait_before_screenshots = original_wait_before_screenshots
-        if send_dom is not None:
-            variables.eyes.send_dom = original_send_dom
-        if stitch_content is not None:
-            variables.stitch_content = original_stitch_content
-        if matchlevel is not None:
-            variables.eyes.match_level = original_matchlevel
+        utils.update_properties(**original_properties)
 
     def check_eyes_region_by_selector(
         self,
@@ -297,8 +206,8 @@ class CheckKeywords:
         hidescrollbars=None,
         wait_before_screenshots=None,
         send_dom=None,
-        stitch_content=None,
-        matchlevel=None
+        stitchcontent=None,
+        matchlevel=None,
     ):
         """
         Takes a snapshot of the region of the element found by calling
@@ -330,30 +239,9 @@ class CheckKeywords:
         Due to an issue regarding the height of the address bar not being taken into account when the screenshot is taken, a temporary workaround is in place.
         In order to screenshot the correct element, it is added the value of 71 to the y coordinate of the element.
         """
-        if enable_eyes_log is not None:
-            original_logging = variables.is_logger_open
-            utils.manage_logging(enable_eyes_log, enable_http_debug_log)
-
-        if hidescrollbars is not None:
-            original_hidescrollbars = variables.eyes.hide_scrollbars
-            variables.eyes.hide_scrollbars = hidescrollbars
-
-        if wait_before_screenshots is not None:
-            original_wait_before_screenshots = variables.eyes.wait_before_screenshots
-            variables.eyes.wait_before_screenshots = int(wait_before_screenshots)
-
-        if send_dom is not None:
-            original_send_dom = variables.eyes.send_dom
-            variables.eyes.send_dom = send_dom
-
-        if stitch_content is not None:
-            original_stitch_content = variables.stitch_content
-            variables.stitch_content = stitch_content
-
-        if matchlevel is not None:
-            original_matchlevel = variables.eyes.match_level
-            variables.eyes.match_level = utils.get_match_level(matchlevel)
-
+        original_properties = utils.save_current_properties()
+        utils.update_properties(None, enable_eyes_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, stitchcontent)
+        loggerRobot.info(selector)
         selector_strategy = utils.get_selector_strategy(selector)
 
         # Temporary workaround in order to capture the correct element on Safari
@@ -374,26 +262,19 @@ class CheckKeywords:
                 name,
                 matchtimeout,
                 target,
-                variables.stitch_content
+                variables.stitchcontent,
             )
         else:
             variables.eyes.check_region_by_selector(
-                selector_strategy, value, name, matchtimeout, target, variables.stitch_content
+                selector_strategy,
+                value,
+                name,
+                matchtimeout,
+                target,
+                variables.stitchcontent,
             )
 
-        if hidescrollbars is not None:
-            variables.eyes.hide_scrollbars = original_hidescrollbars
-        if enable_eyes_log is not None:
-            utils.manage_logging(original_logging, enable_http_debug_log)
-        if wait_before_screenshots is not None:
-            variables.eyes.wait_before_screenshots = original_wait_before_screenshots
-        if send_dom is not None:
-            variables.eyes.send_dom = original_send_dom
-        if stitch_content is not None:
-            variables.stitch_content = original_stitch_content
-        if matchlevel is not None:
-            variables.eyes.match_level = original_matchlevel
-
+        utils.update_properties(**original_properties)
 
     def check_eyes_region_in_frame_by_selector(
         self,
@@ -408,8 +289,8 @@ class CheckKeywords:
         hidescrollbars=None,
         wait_before_screenshots=None,
         send_dom=None,
-        stitch_content=None,
-        matchlevel=None
+        stitchcontent=None,
+        matchlevel=None,
     ):
         """
         Takes a snapshot of the region of the element found by calling
@@ -449,29 +330,8 @@ class CheckKeywords:
 
         """
 
-        if enable_eyes_log is not None:
-            original_logging = variables.is_logger_open
-            utils.manage_logging(enable_eyes_log, enable_http_debug_log)
-
-        if hidescrollbars is not None:
-            original_hidescrollbars = variables.eyes.hide_scrollbars
-            variables.eyes.hide_scrollbars = hidescrollbars
-
-        if wait_before_screenshots is not None:
-            original_wait_before_screenshots = variables.eyes.wait_before_screenshots
-            variables.eyes.wait_before_screenshots = int(wait_before_screenshots)
-
-        if send_dom is not None:
-            original_send_dom = variables.eyes.send_dom
-            variables.eyes.send_dom = send_dom
-
-        if stitch_content is not None:
-            original_stitch_content = variables.stitch_content
-            variables.stitch_content = stitch_content
-
-        if matchlevel is not None:
-            original_matchlevel = variables.eyes.match_level
-            variables.eyes.match_level = utils.get_match_level(matchlevel)
+        original_properties = utils.save_current_properties()
+        utils.update_properties(None, enable_eyes_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, stitchcontent)
 
         if type(framereference) is unicode:
             try:
@@ -502,24 +362,18 @@ class CheckKeywords:
                     name,
                     matchtimeout,
                     target,
-                    variables.stitch_content
+                    variables.stitchcontent,
                 )
         else:
             variables.eyes.check_region_in_frame_by_selector(
-                framereference, selector_strategy, value, name, matchtimeout, target, variables.stitch_content
+                framereference,
+                selector_strategy,
+                value,
+                name,
+                matchtimeout,
+                target,
+                variables.stitchcontent,
             )
 
-        if hidescrollbars is not None:
-            variables.eyes.hide_scrollbars = original_hidescrollbars
-        if enable_eyes_log is not None:
-            utils.manage_logging(original_logging, enable_http_debug_log)
-        if wait_before_screenshots is not None:
-            variables.eyes.wait_before_screenshots = original_wait_before_screenshots
-        if send_dom is not None:
-            variables.eyes.send_dom = original_send_dom
-        if stitch_content is not None:
-            variables.stitch_content = original_stitch_content
-        if matchlevel is not None:
-            variables.eyes.match_level = original_matchlevel
-
+        utils.update_properties(**original_properties)
 

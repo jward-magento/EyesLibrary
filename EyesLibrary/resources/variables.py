@@ -3,10 +3,10 @@ def init():
     global driver
     global is_logger_open
     global batch
-    global stitch_content
+    global stitchcontent
 
     eyes = None
     driver = None
     is_logger_open = False
     batch = None
-    stitch_content = False
+    stitchcontent = False

@@ -64,7 +64,7 @@ Match Level
 
 Stitch Content
     [Setup]                                   Setup for Stitch Mode                                               Stitch Content
-    Check Eyes Region By Selector             overflowing-div-image                                               Div                                        stitch_content=${true}
+    Check Eyes Region By Selector             overflowing-div-image                                               Div                                        stitchcontent=${true}
     [Teardown]                                Teardown
 
 Sapo Noticias
@@ -77,7 +77,7 @@ Setup
     [Arguments]                               ${test name}
     Open Browser                              http://www.google.com                                               gc
     Maximize Browser Window
-    Open Eyes Session                         ${API KEY}                                                          EyesLibraryBaseline                        ${test name}               matchlevel=layout                     enable_eyes_log=${true}
+    Open Eyes Session                         ${API KEY}                                                          EyesLibraryBaseline                        ${test name}               matchlevel=layout                     enable_eyes_log=${true}    batchname=Web Testing
 
 Setup for Check Region in Frame
     [Arguments]                               ${test name}
@@ -88,7 +88,7 @@ Setup for Check Region in Frame
     Click Element                             xpath=//*[@id="sncmp-banner-btn-agree"]
     Unselect Frame
     Unselect Frame
-    Open Eyes Session                         ${API KEY}                                                          EyesLibraryBaseline                        ${test name}               width=1300                            height=900                 enable_eyes_log=${true}
+    Open Eyes Session                         ${API KEY}                                                          EyesLibraryBaseline                        ${test name}               width=1300                            height=900                 enable_eyes_log=${true}    batchname=Web Testing
 
 Setup for BatchName
     [Arguments]                               ${test name}                                                        ${batchname}
@@ -100,21 +100,21 @@ Setup for Full Page Screenshot
     [Arguments]                               ${test name}
     Open Browser                              http://www.sapo.pt                                                  gc
     Maximize Browser Window
-    Open Eyes Session                         testname=${test name}                                               matchlevel=layout                          enable_eyes_log=${true}    force_full_page_screenshot=${true}    stitchmode=css
+    Open Eyes Session                         testname=${test name}                                               matchlevel=layout                          enable_eyes_log=${true}    force_full_page_screenshot=${true}    stitchmode=css             batchname=Web Testing
 
 Setup for Sapo
     [Arguments]                               ${test name}
     Open Browser                              http://www.sapo.pt                                                  gc
     Maximize Browser Window
-    Wait Until Element Is Visible             xpath=//*[contains(@class, "footer_acceptAll--27fFv")]
-    Click Element                             xpath=//*[contains(@class, "footer_acceptAll--27fFv")]
-    Open Eyes Session                         ${API KEY}                                                          EyesLibrary                                ${test name}               enable_eyes_log=${true}
+    Wait Until Element Is Visible             xpath=//*[contains(@class, "qc-cmp-button")]
+    Click Element                             xpath=//*[contains(@class, "qc-cmp-button")]
+    Open Eyes Session                         ${API KEY}                                                          EyesLibrary                                ${test name}               enable_eyes_log=${true}               batchname=Web Testing
 
 Setup for Stitch Mode
     [Arguments]                               ${test name}
     Open Browser                              http://applitools.github.io/demo/TestPages/FramesTestPage/          gc
     Maximize Browser Window
-    Open Eyes Session                         ${API KEY}                                                          EyesLibrary                                ${test name}               enable_eyes_log=${true}
+    Open Eyes Session                         ${API KEY}                                                          EyesLibrary                                ${test name}               enable_eyes_log=${true}               batchname=Web Testing
 
 Teardown
     Close All Browsers

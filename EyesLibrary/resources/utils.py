@@ -74,7 +74,7 @@ def get_selector_strategy(selector):
     return selected_strategy
 
 
-def manage_logging(enable_eyes_log, enable_http_debug_log):
+def manage_logging(enable_eyes_log=False, enable_http_debug_log=False):
 
     if enable_eyes_log is True:
         logger.set_logger(StdoutLogger())
@@ -85,3 +85,50 @@ def manage_logging(enable_eyes_log, enable_http_debug_log):
 
     if enable_http_debug_log is True:
         httplib.HTTPConnection.debuglevel = 1
+
+
+def save_current_properties():
+    return {
+        "force_full_page_screenshot": variables.eyes.force_full_page_screenshot,
+        "enable_eyes_log": variables.is_logger_open,
+        "hidescrollbars": variables.eyes.hide_scrollbars,
+        "wait_before_screenshots": variables.eyes.wait_before_screenshots,
+        "send_dom": variables.eyes.send_dom,
+        "matchlevel": variables.eyes.match_level,
+        "stitchcontent": variables.stitchcontent
+    }
+
+
+def update_properties(
+    force_full_page_screenshot=None,
+    enable_eyes_log=None,
+    hidescrollbars=None,
+    wait_before_screenshots=None,
+    send_dom=None,
+    matchlevel=None,
+    stitchcontent=None,
+):
+
+    if force_full_page_screenshot is not None:
+        variables.eyes.force_full_page_screenshot = force_full_page_screenshot
+
+    if enable_eyes_log is not None:
+        manage_logging(enable_eyes_log)
+
+    if hidescrollbars is not None:
+        variables.eyes.hide_scrollbars = hidescrollbars
+
+    if wait_before_screenshots is not None:
+        variables.eyes.wait_before_screenshots = int(wait_before_screenshots)
+
+    if send_dom is not None:
+        variables.eyes.send_dom = send_dom
+
+    if matchlevel is not None:
+        try:
+            variables.eyes.match_level = get_match_level(matchlevel)
+        except:
+            variables.eyes.match_level = matchlevel
+
+    if stitchcontent is not None:
+        variables.stitchcontent = stitchcontent
