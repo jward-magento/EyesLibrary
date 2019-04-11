@@ -15,21 +15,19 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
     = Table of contents =
     - `Before running tests`
     - `Writing tests`
-        - `Using selectors`
-        - `Defining Ignore and Floating regions`
-    - `Analysing the tests`
+    - `Analysing the test results`
     - `Importing`
     - `Shortcuts`
     - `Keywords`
 
     = Before running tests =
 
-    In order to run EyesLibrary and return results, you have to create a [https://applitools.com/sign-up/ | free account] with Applitools.
-    You can retrieve your API key from the Applitools Eyes Test Manager, that will need to be passed in your Open Eyes Session keyword.
+    In order to run EyesLibrary, you have to create a [https://applitools.com/sign-up/ | free account] with Applitools, to retrieve your API key.
+    After signing up, you can get it from the [https://eyes.applitools.com/app/test-results/|Applitools Eyes Test Manager].
         
-    You may also want to read [https://applitools.com/docs | Applitools documentation] in order to better understand how Eyes works.
+    You may want to read [https://applitools.com/docs | Applitools documentation] in order to better understand how Eyes works.
     
-    Prior to running tests, EyesLibrary must first be imported into your Robot test suite.
+    Prior to running tests, EyesLibrary must be imported into your Robot test suite.
 
     Example:
         | Library | EyesLibrary | 
@@ -72,14 +70,32 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
 
     See `Close Eyes Session`.
     
-    
-    Here's an entire test case example:
+    - Here's an entire test case example:
 
         | =Keywords=         | =Parameters=       |
-        | Open Browser       | http://google.com/ | gc                  |                       
-        | Open Eyes Session  | YourApplitoolsKey  | EyesLibrary_AppName | EyesLibrary_TestName |
+        | Open Browser       | http://google.com/ | gc      |                       
+        | Open Eyes Session  | YourApplitoolsKey  | AppName | TestName |
         | Check Eyes Window  | Google Homepage    |                              
         | Close Eyes Session | 
+
+    == Open vs Check keyword arguments ==
+
+    Some arguments may be defined either on `Open Eyes Session` or on `Check keywords`.
+
+    When defining an argument on Open Eyes Session, it will be aplied to _all the checks of that session_.
+
+    On the other hand, when an argument is defined on a Check keyword, it will determine the behaviour _specific to that checkpoint_, not to the other checks of the session.
+
+    When an argument is defined both on Open and Check keywords during the same test, the latter will be used for that specific checkpoint.
+
+    == Check keywords ==
+
+    These are the available Check keywords:
+    - `Check Eyes Window`
+    - `Check Eyes Region`
+    - `Check Eyes Region By Element`
+    - `Check Eyes Region By Selector`
+    - `Check Eyes Region In Frame By Selector`
 
     == Using selectors ==
 
@@ -102,7 +118,7 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
 
     A *Floating Region* defines an inner region to be matched and outer bounds in which the inner region can move and still be considered matching.
 
-    To get more details, consult [https://applitools.com/docs/api/eyes-sdk/index-gen/classindex-selenium-python.html|Applitools Eyes Documentation]
+    To get more details, consult [https://applitools.com/docs/api/eyes-sdk/index-gen/classindex-selenium-python.html|Eyes Selenium SDK Documentation]
 
     These regions may be defined using the following keywords:
     - `Ignore Region By Coordinates`
@@ -112,19 +128,19 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
     - `Floating Region By Element`
     - `Floating Region By Selector`
 
-    All of these keywords return a Target object, that must be passed as an argument of the chosen Check Keyword.
+    All of these keywords return a Target object, that must be passed as an argument of the chosen Check keyword.
     
-    For example, when using `Check Eyes Window` and defining `Ignore Region By Coordinates` and `Floating Region By Selector`.
+    For example, when using `Check Eyes Window` and defining `Ignore Region By Coordinates` and `Floating Region By Selector`:
  
         | {target}=         | Ignore Region By Coordinates | 20                      | 100   | 200 | 100 |
         | {target}=         | Floating Region By Selector  | //div[@id='my_element'] | xpath | 20  | 10  | 10 | 20 | {target} |
         | Check Eyes Window | Google Homepage              | target={target}         |          
     
-    = Analysing the tests =
+    = Analysing the test results =
 
-    In order to review and analyse the test results, you have to access the  [https://eyes.applitools.com/app/test-results/|Test Manager]
+    In order to review and analyse the test results, you have to access the  [https://eyes.applitools.com/app/test-results/|Test Manager].
 
-    For more information on it, read the [https://applitools.com/docs/topics/test-manager/tm-overview.html|Test Manager Documentation]
+    For more information on it, read the [https://applitools.com/docs/topics/test-manager/tm-overview.html|Test Manager Documentation].
     
     """
 
