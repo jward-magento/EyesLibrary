@@ -49,51 +49,52 @@ class SessionKeywords(object):
         stitch_content=False,
     ):
         """
-        Starts a session with the Applitools Eyes Website.
+        Starts a session with Applitools.
 
         Some of the following arguments may also be defined on library import.
-        See `Before running tests` or `Importing`
+        See `Before running tests` or `Importing`.
 
-            | =Arguments=                               | =Description=                                                                                                                            |
-            | API Key (string)                          | User's Applitools Eyes key.                                                                                                              |
-            | Application Name (string)                 | The name of the application under test.                                                                                                  |
-            | Test Name (string)                        | The test name.                                                                                                                           |  
-            | Library (default=SeleniumLibrary)         | Library to test (Either SeleniumLibrary or AppiumLibrary)                                                                                |
-            | (Optional) Width (int)                    | The width of the browser window e.g. 1280                                                                                                |
-            | (Optional) Height (int)                   | The height of the browser window e.g. 1000                                                                                               |
-            | (Optional) Operating System (string)      | The operating system of the test, can be used to override the OS name to allow cross OS verification                                     |
-            | (Optional) Browser Name (string)          | The browser name for the test, can be used to override the browser name to allow cross browser verification                              |
-            | (Optional) Match Level (string)           | The match level for the comparison of this session's tests - can be STRICT, LAYOUT, CONTENT or EXACT                                     |
-            | Enable Eyes Log (default=False)           | Determines if the trace logs of Applitools Eyes SDK are activated for this session.                                                      |
-            | Enable HTTP Debug Log (default=False)     | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable.                                           |
-            | Baseline Name (default=None)              | Name of the branch where the baseline reference will be taken from and where new and accepted steps will be saved to.                    |
-            | Batch Name (default=None)                 | The name of the batch                                                                                                                    |
-            | Branch Name (default=None)                | The branch to use to check test                                                                                                          |
-            | Parent Branch (default=None)              | Parent Branch to base the new Branch on                                                                                                  |
-            | Server URL (default=None)                 | The URL of the Eyes server. If not provided then your test will run on the public cloud.                                                 |
-            | Force Full Page Screenshot (default=None) | Will force the browser to take a screenshot of whole page.                                                                               |
-            | Stitch Mode (default=None)                | Type of stitching used for full page screenshots - can be CSS or SCROLL                                                                  |
-            | Match Timeout (default=None)              | Determines how much time in milliseconds Eyes continues to retry the matching before declaring a mismatch on this session's tests        |
-            | Hide Scrollbars (default=None)            | Sets if the scrollbars are hidden this session's tests, by passing 'True' or 'False' in the variable.                                    |
-            | Save New Tests (default=True)             | Sets if the new tests on this session are automatically accepted, by passing 'True' or 'False' in the variable.                          |
-            | Wait Before Screenshots (default=None)    | Determines the number of milliseconds that Eyes will wait before capturing a screenshot on this sessions's tests                         |
-            | Send DOM (default=None)                   | Sets if DOM information should be sent for this session's checkpoints.                                                                   |    
-            | Stitch Content (default=False)            | If this session test's elements/region are scrollable, determines if Eyes will scroll this them to take a full region/element screenshot |    
+            | =Arguments=                       | =Description=                                                                                                                            |
+            | API Key (str)                     | *Mandatory* - User's Applitools Eyes key                                                                                                 |
+            | Application Name (str)            | *Mandatory* - The name of the application under test                                                                                     |
+            | Test Name (str)                   | *Mandatory* - The test name                                                                                                              |  
+            | Library (str)                     | Library to test (Either SeleniumLibrary or AppiumLibrary)                                                                                |
+            | Width (int)                       | The width of the browser window e.g. 1280                                                                                                |
+            | Height (int)                      | The height of the browser window e.g. 1000                                                                                               |
+            | Operating System (str)            | The operating system of the test, can be used to override the OS name to allow cross OS verification                                     |
+            | Browser Name (str)                | The browser name for the test, can be used to override the browser name to allow cross browser verification                              |
+            | Match Level (str)                 | The match level for the comparison of this session's tests - can be STRICT, LAYOUT, CONTENT or EXACT                                     |
+            | Enable Eyes Log (bool)            | Determines if the trace logs of Applitools Eyes SDK are activated for this session                                                       |
+            | Enable HTTP Debug Log (bool)      | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable                                            |
+            | Baseline Name (str)               | Name of the branch where the baseline reference will be taken from and where new and accepted steps will be saved to                     |
+            | Batch Name (str)                  | The name of the batch                                                                                                                    |
+            | Branch Name (str)                 | The branch to use to check test                                                                                                          |
+            | Parent Branch (str)               | Parent Branch to base the new Branch on                                                                                                  |
+            | Server URL (str)                  | The URL of the Eyes server. If not provided then your test will run on the public cloud                                                  |
+            | Force Full Page Screenshot (bool) | Will force the browser to take a screenshot of whole page                                                                                |
+            | Stitch Mode (str)                 | Type of stitching used for full page screenshots - can be CSS or SCROLL                                                                  |
+            | Match Timeout (int)               | Determines how much time in milliseconds Eyes continues to retry the matching before declaring a mismatch on this session's tests        |
+            | Hide Scrollbars (bool)            | Sets if the scrollbars are hidden this session's tests, by passing 'True' or 'False' in the variable                                     |
+            | Save New Tests (bool)             | Sets if the new tests on this session are automatically accepted, by passing 'True' or 'False' in the variable                           |
+            | Wait Before Screenshots (int)     | Determines the number of milliseconds that Eyes will wait before capturing a screenshot on this sessions's tests                         |
+            | Send DOM (bool)                   | Sets if DOM information should be sent for this session's checkpoints                                                                    |    
+            | Stitch Content (bool)             | If this session test's elements/region are scrollable, determines if Eyes will scroll this them to take a full region/element screenshot |    
+
+        *Mandatory Arguments:* They may be defined through this keyword, or when importing the library.
+        In order to run a test, provide at least the API Key, Application Name and Test Name.
 
         Creates an instance of the AppiumLibrary or SeleniumLibrary webdriver, given the library argument.
 
-        Defines a global driver and sets the webdriver to the global driver.
+        Defines a global driver and sets it to the webdriver found.
 
         Checks if there has been a width or height value passed in.
         If there no are values passed in, eyes calls the method open without the width and height values.
         Otherwise, Eyes calls open with the width and height values defined.
-
-        It is mandatory to define at least the Application Name, Test Name and API Key, either through this keyword or when importing the library. 
-
+ 
         *Note:* When opening the session on a mobile browser or hybrid app, the context must be set to WEBVIEW in order to retrieve the correct viewport size. Geolocation of the device may have to be set after switching context.
 
         *Example:*                                                                                                                                                                                                                               
-            | Open Eyes Session | YourApplitoolsKey | YourAppName | YourTestName | SeleniumLibrary | 1024 | 768 | OSOverrideName | BrowserOverrideName | LAYOUT | True | True | BranchName | ParentBranch | https://myserver.com | True | CSS | 5000 | True | False | 2000 |
+            | Open Eyes Session | YourApplitoolsKey | AppName | TestName | SeleniumLibrary | 1024 | 768 | OSOverrideName | BrowserOverrideName | LAYOUT | True | True | BranchName | ParentBranch | https://myserver.com | True | CSS | 5000 | True | False | 2000 |
         """
 
         if appname is None:
@@ -188,9 +189,9 @@ class SessionKeywords(object):
         Closes a session and returns the results of the session.
         If a test is running, aborts it. Otherwise, does nothing.
 
-            | =Arguments=                           | =Description=                                                                                  |
-            | Enable Eyes Log (default=False)       | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.       |
-            | Enable HTTP Debug Log (default=False) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable. |
+            | =Arguments=                     | =Description=                                                                                  |
+            | Enable Eyes Log (boolean)       | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.       |
+            | Enable HTTP Debug Log (boolean) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable. |
 
         *Example:*
             | Close Eyes Session | True | True |                                 
