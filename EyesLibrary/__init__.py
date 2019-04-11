@@ -48,7 +48,7 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
     - Save New Tests (save_new_tests)        
 
     Example:
-        | Library | EyesLibrary | ApiKey | AppName | TestName | SeleniumLibrary | Layout | True | Windows | Firefox | https://myserver.com | 5000 | False |
+        | Library | EyesLibrary | ApiKey | AppName | TestName | SeleniumLibrary | layout | ${true} | Windows | Firefox | https://myserver.com | 5000 | ${false} |
         
     = Writing tests =
 

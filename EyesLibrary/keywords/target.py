@@ -70,7 +70,7 @@ class TargetKeywords:
 
             | =Arguments=     | =Description=                                                                                                 |
             | Value (str)     | *Mandatory* - The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown          |
-            | Selector (str)  | *Mandatory* - The strategy to locate the element. The supported selectors are specified in `Using Selectors` |
+            | Selector (str)  | *Mandatory* - The strategy to locate the element. The supported selectors are specified in `Using Selectors`  |
             | Target (Target) | The previously existent Target, to be used if a ignore region or floating region was already set              |
                 
         *Example:*
@@ -191,7 +191,7 @@ class TargetKeywords:
 
             | =Arguments=            | =Description=                                                                                                 |
             | Value (str)            | *Mandatory* - The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown          |
-            | Selector (str)         | *Mandatory* - The strategy to locate the element. The supported selectors are specified in `Using Selectors` |
+            | Selector (str)         | *Mandatory* - The strategy to locate the element. The supported selectors are specified in `Using Selectors`  |
             | Max Left Offset (int)  | The amount the floating region may move to the left. e.g. 10                                                  |
             | Max Top Offset (int)   | The amount the floating region may moveupwards. e.g. 20                                                       |
             | Max Right Offset (int) | The amount the floating region may move to the right. e.g. 10                                                 |
