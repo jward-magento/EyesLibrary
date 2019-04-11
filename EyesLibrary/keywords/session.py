@@ -46,7 +46,7 @@ class SessionKeywords(object):
         save_new_tests=None,
         wait_before_screenshots=None,
         send_dom=None,
-        stitch_content=False,
+        stitchcontent=False,
     ):
         """
         Starts a session with Applitools.
@@ -169,8 +169,8 @@ class SessionKeywords(object):
             variables.eyes.wait_before_screenshots = int(wait_before_screenshots)
         if send_dom is not None:
             variables.eyes.send_dom = send_dom
-        if stitch_content is not False:
-            variables.stitch_content = stitch_content
+        if stitchcontent is not False:
+            variables.stitchcontent = stitchcontent
 
         if width is None and height is None:
             variables.driver = variables.eyes.open(driver, appname, testname)
