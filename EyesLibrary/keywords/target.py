@@ -27,8 +27,8 @@ class TargetKeywords:
             | Target (Target) | The previously existent Target, to be used if a ignore region or floating region was already set |
                 
         *Example:*
-            | ${target}=        | Ignore Region By Coordinates | 10   | 20   | 100  | 100       |
-            | Check Eyes Window | Google Homepage              | True | True | True | ${target} |
+            | ${target}=        | Ignore Region By Coordinates | 10               | 20 | 100 | 100 |
+            | Check Eyes Window | Google Homepage              | target=${target} |
 
         """
 
@@ -52,7 +52,7 @@ class TargetKeywords:
         *Example:*
             | ${element}=       | Get Webelement           | //*[@id="hplogo"] |
             | ${target}=        | Ignore Region By Element | ${element}        | 
-            | Check Eyes Window | Google Homepage          | True              | True | True | ${target} |
+            | Check Eyes Window | Google Homepage          | target=${target}  |
         """
 
         if target is None:
@@ -74,8 +74,8 @@ class TargetKeywords:
             | Target (Target) | The previously existent Target, to be used if a ignore region or floating region was already set              |
                 
         *Example:*
-            | ${target}=        | Ignore Region By Selector | .first.expanded.dropdown | CSS SELECTOR |
-            | Check Eyes Window | Google Homepage           | True                     | True         | True | ${target} |
+            | ${target}=        | Ignore Region By Selector | .first.expanded.dropdown | css selector |
+            | Check Eyes Window | Google Homepage           | target=${target}         |
         """
 
         if target is None:
@@ -115,8 +115,8 @@ class TargetKeywords:
             | Target (Target)        | The previously existent Target, to be used if a ignore region or floating region was already set |
                 
         *Example:*
-            | ${target}=    Floating Region By Coordinates |  10              | 10   | 200  | 150  | 10        | 0 | 50 | 50 | 
-            | Check Eyes Window                            |  Google Homepage | True | True | True | ${target} |
+            | ${target}=    Floating Region By Coordinates |  10              | 10               | 200 | 150 | 10 | 0 | 50 | 50 | 
+            | Check Eyes Window                            |  Google Homepage | target=${target} |
         """
 
         if target is None:
@@ -157,8 +157,8 @@ class TargetKeywords:
                 
         *Example:*
             | ${element}=       | Get Element                | //*[@id="hplogo"] |
-            | ${target}=        | Floating Region By Element | ${element}        | 10   | 20   | 0         | 10 |
-            | Check Eyes Window | Google Homepage            | True              | True | True | ${target} |
+            | ${target}=        | Floating Region By Element | ${element}        | 10 | 20 | 0 | 10 |
+            | Check Eyes Window | Google Homepage            | target={target}   |
         """
 
         if target is None:
@@ -199,8 +199,8 @@ class TargetKeywords:
             | Target (Target)        | The previously existent Target, to be used if a ignore region or floating region was already set              |
                 
         *Example:*
-            | ${target}=        | Floating Region By Selector | .first.expanded.dropdown | CSS SELECTOR | 20   | 10         | 20 | 10 |
-            | Check Eyes Window | Google Homepage             | True                     | True         | True | ${target}  |
+            | ${target}=        | Floating Region By Selector | .first.expanded.dropdown | css selector | 20 | 10 | 20 | 10 |
+            | Check Eyes Window | Google Homepage             | target=${target}         |
         """
 
         if target is None:

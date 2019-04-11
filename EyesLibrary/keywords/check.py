@@ -47,7 +47,7 @@ class CheckKeywords:
             | Match Level (str)                 | The match level for the comparison of this test - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
         
         *Example:*
-            | Check Eyes Window | Google Homepage | True | True | True | 5000 |
+            | Check Eyes Window | Google Homepage | ${true} | ${true} | ${true} | 5000 |
 
         *Note (Safari on mobile):*
         When checking a window, provide osname=iOS and browsername=Safari on `Open Eyes Session`.
@@ -148,7 +148,7 @@ class CheckKeywords:
             | Match Level (str)             | The match level for the comparison of this test - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
         
         *Example:*
-            | Check Eyes Region | 100 | 150 | 500 | 120 | Google Logo | True | True | 5000 |
+            | Check Eyes Region | 100 | 150 | 500 | 120 | Google Logo | ${true} | ${true} | 5000 |
         """
         if enable_eyes_log is not None:
             original_logging = variables.is_logger_open
@@ -216,7 +216,7 @@ class CheckKeywords:
         
         *Example:*
             | ${element}=                  | Get Element | //*[@id="hplogo"] |
-            | Check Eyes Region By Element | ${element}  | ElementName       | True | True | 5000 |
+            | Check Eyes Region By Element | ${element}  | ElementName       | ${true} | ${true} | 5000 |
 
         *Note (Safari on mobile):*
         When checking an element, provide osname=iOS and browsername=Safari on `Open Eyes Session`.
@@ -319,7 +319,7 @@ class CheckKeywords:
             | Match Level (str)             | The match level for the comparison of this test - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
         
         *Example:*
-            | Check Eyes Region By Selector | .first.expanded.dropdown | CssElement | CSS SELECTOR | True | True | 5000 |
+            | Check Eyes Region By Selector | .first.expanded.dropdown | Css Element | css selector | ${true} | ${true} | 5000 |
 
         *Note (Safari on mobile):*
         When checking an element, provide osname=iOS and browsername=Safari on `Open Eyes Session`.
@@ -428,7 +428,7 @@ class CheckKeywords:
             | Match Level (str)                        | The match level for the comparison of this test - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
         
         *Example:*
-            | Check Eyes Region In Frame By Selector | FrameName | .first.expanded.dropdown | CssElement | CSS SELECTOR | True | True | 5000 |
+            | Check Eyes Region In Frame By Selector | FrameName | .first.expanded.dropdown | Css Element | css selector | ${true} | ${true} | 5000 |
 
         *Frame Reference*
 

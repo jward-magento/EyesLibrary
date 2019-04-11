@@ -9,8 +9,10 @@ _version_ = VERSION
 
 class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
     """
-    EyesLibrary is a visual verification library for Robot Framework that leverages
-    the Eyes-Selenium and Selenium/Appium libraries.
+    EyesLibrary is a visual verification library for [http://robotframework.org/|Robot Framework] that leverages
+    [https://applitools.com/docs/api/eyes-sdk/index-gen/classindex-selenium-python.html|Eyes-Selenium] and
+    [http://robotframework.org/SeleniumLibrary/SeleniumLibrary.html|SeleniumLibrary] / 
+    [http://serhatbolsu.github.io/robotframework-appiumlibrary/AppiumLibrary.html|AppiumLibrary].
 
     = Table of contents =
     - `Before running tests`
@@ -22,10 +24,10 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
 
     = Before running tests =
 
-    In order to run EyesLibrary, you have to create a [https://applitools.com/sign-up/ | free account] with Applitools, to retrieve your API key.
+    In order to run EyesLibrary, you have to create a [https://applitools.com/sign-up/|free account] with Applitools, to retrieve your API key.
     After signing up, you can get it from the [https://eyes.applitools.com/app/test-results/|Applitools Eyes Test Manager].
         
-    You may want to read [https://applitools.com/docs | Applitools documentation] in order to better understand how Eyes works.
+    You may want to read [https://applitools.com/docs|Applitools documentation] in order to better understand how Eyes works.
     
     Prior to running tests, EyesLibrary must be imported into your Robot test suite.
 
@@ -162,7 +164,19 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
         save_new_tests=True,
     ):
         """
-        TODO Documentation
+        EyesLibrary can be imported with optional arguments.
+        
+        - ``apikey``: Applitools API key
+        - ``appname``: Application name
+        - ``testname``: Test name
+        - ``library``: Library used to open browser/application (SeleniumLibrary or AppiumLibrary)
+        - ``matchlevel``: Match level used for the comparation of screenshots
+        - ``enable_eyes_log``: Activation of Applitools Eyes SDK trace logs         
+        - ``osname``: Overridden OS name
+        - ``browsername``: Overridden Browser name
+        - ``serverurl``: The URL of the Eyes server
+        - ``matchtimeout``: Time until Eyes stops retrying the matching (milliseconds)
+        - ``save_new_tests``: Automatically accepting new tests
         """
 
         self.library_arguments = {
