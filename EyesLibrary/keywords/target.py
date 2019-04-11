@@ -68,10 +68,10 @@ class TargetKeywords:
         Returns a Target object that ignores the region of the element specified in the arguments by selector and value.
         See `Defining Ignore and Floating Regions` and `Using Selectors`
 
-            | =Arguments=     | =Description=                                                                                                                                                                   |
-            | Value (str)     | *Mandatory* - The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown                                                                            |
-            | Selector (str)  | *Mandatory* - This will decide what element will be located. The supported selectors include: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME |
-            | Target (Target) | The previously existent Target, to be used if a ignore region or floating region was already set                                                                                |
+            | =Arguments=     | =Description=                                                                                                 |
+            | Value (str)     | *Mandatory* - The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown          |
+            | Selector (str)  | *Mandatory* - The strategy to locate the element. The supported selectors are specified in `Using Selectors` |
+            | Target (Target) | The previously existent Target, to be used if a ignore region or floating region was already set              |
                 
         *Example:*
             | ${target}=        | Ignore Region By Selector | .first.expanded.dropdown | CSS SELECTOR |
@@ -189,14 +189,14 @@ class TargetKeywords:
         Returns a Target object that includes the floating region containing the element specified in the arguments by selector and value.
         See `Defining Ignore and Floating Regions` and `Using Selectors`.
 
-            | =Arguments=            | =Description=                                                                                                                                                                   |
-            | Value (str)            | *Mandatory* - The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown                                                                            |
-            | Selector (str)         | *Mandatory* - This will decide what element will be located. The supported selectors include: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME |
-            | Max Left Offset (int)  | The amount the floating region may move to the left. e.g. 10                                                                                                                    |
-            | Max Top Offset (int)   | The amount the floating region may moveupwards. e.g. 20                                                                                                                         |
-            | Max Right Offset (int) | The amount the floating region may move to the right. e.g. 10                                                                                                                   |
-            | Max Down Offset (int)  | The amount the floating region may move downwards. e.g. 50                                                                                                                      |
-            | Target (Target)        | The previously existent Target, to be used if a ignore region or floating region was already set                                                                                |
+            | =Arguments=            | =Description=                                                                                                 |
+            | Value (str)            | *Mandatory* - The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown          |
+            | Selector (str)         | *Mandatory* - The strategy to locate the element. The supported selectors are specified in `Using Selectors` |
+            | Max Left Offset (int)  | The amount the floating region may move to the left. e.g. 10                                                  |
+            | Max Top Offset (int)   | The amount the floating region may moveupwards. e.g. 20                                                       |
+            | Max Right Offset (int) | The amount the floating region may move to the right. e.g. 10                                                 |
+            | Max Down Offset (int)  | The amount the floating region may move downwards. e.g. 50                                                    |
+            | Target (Target)        | The previously existent Target, to be used if a ignore region or floating region was already set              |
                 
         *Example:*
             | ${target}=        | Floating Region By Selector | .first.expanded.dropdown | CSS SELECTOR | 20   | 10         | 20 | 10 |

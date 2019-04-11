@@ -161,6 +161,9 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
         matchtimeout=None,
         save_new_tests=True,
     ):
+        """
+        TODO Documentation
+        """
 
         self.library_arguments = {
             "apikey": apikey,

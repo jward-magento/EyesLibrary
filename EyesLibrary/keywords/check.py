@@ -305,18 +305,18 @@ class CheckKeywords:
 
         Not available to mobile native apps.
 
-            | =Arguments=                   | =Description=                                                                                                                                                                   |
-            | Value (str)                   | *Mandatory* - The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown                                                                            |
-            | Name (str)                    | *Mandatory* - Name that will be given to region in Eyes                                                                                                                         |
-            | Selector (str)                | *Mandatory* - This will decide what element will be located. The supported selectors include: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME |
-            | Enable Eyes Log (bool)        | Determines if the trace logs of Applitools Eyes SDK are activated for this test. Overrides the argument set on `Open Eyes Session`                                              |
-            | Enable HTTP Debug Log (bool)  | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable                                                                                   |
-            | Match Timeout (int)           | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test                                                           |
-            | Hide Scrollbars (bool)        | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable                                                                                     |
-            | Wait Before Screenshots (int) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session`                       |
-            | Send DOM (bool)               | Sets if DOM information should be sent for this checkpoint                                                                                                                      |    
-            | Stitch Content (bool)         | Determines if Eyes will scroll this element to take a full element screenshot, when the element is scrollable                                                                   |    
-            | Match Level (str)             | The match level for the comparison of this test - can be STRICT, LAYOUT, CONTENT or EXACT                                                                                       |
+            | =Arguments=                   | =Description=                                                                                                                                             |
+            | Value (str)                   | *Mandatory* - The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown                                                      |
+            | Name (str)                    | *Mandatory* - Name that will be given to region in Eyes                                                                                                   |
+            | Selector (str)                | *Mandatory* - The strategy to locate the element. The supported selectors are specified in `Using Selectors`                                             |
+            | Enable Eyes Log (bool)        | Determines if the trace logs of Applitools Eyes SDK are activated for this test. Overrides the argument set on `Open Eyes Session`                        |
+            | Enable HTTP Debug Log (bool)  | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable                                                             |
+            | Match Timeout (int)           | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test                                     |
+            | Hide Scrollbars (bool)        | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable                                                               |
+            | Wait Before Screenshots (int) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session` |
+            | Send DOM (bool)               | Sets if DOM information should be sent for this checkpoint                                                                                                |    
+            | Stitch Content (bool)         | Determines if Eyes will scroll this element to take a full element screenshot, when the element is scrollable                                             |    
+            | Match Level (str)             | The match level for the comparison of this test - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
         
         *Example:*
             | Check Eyes Region By Selector | .first.expanded.dropdown | CssElement | CSS SELECTOR | True | True | 5000 |
@@ -413,19 +413,19 @@ class CheckKeywords:
         and matches it with the expected output. With a choice from eight
         selectors, to check by on `Using Selectors` section.
 
-            | =Arguments=                              | =Description=                                                                                                                                                                   |
-            | Frame Reference (str, int or WebElement) | *Mandatory* - Defines the frame to be checked. See below what arguments must be used as frame reference                                                                         |
-            | Value (str)                              | *Mandatory* - The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown                                                                            |
-            | Name (str)                               | *Mandatory* - Name that will be given to region in Eyes                                                                                                                         |
-            | Selector (str)                           | *Mandatory* - This will decide what element will be located. The supported selectors include: CSS SELECTOR, XPATH, ID, LINK TEXT, PARTIAL LINK TEXT, NAME, TAG NAME, CLASS NAME |
-            | Enable Eyes Log (bool)                   | Determines if the trace logs of Applitools Eyes SDK are activated for this test. Overrides the argument set on `Open Eyes Session`                                              |
-            | Enable HTTP Debug Log (bool)             | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable                                                                                   |
-            | Match Timeout (int)                      | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test                                                           |
-            | Hide Scrollbars (bool)                   | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable                                                                                     |
-            | Wait Before Screenshots (int)            | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session`                       |
-            | Send DOM (bool)                          | Sets if DOM information should be sent for this checkpoint                                                                                                                      |    
-            | Stitch Content (bool)                    | Determines if Eyes will scroll this element to take a full element screenshot, when the element is scrollable                                                                   |    
-            | Match Level (str)                        | The match level for the comparison of this test - can be STRICT, LAYOUT, CONTENT or EXACT                                                                                       |
+            | =Arguments=                              | =Description=                                                                                                                                             |
+            | Frame Reference (str, int or WebElement) | *Mandatory* - Defines the frame to be checked. See below what arguments must be used as frame reference                                                   |
+            | Value (str)                              | *Mandatory* - The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown                                                      |
+            | Name (str)                               | *Mandatory* - Name that will be given to region in Eyes                                                                                                   |
+            | Selector (str)                           | *Mandatory* - The strategy to locate the element. The supported selectors are specified in `Using Selectors`                                             |
+            | Enable Eyes Log (bool)                   | Determines if the trace logs of Applitools Eyes SDK are activated for this test. Overrides the argument set on `Open Eyes Session`                        |
+            | Enable HTTP Debug Log (bool)             | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable                                                             |
+            | Match Timeout (int)                      | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test                                     |
+            | Hide Scrollbars (bool)                   | Sets if the scrollbars are hidden in the test, by passing 'True' or 'False' in the variable                                                               |
+            | Wait Before Screenshots (int)            | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session` |
+            | Send DOM (bool)                          | Sets if DOM information should be sent for this checkpoint                                                                                                |    
+            | Stitch Content (bool)                    | Determines if Eyes will scroll this element to take a full element screenshot, when the element is scrollable                                             |    
+            | Match Level (str)                        | The match level for the comparison of this test - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
         
         *Example:*
             | Check Eyes Region In Frame By Selector | FrameName | .first.expanded.dropdown | CssElement | CSS SELECTOR | True | True | 5000 |
