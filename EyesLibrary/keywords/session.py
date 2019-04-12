@@ -224,3 +224,12 @@ class SessionKeywords(object):
             | Add Eyes Property | Language | PT |                         
         """
         variables.eyes.add_property(name, value)
+
+    def get_viewport_size(self):
+        """
+        Retrieves the value that was set for the viewport.
+
+        *Example:*
+            | ${size}= | Get Viewport Size |                  
+        """
+        return variables.eyes.get_viewport_size()
