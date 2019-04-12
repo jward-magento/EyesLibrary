@@ -189,12 +189,12 @@ class SessionKeywords(object):
         Closes a session and returns the results of the session.
         If a test is running, aborts it. Otherwise, does nothing.
 
-            | =Arguments=                     | =Description=                                                                                  |
-            | Enable Eyes Log (boolean)       | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.       |
-            | Enable HTTP Debug Log (boolean) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable. |
+            | =Arguments=                  | =Description=                                                                                  |
+            | Enable Eyes Log (bool)       | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.       |
+            | Enable HTTP Debug Log (bool) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable. |
 
         *Example:*
-            | Close Eyes Session | True | True |                                 
+            | Close Eyes Session | ${true} | ${true} |                                 
         """
         utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
@@ -209,3 +209,18 @@ class SessionKeywords(object):
             | ${isOpen}= | Eyes Session Is Open |                    
         """
         return variables.eyes.is_open
+
+    def add_eyes_property(self, name, value):
+        """
+        Adds a custom key name/value property that will be associated with the session.
+        You can view these properties and filter and group by these properties in the [https://eyes.applitools.com/app/test-results/|Test Manager]
+        Make sure to use this keyword right after `Open Eyes Session`.
+
+            | =Arguments= | =Description=                      |
+            | Name (str)  | The name of the property           |
+            | Value (str) | The value associated with the name |
+
+        *Example:*
+            | Add Eyes Property | Language | PT |                         
+        """
+        variables.eyes.add_property(name, value)

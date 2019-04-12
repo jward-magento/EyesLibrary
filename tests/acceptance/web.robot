@@ -41,6 +41,13 @@ Is Session Open
     Should Be True                            ${is open}
     [Teardown]                                Teardown
 
+Add Property
+    [Setup]                                   Setup                                                               Add Property
+    Add Eyes Property                         Office Location                                                     Portugal
+    Add Eyes Property                         Language                                                            PT
+    Check Eyes Window                         Window
+    [Teardown]                                Teardown
+
 Batch Test 1
     [Setup]                                   Setup for BatchName                                                 Web - Batch Test 1                         Batch Test
     Check Eyes Window                         Homepage

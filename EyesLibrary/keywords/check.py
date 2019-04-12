@@ -241,7 +241,7 @@ class CheckKeywords:
         """
         original_properties = utils.save_current_properties()
         utils.update_properties(None, enable_eyes_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, stitchcontent)
-        loggerRobot.info(selector)
+        
         selector_strategy = utils.get_selector_strategy(selector)
 
         # Temporary workaround in order to capture the correct element on Safari
