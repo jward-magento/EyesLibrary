@@ -184,21 +184,24 @@ class SessionKeywords(object):
 
         utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
-    def close_eyes_session(self, enable_eyes_log=False, enable_http_debug_log=False):
+    def close_eyes_session(
+        self, raise_exception=True, enable_eyes_log=False, enable_http_debug_log=False
+    ):
         """
         Closes a session and returns the results of the session.
         If a test is running, aborts it. Otherwise, does nothing.
 
-            | =Arguments=                  | =Description=                                                                                  |
-            | Enable Eyes Log (bool)       | The Eyes logs will not be included by default. To activate, pass 'True' in the variable.       |
-            | Enable HTTP Debug Log (bool) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable. |
+            | =Arguments=                  | =Description=                                                                                                          |
+            | Raise Exception (bool)       | If you don't want an exception to be thrown if there are new, missing or mismatched steps, pass 'False in the variable |
+            | Enable Eyes Log (bool)       | The Eyes logs will not be included by default. To activate, pass 'True' in the variable                                |
+            | Enable HTTP Debug Log (bool) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable                          |
 
         *Example:*
-            | Close Eyes Session | ${true} | ${true} |                                 
+            | Close Eyes Session | ${false} |                                 
         """
         utils.manage_logging(enable_eyes_log, enable_http_debug_log)
 
-        variables.eyes.close()
+        variables.eyes.close(raise_exception)
         variables.eyes.abort_if_not_closed()
 
     def eyes_session_is_open(self):
