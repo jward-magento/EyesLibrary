@@ -204,6 +204,24 @@ class SessionKeywords(object):
         variables.eyes.close(raise_exception)
         variables.eyes.abort_if_not_closed()
 
+    def abort_eyes_session_if_not_closed(
+        self, enable_eyes_log=False, enable_http_debug_log=False
+    ):
+        """
+        Stops execution without calling close(). 
+        This method does all the cleanup normally done by close.
+        If this method is called, and close has not been called, then the test will have a status of Aborted in the Test Manager.
+
+            | =Arguments=                  | =Description=                                                                                 |
+            | Enable Eyes Log (bool)       | The Eyes logs will not be included by default. To activate, pass 'True' in the variable       |
+            | Enable HTTP Debug Log (bool) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable |
+
+        *Example:*
+            | Abort Eyes Session If Not Closed |                             
+        """
+        utils.manage_logging(enable_eyes_log, enable_http_debug_log)
+        variables.eyes.abort_if_not_closed()
+
     def eyes_session_is_open(self):
         """
         Returns True if an Applitools Eyes session is currently running, otherwise it will return False.
