@@ -23,7 +23,7 @@ class CheckKeywords:
         name,
         force_full_page_screenshot=None,
         enable_eyes_log=None,
-        enable_http_debug_log=False,
+        enable_http_debug_log=None,
         matchtimeout=-1,
         target=None,
         hidescrollbars=None,
@@ -57,8 +57,8 @@ class CheckKeywords:
         """
 
         original_properties = utils.save_current_properties()
-        utils.update_properties(force_full_page_screenshot, enable_eyes_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, None)
-       
+        utils.update_properties(force_full_page_screenshot, enable_eyes_log, enable_http_debug_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, None)
+        #utils.manage_logging(enable_eyes_log, enable_http_debug_log)
         # Temporary workaround in order to capture the correct element on Safari
         # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
         # Current address bar height: 71
@@ -84,7 +84,7 @@ class CheckKeywords:
         height,
         name,
         enable_eyes_log=None,
-        enable_http_debug_log=False,
+        enable_http_debug_log=None,
         matchtimeout=-1,
         target=None,
         hidescrollbars=None,
@@ -118,7 +118,7 @@ class CheckKeywords:
             | Check Eyes Region | 100 | 150 | 500 | 120 | Google Logo | ${true} | ${true} | 5000 |
         """
         original_properties = utils.save_current_properties()
-        utils.update_properties(None, enable_eyes_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, None)
+        utils.update_properties(None, enable_eyes_log, enable_http_debug_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, None)
 
         region = Region(float(left), float(top), float(width), float(height))
         variables.eyes.check_region(region, name, matchtimeout, target)
@@ -200,7 +200,7 @@ class CheckKeywords:
         name,
         selector="id",
         enable_eyes_log=None,
-        enable_http_debug_log=False,
+        enable_http_debug_log=None,
         matchtimeout=-1,
         target=None,
         hidescrollbars=None,
@@ -240,7 +240,7 @@ class CheckKeywords:
         In order to screenshot the correct element, it is added the value of 71 to the y coordinate of the element.
         """
         original_properties = utils.save_current_properties()
-        utils.update_properties(None, enable_eyes_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, stitchcontent)
+        utils.update_properties(None, enable_eyes_log, enable_http_debug_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, stitchcontent)
         
         selector_strategy = utils.get_selector_strategy(selector)
 
@@ -283,7 +283,7 @@ class CheckKeywords:
         name,
         selector="id",
         enable_eyes_log=None,
-        enable_http_debug_log=False,
+        enable_http_debug_log=None,
         matchtimeout=-1,
         target=None,
         hidescrollbars=None,
@@ -331,7 +331,7 @@ class CheckKeywords:
         """
 
         original_properties = utils.save_current_properties()
-        utils.update_properties(None, enable_eyes_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, stitchcontent)
+        utils.update_properties(None, enable_eyes_log, enable_http_debug_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, stitchcontent)
 
         if type(framereference) is unicode:
             try:

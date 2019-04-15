@@ -171,7 +171,7 @@ class SessionKeywords(object):
             variables.eyes.send_dom = send_dom
         if stitchcontent is not False:
             variables.stitchcontent = stitchcontent
-
+    
         if width is None and height is None:
             variables.driver = variables.eyes.open(driver, appname, testname)
         else:
@@ -181,8 +181,7 @@ class SessionKeywords(object):
             variables.driver = variables.eyes.open(
                 driver, appname, testname, {"width": intwidth, "height": intheight}
             )
-
-        utils.manage_logging(enable_eyes_log, enable_http_debug_log)
+        
 
     def close_eyes_session(
         self, raise_exception=True, enable_eyes_log=False, enable_http_debug_log=False

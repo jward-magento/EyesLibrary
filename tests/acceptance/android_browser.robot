@@ -11,7 +11,7 @@ Resource    resources/android.robot
 *** Test Cases ***
 Check Window
     [Setup]                                         Setup                                                               Android Browser - Check Window
-    Check Eyes Window                               Google Homepage
+    Check Eyes Window                               Google Homepage                                                     enable_http_debug_log=${true}
     [Teardown]                                      Teardown
 
 Check Region

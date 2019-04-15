@@ -84,7 +84,7 @@ Setup
     [Arguments]                               ${test name}
     Open Browser                              http://www.google.com                                               gc
     Maximize Browser Window
-    Open Eyes Session                         ${API KEY}                                                          EyesLibraryBaseline                        ${test name}               matchlevel=layout                     enable_eyes_log=${true}    batchname=Web Testing
+    Open Eyes Session                         ${API KEY}                                                          EyesLibraryBaseline                        ${test name}               matchlevel=layout                     enable_eyes_log=${true}    batchname=Web Testing    enable_http_debug_log=${true}
 
 Setup for Check Region in Frame
     [Arguments]                               ${test name}

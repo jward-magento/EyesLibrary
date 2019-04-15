@@ -74,34 +74,36 @@ def get_selector_strategy(selector):
     return selected_strategy
 
 
-def manage_logging(enable_eyes_log=False, enable_http_debug_log=False):
+def manage_logging(enable_eyes_log=None, enable_http_debug_log=None):
 
     if enable_eyes_log is True:
         logger.set_logger(StdoutLogger())
-        variables.is_logger_open = True
-    elif variables.is_logger_open is True and enable_eyes_log is False:
+    elif enable_eyes_log is False:
         logger.close()
-        variables.is_logger_open = False
 
     if enable_http_debug_log is True:
         httplib.HTTPConnection.debuglevel = 1
+    elif enable_http_debug_log is False:
+        httplib.HTTPConnection.debuglevel = 0
 
 
 def save_current_properties():
     return {
         "force_full_page_screenshot": variables.eyes.force_full_page_screenshot,
-        "enable_eyes_log": variables.is_logger_open,
+        "enable_eyes_log": logger._logger_to_use is not None,
+        "enable_http_debug_log": httplib.HTTPConnection.debuglevel > 0,
         "hidescrollbars": variables.eyes.hide_scrollbars,
         "wait_before_screenshots": variables.eyes.wait_before_screenshots,
         "send_dom": variables.eyes.send_dom,
         "matchlevel": variables.eyes.match_level,
-        "stitchcontent": variables.stitchcontent
+        "stitchcontent": variables.stitchcontent,
     }
 
 
 def update_properties(
     force_full_page_screenshot=None,
     enable_eyes_log=None,
+    enable_http_debug_log=None,
     hidescrollbars=None,
     wait_before_screenshots=None,
     send_dom=None,
@@ -112,8 +114,8 @@ def update_properties(
     if force_full_page_screenshot is not None:
         variables.eyes.force_full_page_screenshot = force_full_page_screenshot
 
-    if enable_eyes_log is not None:
-        manage_logging(enable_eyes_log)
+    if enable_eyes_log is not None or enable_http_debug_log is not None:
+        manage_logging(enable_eyes_log, enable_http_debug_log)
 
     if hidescrollbars is not None:
         variables.eyes.hide_scrollbars = hidescrollbars
