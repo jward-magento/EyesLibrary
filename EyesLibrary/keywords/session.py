@@ -47,6 +47,7 @@ class SessionKeywords(object):
         wait_before_screenshots=None,
         send_dom=None,
         stitchcontent=False,
+        isdisabled=None,
     ):
         """
         Starts a session with Applitools.
@@ -79,6 +80,7 @@ class SessionKeywords(object):
             | Wait Before Screenshots (int)     | Determines the number of milliseconds that Eyes will wait before capturing a screenshot on this sessions's tests                         |
             | Send DOM (bool)                   | Sets if DOM information should be sent for this session's checkpoints                                                                    |    
             | Stitch Content (bool)             | If this session test's elements/region are scrollable, determines if Eyes will scroll this them to take a full region/element screenshot |    
+            | Is Disabled (bool)                | Determines whether or not interactions with Eyes will be silently ignored                                                                |    
 
         *Mandatory Arguments:* They may be defined through this keyword, or when importing the library.
         In order to run a test, provide at least the API Key, Application Name and Test Name.
@@ -171,20 +173,19 @@ class SessionKeywords(object):
             variables.eyes.send_dom = send_dom
         if stitchcontent is not False:
             variables.stitchcontent = stitchcontent
-    
+        if isdisabled is not None:
+            variables.eyes.is_disabled = isdisabled
+
         if width is None and height is None:
             variables.driver = variables.eyes.open(driver, appname, testname)
         else:
-            intwidth = int(width)
-            intheight = int(height)
-
             variables.driver = variables.eyes.open(
-                driver, appname, testname, {"width": intwidth, "height": intheight}
+                driver, appname, testname, {"width": int(width), "height": int(height)}
             )
-        
 
+        
     def close_eyes_session(
-        self, raise_exception=True, enable_eyes_log=False, enable_http_debug_log=False
+        self, raise_exception=True, enable_eyes_log=None, enable_http_debug_log=None
     ):
         """
         Closes a session and returns the results of the session.
@@ -204,7 +205,7 @@ class SessionKeywords(object):
         variables.eyes.abort_if_not_closed()
 
     def abort_eyes_session_if_not_closed(
-        self, enable_eyes_log=False, enable_http_debug_log=False
+        self, enable_eyes_log=None, enable_http_debug_log=None
     ):
         """
         Stops execution without calling close(). 

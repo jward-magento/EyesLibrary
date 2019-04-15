@@ -97,6 +97,7 @@ def save_current_properties():
         "send_dom": variables.eyes.send_dom,
         "matchlevel": variables.eyes.match_level,
         "stitchcontent": variables.stitchcontent,
+        "isdisabled": variables.eyes.is_disabled
     }
 
 
@@ -109,6 +110,7 @@ def update_properties(
     send_dom=None,
     matchlevel=None,
     stitchcontent=None,
+    isdisabled=None
 ):
 
     if force_full_page_screenshot is not None:
@@ -134,3 +136,6 @@ def update_properties(
 
     if stitchcontent is not None:
         variables.stitchcontent = stitchcontent
+
+    if isdisabled is not None:
+        variables.eyes.is_disabled = isdisabled

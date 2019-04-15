@@ -30,6 +30,7 @@ class CheckKeywords:
         wait_before_screenshots=None,
         send_dom=None,
         matchlevel=None,
+        isdisabled=None
     ):
         """
         Takes a snapshot from the browser using the webdriver and matches
@@ -46,7 +47,8 @@ class CheckKeywords:
             | Wait Before Screenshots (int)     | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session` |
             | Send DOM (bool)                   | Sets if DOM information should be sent for this checkpoint                                                                                                |    
             | Match Level (str)                 | The match level for the comparison of this test - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
-        
+            | Is Disabled (bool)                | Determines whether or not interactions with Eyes will be silently ignored                                                                                 |    
+
         *Example:*
             | Check Eyes Window | Google Homepage | ${true} | ${true} | ${true} | 5000 |
 
@@ -57,8 +59,8 @@ class CheckKeywords:
         """
 
         original_properties = utils.save_current_properties()
-        utils.update_properties(force_full_page_screenshot, enable_eyes_log, enable_http_debug_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, None)
-        #utils.manage_logging(enable_eyes_log, enable_http_debug_log)
+        utils.update_properties(force_full_page_screenshot, enable_eyes_log, enable_http_debug_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, None, isdisabled)
+        
         # Temporary workaround in order to capture the correct element on Safari
         # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
         # Current address bar height: 71
@@ -91,6 +93,7 @@ class CheckKeywords:
         wait_before_screenshots=None,
         send_dom=None,
         matchlevel=None,
+        isdisabled=None
     ):
         """
         Takes a snapshot of the given region from the browser using a Region
@@ -113,12 +116,13 @@ class CheckKeywords:
             | Wait Before Screenshots (int) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session` |
             | Send DOM (bool)               | Sets if DOM information should be sent for this checkpoint                                                                                                |    
             | Match Level (str)             | The match level for the comparison of this test - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
-        
+            | Is Disabled (bool)            | Determines whether or not interactions with Eyes will be silently ignored                                                                                 |    
+
         *Example:*
             | Check Eyes Region | 100 | 150 | 500 | 120 | Google Logo | ${true} | ${true} | 5000 |
         """
         original_properties = utils.save_current_properties()
-        utils.update_properties(None, enable_eyes_log, enable_http_debug_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, None)
+        utils.update_properties(None, enable_eyes_log, enable_http_debug_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, None, isdisabled)
 
         region = Region(float(left), float(top), float(width), float(height))
         variables.eyes.check_region(region, name, matchtimeout, target)
@@ -138,6 +142,7 @@ class CheckKeywords:
         send_dom=None,
         stitchcontent=None,
         matchlevel=None,
+        isdisabled=None
     ):
         """
         Takes a snapshot of the region of the given element from the browser
@@ -155,7 +160,8 @@ class CheckKeywords:
             | Send DOM (bool)               | Sets if DOM information should be sent for this checkpoint                                                                                                |    
             | Stitch Content (bool)         | Determines if Eyes will scroll this element to take a full element screenshot, when the element is scrollable                                             |    
             | Match Level (str)             | The match level for the comparison of this test - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
-        
+            | Is Disabled (bool)            | Determines whether or not interactions with Eyes will be silently ignored                                                                                 |    
+
         *Example:*
             | ${element}=                  | Get Element | //*[@id="hplogo"] |
             | Check Eyes Region By Element | ${element}  | ElementName       | ${true} | ${true} | 5000 |
@@ -166,7 +172,7 @@ class CheckKeywords:
         In order to screenshot the correct element, it is added the value of 71 to the y coordinate of the element.
         """
         original_properties = utils.save_current_properties()
-        utils.update_properties(None, enable_eyes_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, stitchcontent)
+        utils.update_properties(None, enable_eyes_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, stitchcontent, isdisabled)
 
         # Temporary workaround in order to capture the correct element on Safari
         # Element coordinate y doesn't take the address bar height into consideration, so it has to be added
@@ -208,6 +214,7 @@ class CheckKeywords:
         send_dom=None,
         stitchcontent=None,
         matchlevel=None,
+        isdisabled=None
     ):
         """
         Takes a snapshot of the region of the element found by calling
@@ -230,7 +237,8 @@ class CheckKeywords:
             | Send DOM (bool)               | Sets if DOM information should be sent for this checkpoint                                                                                                |    
             | Stitch Content (bool)         | Determines if Eyes will scroll this element to take a full element screenshot, when the element is scrollable                                             |    
             | Match Level (str)             | The match level for the comparison of this test - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
-        
+            | Is Disabled (bool)            | Determines whether or not interactions with Eyes will be silently ignored                                                                                 |    
+
         *Example:*
             | Check Eyes Region By Selector | .first.expanded.dropdown | Css Element | css selector | ${true} | ${true} | 5000 |
 
@@ -240,7 +248,7 @@ class CheckKeywords:
         In order to screenshot the correct element, it is added the value of 71 to the y coordinate of the element.
         """
         original_properties = utils.save_current_properties()
-        utils.update_properties(None, enable_eyes_log, enable_http_debug_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, stitchcontent)
+        utils.update_properties(None, enable_eyes_log, enable_http_debug_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, stitchcontent, isdisabled)
         
         selector_strategy = utils.get_selector_strategy(selector)
 
@@ -291,6 +299,7 @@ class CheckKeywords:
         send_dom=None,
         stitchcontent=None,
         matchlevel=None,
+        isdisabled=None
     ):
         """
         Takes a snapshot of the region of the element found by calling
@@ -312,7 +321,8 @@ class CheckKeywords:
             | Send DOM (bool)                          | Sets if DOM information should be sent for this checkpoint                                                                                                |    
             | Stitch Content (bool)                    | Determines if Eyes will scroll this element to take a full element screenshot, when the element is scrollable                                             |    
             | Match Level (str)                        | The match level for the comparison of this test - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
-        
+            | Is Disabled (bool)                       | Determines whether or not interactions with Eyes will be silently ignored                                                                                 |    
+
         *Example:*
             | Check Eyes Region In Frame By Selector | FrameName | .first.expanded.dropdown | Css Element | css selector | ${true} | ${true} | 5000 |
 
@@ -331,7 +341,7 @@ class CheckKeywords:
         """
 
         original_properties = utils.save_current_properties()
-        utils.update_properties(None, enable_eyes_log, enable_http_debug_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, stitchcontent)
+        utils.update_properties(None, enable_eyes_log, enable_http_debug_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, stitchcontent, isdisabled)
 
         if type(framereference) is unicode:
             try:
