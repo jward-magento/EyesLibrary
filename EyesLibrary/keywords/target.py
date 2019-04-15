@@ -220,3 +220,26 @@ class TargetKeywords:
 
         return target
 
+    def ignore_caret(
+        self,
+        ignore=True,
+        target=None,
+    ):
+        """
+        Returns a Target object that determines whether a blinking cursor should be ignored or not.
+        See `Defining Ignore and Floating Regions`.
+
+            | =Arguments=            | =Description=                                                                                                |
+            | Ignore (bool)          | If true, Eyes should detect mismatch artifacts caused by a blinking cursor and not report them as mismatches |
+            | Target (Target)        | The previously existent Target, to be used if a ignore region or floating region was already set             |
+                
+        *Example:*
+            | ${target}=        | Ignore Caret    | ${false}         |
+            | Check Eyes Window | Google Homepage | target=${target} |
+        """
+
+        if target is None:
+            target = Target()
+
+        target.ignore_caret(ignore)
+        return target
