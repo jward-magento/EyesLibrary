@@ -220,11 +220,7 @@ class TargetKeywords:
 
         return target
 
-    def ignore_caret(
-        self,
-        ignore=True,
-        target=None,
-    ):
+    def ignore_caret(self, ignore=True, target=None):
         """
         Returns a Target object that determines whether a blinking cursor should be ignored or not.
         See `Defining Ignore and Floating Regions`.

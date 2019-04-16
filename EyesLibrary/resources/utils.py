@@ -75,11 +75,13 @@ def get_selector_strategy(selector):
 
 
 def manage_logging(enable_eyes_log=None, enable_http_debug_log=None):
-
+    
     if enable_eyes_log is True:
         logger.set_logger(StdoutLogger())
+        logger.open_()
     elif enable_eyes_log is False:
         logger.close()
+        logger.set_logger(None)
 
     if enable_http_debug_log is True:
         httplib.HTTPConnection.debuglevel = 1
@@ -100,6 +102,11 @@ def save_current_properties():
         "isdisabled": variables.eyes.is_disabled
     }
 
+def save_current_logging_properties():
+    return {
+        "enable_eyes_log": logger._logger_to_use is not None,
+        "enable_http_debug_log": httplib.HTTPConnection.debuglevel > 0,
+    }
 
 def update_properties(
     force_full_page_screenshot=None,

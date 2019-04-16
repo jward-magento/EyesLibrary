@@ -13,8 +13,7 @@ from applitools.eyes import Eyes, BatchInfo
 from applitools.selenium.webelement import EyesWebElement
 from applitools.selenium.positioning import StitchMode
 from robot.api import logger as loggerRobot
-
-from EyesLibrary.resources import utils, variables
+from EyesLibrary.resources import variables, utils
 
 
 class SessionKeywords(object):
@@ -203,6 +202,8 @@ class SessionKeywords(object):
         variables.eyes.close(raise_exception)
         variables.eyes.abort_if_not_closed()
 
+        utils.manage_logging(False, False)
+
     def abort_eyes_session_if_not_closed(
         self, enable_eyes_log=None, enable_http_debug_log=None
     ):
@@ -219,15 +220,19 @@ class SessionKeywords(object):
             | Abort Eyes Session If Not Closed |                             
         """
         utils.manage_logging(enable_eyes_log, enable_http_debug_log)
+
         variables.eyes.abort_if_not_closed()
+
+        utils.manage_logging(False, False)
 
     def eyes_session_is_open(self):
         """
         Returns True if an Applitools Eyes session is currently running, otherwise it will return False.
-
+          
         *Example:*
             | ${isOpen}= | Eyes Session Is Open |                    
         """
+
         return variables.eyes.is_open
 
     def add_eyes_property(self, name, value):
@@ -243,13 +248,24 @@ class SessionKeywords(object):
         *Example:*
             | Add Eyes Property | Language | PT |                         
         """
+        
         variables.eyes.add_property(name, value)
 
-    def get_viewport_size(self):
+    def get_viewport_size(self, enable_eyes_log=None, enable_http_debug_log=None):
         """
         Retrieves the value that was set for the viewport.
+
+            | =Arguments=                  | =Description=                                                                                 |
+            | Enable Eyes Log (bool)       | The Eyes logs will not be included by default. To activate, pass 'True' in the variable       |
+            | Enable HTTP Debug Log (bool) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable |
 
         *Example:*
             | ${size}= | Get Viewport Size |                  
         """
-        return variables.eyes.get_viewport_size()
+        logging_properties = utils.save_current_logging_properties()
+        utils.manage_logging(enable_eyes_log, enable_http_debug_log)
+
+        viewport_size = variables.eyes.get_viewport_size()
+
+        utils.manage_logging(**logging_properties)
+        return viewport_size
