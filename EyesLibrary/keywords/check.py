@@ -36,18 +36,18 @@ class CheckKeywords:
         Takes a snapshot from the browser using the webdriver and matches
         it with the expected output.
 
-            | =Arguments=                       | =Description=                                                                                                                                             |
-            | Name (str)                        | *Mandatory* - Name that will be given to region in Eyes                                                                                                   |
-            | Force Full Page Screenshot (bool) | Will force the browser to take a screenshot of whole page. Define "Stitch Mode" argument on `Open Eyes Session` if necessary                              |
-            | Enable Eyes Log (bool)            | Determines if the trace logs of Applitools Eyes SDK are activated for this test. Overrides the argument set on `Open Eyes Session`                        |
-            | Enable HTTP Debug Log (bool)      | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable                                                             |
+            | =Arguments=                       | =Description=                                                                                                                                                   |
+            | Name (str)                        | *Mandatory* - Name that will be given to region in Eyes                                                                                                         |
+            | Force Full Page Screenshot (bool) | Will force the browser to take a screenshot of whole page. Define "Stitch Mode" argument on `Open Eyes Session` if necessary                                    |
+            | Enable Eyes Log (bool)            | Determines if the trace logs of Applitools Eyes SDK are activated for this test. Overrides the argument set on `Open Eyes Session`                              |
+            | Enable HTTP Debug Log (bool)      | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable                                                                   |
             | Match Timeout (int)               | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this checkpoint                                     |
-            | Target (Target)                   | The intended Target. See `Defining Ignore and Floating Regions`                                                                                           |
+            | Target (Target)                   | The intended Target. See `Defining Ignore and Floating Regions`                                                                                                 |
             | Hide Scrollbars (bool)            | Sets if the scrollbars are hidden in the checkpoint, by passing 'True' or 'False' in the variable                                                               |
             | Wait Before Screenshots (int)     | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this checkpoint. Overrides the argument set on `Open Eyes Session` |
-            | Send DOM (bool)                   | Sets if DOM information should be sent for this checkpoint                                                                                                |    
+            | Send DOM (bool)                   | Sets if DOM information should be sent for this checkpoint                                                                                                      |    
             | Match Level (str)                 | The match level for the comparison of this checkpoint - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
-            | Is Disabled (bool)                | Determines whether or not interactions with Eyes will be silently ignored                                                                                 |    
+            | Is Disabled (bool)                | Determines whether or not interactions with Eyes will be silently ignored                                                                                       |    
 
         *Example:*
             | Check Eyes Window | Google Homepage | ${true} | ${true} | ${true} | 5000 |
@@ -102,21 +102,21 @@ class CheckKeywords:
 
         The width and the height cannot be greater than the width and the height specified on `Open Eyes Session`.
 
-            | =Arguments=                   | =Description=                                                                                                                                             |
-            | Left (float)                  | *Mandatory* - The left coordinate of the region that is tested e.g. 100                                                                                   |
-            | Top (float)                   | *Mandatory* - The top coordinate of the region that is tested e.g. 150                                                                                    |
-            | Width (float)                 | *Mandatory* - The width of the region that is tested e.g. 500                                                                                             |
-            | Height (float)                | *Mandatory* - The height of the region that is tested e.g. 120                                                                                            |
-            | Name (str)                    | *Mandatory* - Name that will be given to region in Eyes                                                                                                   |
+            | =Arguments=                   | =Description=                                                                                                                                                   |
+            | Left (float)                  | *Mandatory* - The left coordinate of the region that is tested e.g. 100                                                                                         |
+            | Top (float)                   | *Mandatory* - The top coordinate of the region that is tested e.g. 150                                                                                          |
+            | Width (float)                 | *Mandatory* - The width of the region that is tested e.g. 500                                                                                                   |
+            | Height (float)                | *Mandatory* - The height of the region that is tested e.g. 120                                                                                                  |
+            | Name (str)                    | *Mandatory* - Name that will be given to region in Eyes                                                                                                         |
             | Enable Eyes Log (bool)        | Determines if the trace logs of Applitools Eyes SDK are activated for this checkpoint. Overrides the argument set on `Open Eyes Session`                        |
-            | Enable HTTP Debug Log (bool)  | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable                                                             |
+            | Enable HTTP Debug Log (bool)  | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable                                                                   |
             | Match Timeout (int)           | Determines how much time in milliseconds  Eyes continue to retry the matching before declaring a mismatch on this checkpoint                                    |
-            | Target (Target)               | The intended Target. See `Defining Ignore and Floating Regions`                                                                                           |
+            | Target (Target)               | The intended Target. See `Defining Ignore and Floating Regions`                                                                                                 |
             | Hide Scrollbars (bool)        | Sets if the scrollbars are hidden in the checkpoint, by passing 'True' or 'False' in the variable                                                               |
             | Wait Before Screenshots (int) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this checkpoint. Overrides the argument set on `Open Eyes Session` |
-            | Send DOM (bool)               | Sets if DOM information should be sent for this checkpoint                                                                                                |    
+            | Send DOM (bool)               | Sets if DOM information should be sent for this checkpoint                                                                                                      |    
             | Match Level (str)             | The match level for the comparison of this checkpoint - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
-            | Is Disabled (bool)            | Determines whether or not interactions with Eyes will be silently ignored                                                                                 |    
+            | Is Disabled (bool)            | Determines whether or not interactions with Eyes will be silently ignored                                                                                       |    
 
         *Example:*
             | Check Eyes Region | 100 | 150 | 500 | 120 | Google Logo | ${true} | ${true} | 5000 |
@@ -148,19 +148,19 @@ class CheckKeywords:
         Takes a snapshot of the region of the given element from the browser
         using the web driver. Not available to mobile native apps.
 
-            | =Arguments=                   | =Description=                                                                                                                                             |
-            | Element (WebElement)          | *Mandatory* - The Web Element to be checked                                                                                                               |
-            | Name (str)                    | *Mandatory* - Name that will be given to region in Eyes                                                                                                   |
+            | =Arguments=                   | =Description=                                                                                                                                                   |
+            | Element (WebElement)          | *Mandatory* - The Web Element to be checked                                                                                                                     |
+            | Name (str)                    | *Mandatory* - Name that will be given to region in Eyes                                                                                                         |
             | Enable Eyes Log (bool)        | Determines if the trace logs of Applitools Eyes SDK are activated for this checkpoint. Overrides the argument set on `Open Eyes Session`                        |
-            | Enable HTTP Debug Log (bool)  | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable                                                             |
-            | Match Timeout (int)           | Determines how much time in milliseconds  Eyes continue to retry the matching before declaring a mismatch on this test                                    |
-            | Target (Target)               | The intended Target. See `Defining Ignore and Floating Regions`                                                                                           |
+            | Enable HTTP Debug Log (bool)  | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable                                                                   |
+            | Match Timeout (int)           | Determines how much time in milliseconds  Eyes continue to retry the matching before declaring a mismatch on this test                                          |
+            | Target (Target)               | The intended Target. See `Defining Ignore and Floating Regions`                                                                                                 |
             | Hide Scrollbars (bool)        | Sets if the scrollbars are hidden in the checkpoint, by passing 'True' or 'False' in the variable                                                               |
             | Wait Before Screenshots (int) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this checkpoint. Overrides the argument set on `Open Eyes Session` |
-            | Send DOM (bool)               | Sets if DOM information should be sent for this checkpoint                                                                                                |    
-            | Stitch Content (bool)         | Determines if Eyes will scroll this element to take a full element screenshot, when the element is scrollable                                             |    
+            | Send DOM (bool)               | Sets if DOM information should be sent for this checkpoint                                                                                                      |    
+            | Stitch Content (bool)         | Determines if Eyes will scroll this element to take a full element screenshot, when the element is scrollable                                                   |    
             | Match Level (str)             | The match level for the comparison of this checkpoint - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
-            | Is Disabled (bool)            | Determines whether or not interactions with Eyes will be silently ignored                                                                                 |    
+            | Is Disabled (bool)            | Determines whether or not interactions with Eyes will be silently ignored                                                                                       |    
 
         *Example:*
             | ${element}=                  | Get Element | //*[@id="hplogo"] |
@@ -228,15 +228,15 @@ class CheckKeywords:
             | Value (str)                   | *Mandatory* - The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown                                                      |
             | Name (str)                    | *Mandatory* - Name that will be given to region in Eyes                                                                                                   |
             | Selector (str)                | *Mandatory* - The strategy to locate the element. The supported selectors are specified in `Using Selectors`                                              |
-            | Enable Eyes Log (bool)        | Determines if the trace logs of Applitools Eyes SDK are activated for this checkpoint. Overrides the argument set on `Open Eyes Session`                        |
+            | Enable Eyes Log (bool)        | Determines if the trace logs of Applitools Eyes SDK are activated for this checkpoint. Overrides the argument set on `Open Eyes Session`                  |
             | Enable HTTP Debug Log (bool)  | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable                                                             |
-            | Match Timeout (int)           | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this checkpoint                                     |
+            | Match Timeout (int)           | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this checkpoint                               |
             | Target (Target)               | The intended Target. See `Defining Ignore and Floating Regions`                                                                                           |
-            | Hide Scrollbars (bool)        | Sets if the scrollbars are hidden in the checkpoint, by passing 'True' or 'False' in the variable                                                               |
+            | Hide Scrollbars (bool)        | Sets if the scrollbars are hidden in the checkpoint, by passing 'True' or 'False' in the variable                                                         |
             | Wait Before Screenshots (int) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this test. Overrides the argument set on `Open Eyes Session` |
             | Send DOM (bool)               | Sets if DOM information should be sent for this checkpoint                                                                                                |    
             | Stitch Content (bool)         | Determines if Eyes will scroll this element to take a full element screenshot, when the element is scrollable                                             |    
-            | Match Level (str)             | The match level for the comparison of this checkpoint - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
+            | Match Level (str)             | The match level for the comparison of this checkpoint - can be STRICT, LAYOUT, CONTENT or EXACT                                                           |
             | Is Disabled (bool)            | Determines whether or not interactions with Eyes will be silently ignored                                                                                 |    
 
         *Example:*
@@ -307,21 +307,21 @@ class CheckKeywords:
         and matches it with the expected output. With a choice from eight
         selectors, to check by on `Using Selectors` section.
 
-            | =Arguments=                              | =Description=                                                                                                                                             |
-            | Frame Reference (str, int or WebElement) | *Mandatory* - Defines the frame to be checked. See below what arguments must be used as frame reference                                                   |
-            | Value (str)                              | *Mandatory* - The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown                                                      |
-            | Name (str)                               | *Mandatory* - Name that will be given to region in Eyes                                                                                                   |
-            | Selector (str)                           | *Mandatory* - The strategy to locate the element. The supported selectors are specified in `Using Selectors`                                              |
+            | =Arguments=                              | =Description=                                                                                                                                                   |
+            | Frame Reference (str, int or WebElement) | *Mandatory* - Defines the frame to be checked. See below what arguments must be used as frame reference                                                         |
+            | Value (str)                              | *Mandatory* - The specific value of the selector. e.g. a CSS SELECTOR value .first.expanded.dropdown                                                            |
+            | Name (str)                               | *Mandatory* - Name that will be given to region in Eyes                                                                                                         |
+            | Selector (str)                           | *Mandatory* - The strategy to locate the element. The supported selectors are specified in `Using Selectors`                                                    |
             | Enable Eyes Log (bool)                   | Determines if the trace logs of Applitools Eyes SDK are activated for this checkpoint. Overrides the argument set on `Open Eyes Session`                        |
-            | Enable HTTP Debug Log (bool)             | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable                                                             |
-            | Match Timeout (int)                      | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test                                     |
-            | Target (Target)                          | The intended Target. See `Defining Ignore and Floating Regions`                                                                                           |
+            | Enable HTTP Debug Log (bool)             | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable                                                                   |
+            | Match Timeout (int)                      | Determines how much time in milliseconds Eyes continue to retry the matching before declaring a mismatch on this test                                           |
+            | Target (Target)                          | The intended Target. See `Defining Ignore and Floating Regions`                                                                                                 |
             | Hide Scrollbars (bool)                   | Sets if the scrollbars are hidden in the checkpoint, by passing 'True' or 'False' in the variable                                                               |
             | Wait Before Screenshots (int)            | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this checkpoint. Overrides the argument set on `Open Eyes Session` |
-            | Send DOM (bool)                          | Sets if DOM information should be sent for this checkpoint                                                                                                |    
-            | Stitch Content (bool)                    | Determines if Eyes will scroll this element to take a full element screenshot, when the element is scrollable                                             |    
+            | Send DOM (bool)                          | Sets if DOM information should be sent for this checkpoint                                                                                                      |    
+            | Stitch Content (bool)                    | Determines if Eyes will scroll this element to take a full element screenshot, when the element is scrollable                                                   |    
             | Match Level (str)                        | The match level for the comparison of this checkpoint - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
-            | Is Disabled (bool)                       | Determines whether or not interactions with Eyes will be silently ignored                                                                                 |    
+            | Is Disabled (bool)                       | Determines whether or not interactions with Eyes will be silently ignored                                                                                       |    
 
         *Example:*
             | Check Eyes Region In Frame By Selector | FrameName | .first.expanded.dropdown | Css Element | css selector | ${true} | ${true} | 5000 |
