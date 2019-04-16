@@ -64,15 +64,17 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
 
     Between opening and closing the session, you can run your visual checks.
     
-    See `Check Eyes Region`, `Check Eyes Region By Element`, `Check Eyes Region By Selector` and `Check Eyes Window`.
+    See `Check Eyes Region`, `Check Eyes Region By Element`, `Check Eyes Region By Selector`, `Check Eyes Region In Frame By Selector` and `Check Eyes Window`.
     
     You can also verify if there's an open session with `Eyes Session Is Open`.
     
     3. *Close Eyes Session*
 
     See `Close Eyes Session`.
-    
-    - Here's an entire test case example:
+    	
+    == Test Case Example ==
+
+    Above, we consider the *structure of a test*. For each test (=session), there may be as many checkpoints as you want. Here's a test case example:
 
         | =Keywords=         | =Parameters=       |
         | Open Browser       | http://google.com/ | gc      |                       
@@ -129,6 +131,7 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
     - `Floating Region By Coordinates`
     - `Floating Region By Element`
     - `Floating Region By Selector`
+    - `Ignore Caret`
 
     All of these keywords return a Target object, that must be passed as an argument of the chosen Check keyword.
     
