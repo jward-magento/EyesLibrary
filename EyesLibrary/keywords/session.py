@@ -13,6 +13,7 @@ from applitools.eyes import Eyes, BatchInfo
 from applitools.selenium.webelement import EyesWebElement
 from applitools.selenium.positioning import StitchMode
 from robot.api import logger as loggerRobot
+from datetime import datetime
 from EyesLibrary.resources import variables, utils
 
 
@@ -34,7 +35,7 @@ class SessionKeywords(object):
         enable_eyes_log=None,
         enable_http_debug_log=None,
         baselinename=None,
-        batchname=None,
+        batch=None,
         branchname=None,
         parentbranch=None,
         serverurl=None,
@@ -47,6 +48,7 @@ class SessionKeywords(object):
         send_dom=None,
         stitchcontent=False,
         isdisabled=None,
+        batch_id=0
     ):
         """
         Starts a session with Applitools.
@@ -67,7 +69,7 @@ class SessionKeywords(object):
             | Enable Eyes Log (bool)            | Determines if the trace logs of Applitools Eyes SDK are activated for this session                                                       |
             | Enable HTTP Debug Log (bool)      | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable                                            |
             | Baseline Name (str)               | Name of the branch where the baseline reference will be taken from and where new and accepted steps will be saved to                     |
-            | Batch Name (str)                  | The name of the batch                                                                                                                    |
+            | Batch (str or BatchInfo)          | The name of the batch                                                                                                                    |
             | Branch Name (str)                 | The branch to use to check test                                                                                                          |
             | Parent Branch (str)               | Parent Branch to base the new Branch on                                                                                                  |
             | Server URL (str)                  | The URL of the Eyes server. If not provided then your test will run on the public cloud                                                  |
@@ -146,10 +148,35 @@ class SessionKeywords(object):
             variables.eyes.host_app = browsername
         if baselinename is not None:
             variables.eyes.baseline_branch_name = baselinename
-        if batchname is not None:
-            if variables.batch is None or variables.batch.name != batchname:
-                variables.batch = BatchInfo(batchname)
-            variables.eyes.batch = variables.batch
+        if batch is not None:
+            if type(batch) is unicode:
+                batch = str(batch)
+            batches_list = variables.batches
+
+            # If batch argument is string
+            if isinstance(batch, str):
+                # Check for batch with same name
+                for batch_element in batches_list:
+                    if batch_element.name == batch:
+                        variables.eyes.batch = batch_element
+                        break
+                # If a batch with this name is not yet on the list
+                if variables.eyes.batch is None:
+                    new_batch = BatchInfo(batch)
+                    variables.eyes.batch = new_batch
+                    variables.batches.append(new_batch)
+            # If batch argument is BatchInfo
+            else:
+                # Check for batch with same name and date
+                for batch_element in batches_list:
+                    if batch_element.name == batch.name and batch_element.started_at == batch.started_at:
+                        variables.eyes.batch = batch_element
+                        break
+                # If the list doesn't contain a batch with the same name and date
+                if variables.eyes.batch is None:
+                    variables.eyes.batch = batch
+                    variables.batches.append(batch)
+
         if matchlevel is not None:
             variables.eyes.match_level = utils.get_match_level(matchlevel)
         if parentbranch is not None:
@@ -269,3 +296,41 @@ class SessionKeywords(object):
 
         utils.manage_logging(**logging_properties)
         return viewport_size
+
+    def create_eyes_batch(self, name=None, started_at=None, batch_id=None):
+        """
+        TODO Documentation
+
+            | =Arguments=                  | =Description=                                                                        |
+            | Name (str)                   | The name of the batch                                                                |
+            | Started At (str or datetime) | TODO The date and time that will be displayed in the Test Manager as the batch start time |
+            | Batch ID (str)               | This argument groups together tests ran in different executions                      |
+
+        Started At as String:
+        TODO: What format is in - Timestamp
+        Link to DateTime library
+
+        *Example:*
+            | ${batch}= | Create Eyes Batch |      
+        """
+
+        if started_at is not None:
+            if type(started_at) is unicode:
+                started_at = str(started_at)
+
+            if isinstance(started_at, str):
+                started_at = datetime.strptime(started_at, '%Y-%m-%d %H:%M:%S')
+
+        if name is not None and started_at is not None:
+            batch = BatchInfo(name, started_at)
+        elif name is not None:
+            batch = BatchInfo(name)
+        elif started_at is not None:
+            batch = BatchInfo(None, started_at)
+        else:
+            batch = BatchInfo()
+
+        if batch_id is not None:
+            batch.id = batch_id
+        return batch
+

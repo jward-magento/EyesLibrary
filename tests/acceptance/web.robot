@@ -1,5 +1,6 @@
 *** Settings ***
 Resource    resources/common.robot
+Library     DateTime
 Library     SeleniumLibrary
 Library     EyesLibrary               ${API KEY}                 EyesLibrary
 
@@ -49,12 +50,14 @@ Add Property
     [Teardown]                                Teardown
 
 Batch Test 1
-    [Setup]                                   Setup for BatchName                                                 Web - Batch Test 1                         Batch Test
+    [Tags]                                    batch
+    [Setup]                                   Setup for Batch                                                     Web - Batch Test 1
     Check Eyes Window                         Homepage
     [Teardown]                                Teardown
 
 Batch Test 2
-    [Setup]                                   Setup for BatchName                                                 Web - Batch Test 2                         Batch Test
+    [Tags]                                    batch
+    [Setup]                                   Setup for Batch                                                     Web - Batch Test 2
     Check Eyes Region By Selector             ${LOGO.id}                                                          Logo
     [Teardown]                                Teardown
 
@@ -84,7 +87,7 @@ Setup
     [Arguments]                               ${test name}
     Open Browser                              http://www.google.com                                               gc
     Maximize Browser Window
-    Open Eyes Session                         ${API KEY}                                                          EyesLibraryBaseline                        ${test name}               matchlevel=layout                     enable_eyes_log=${true}    batchname=Web Testing    enable_http_debug_log=${true}
+    Open Eyes Session                         ${API KEY}                                                          EyesLibraryBaseline                        ${test name}               matchlevel=layout                     enable_eyes_log=${true}    batch=Web Testing
 
 Setup for Check Region in Frame
     [Arguments]                               ${test name}
@@ -95,19 +98,20 @@ Setup for Check Region in Frame
     Click Element                             xpath=//*[@id="sncmp-banner-btn-agree"]
     Unselect Frame
     Unselect Frame
-    Open Eyes Session                         ${API KEY}                                                          EyesLibraryBaseline                        ${test name}               width=1300                            height=900                 enable_eyes_log=${true}    batchname=Web Testing
+    Open Eyes Session                         ${API KEY}                                                          EyesLibraryBaseline                        ${test name}               width=1300                            height=900                 enable_eyes_log=${true}    batch=Web Testing
 
-Setup for BatchName
-    [Arguments]                               ${test name}                                                        ${batchname}
+Setup for Batch
+    [Arguments]                               ${test name}
     Open Browser                              http://www.google.com                                               gc
     Maximize Browser Window
-    Open Eyes Session                         testname=${test name}                                               matchlevel=layout                          enable_eyes_log=${true}    batchname=${batchname}
+    ${batch}=                                 Create Eyes Batch                                                   Batch Test                                 2019-01-01 00:00:00
+    Open Eyes Session                         testname=${test name}                                               matchlevel=layout                          enable_eyes_log=${true}    batch=${batch}
 
 Setup for Full Page Screenshot
     [Arguments]                               ${test name}
     Open Browser                              http://www.sapo.pt                                                  gc
     Maximize Browser Window
-    Open Eyes Session                         testname=${test name}                                               matchlevel=layout                          enable_eyes_log=${true}    force_full_page_screenshot=${true}    stitchmode=css             batchname=Web Testing
+    Open Eyes Session                         testname=${test name}                                               matchlevel=layout                          enable_eyes_log=${true}    force_full_page_screenshot=${true}    stitchmode=css             batch=Web Testing
 
 Setup for Sapo
     [Arguments]                               ${test name}
@@ -115,13 +119,13 @@ Setup for Sapo
     Maximize Browser Window
     Wait Until Element Is Visible             xpath=//*[contains(@class, "qc-cmp-button")]
     Click Element                             xpath=//*[contains(@class, "qc-cmp-button")]
-    Open Eyes Session                         ${API KEY}                                                          EyesLibrary                                ${test name}               enable_eyes_log=${true}               batchname=Web Testing
+    Open Eyes Session                         ${API KEY}                                                          EyesLibrary                                ${test name}               enable_eyes_log=${true}               batch=Web Testing
 
 Setup for Stitch Mode
     [Arguments]                               ${test name}
     Open Browser                              http://applitools.github.io/demo/TestPages/FramesTestPage/          gc
     Maximize Browser Window
-    Open Eyes Session                         ${API KEY}                                                          EyesLibrary                                ${test name}               enable_eyes_log=${true}               batchname=Web Testing
+    Open Eyes Session                         ${API KEY}                                                          EyesLibrary                                ${test name}               enable_eyes_log=${true}               batch=Web Testing
 
 Teardown
     Close All Browsers
