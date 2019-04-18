@@ -47,7 +47,7 @@ class CheckKeywords:
             | Wait Before Screenshots (int)     | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this checkpoint. Overrides the argument set on `Open Eyes Session` |
             | Send DOM (bool)                   | Sets if DOM information should be sent for this checkpoint                                                                                                      |    
             | Match Level (str)                 | The match level for the comparison of this checkpoint - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
-            | Is Disabled (bool)                | Determines whether or not interactions with Eyes will be silently ignored                                                                                       |    
+            | Is Disabled (bool)                | Determines whether or not interactions with Eyes will be silently ignored for this checkpoint                                                                   |    
 
         *Example:*
             | Check Eyes Window | Google Homepage | ${true} | ${true} | ${true} | 5000 |
@@ -116,7 +116,7 @@ class CheckKeywords:
             | Wait Before Screenshots (int) | Determines the number of milliseconds that Eyes will wait before capturing the screenshot of this checkpoint. Overrides the argument set on `Open Eyes Session` |
             | Send DOM (bool)               | Sets if DOM information should be sent for this checkpoint                                                                                                      |    
             | Match Level (str)             | The match level for the comparison of this checkpoint - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
-            | Is Disabled (bool)            | Determines whether or not interactions with Eyes will be silently ignored                                                                                       |    
+            | Is Disabled (bool)            | Determines whether or not interactions with Eyes will be silently ignored for this checkpoint                                                                   |    
 
         *Example:*
             | Check Eyes Region | 100 | 150 | 500 | 120 | Google Logo | ${true} | ${true} | 5000 |
@@ -160,7 +160,7 @@ class CheckKeywords:
             | Send DOM (bool)               | Sets if DOM information should be sent for this checkpoint                                                                                                      |    
             | Stitch Content (bool)         | Determines if Eyes will scroll this element to take a full element screenshot, when the element is scrollable                                                   |    
             | Match Level (str)             | The match level for the comparison of this checkpoint - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
-            | Is Disabled (bool)            | Determines whether or not interactions with Eyes will be silently ignored                                                                                       |    
+            | Is Disabled (bool)            | Determines whether or not interactions with Eyes will be silently ignored for this checkpoint                                                                   |    
 
         *Example:*
             | ${element}=                  | Get Element | //*[@id="hplogo"] |
@@ -237,7 +237,7 @@ class CheckKeywords:
             | Send DOM (bool)               | Sets if DOM information should be sent for this checkpoint                                                                                                |    
             | Stitch Content (bool)         | Determines if Eyes will scroll this element to take a full element screenshot, when the element is scrollable                                             |    
             | Match Level (str)             | The match level for the comparison of this checkpoint - can be STRICT, LAYOUT, CONTENT or EXACT                                                           |
-            | Is Disabled (bool)            | Determines whether or not interactions with Eyes will be silently ignored                                                                                 |    
+            | Is Disabled (bool)            | Determines whether or not interactions with Eyes will be silently ignored for this checkpoint                                                             |    
 
         *Example:*
             | Check Eyes Region By Selector | .first.expanded.dropdown | Css Element | css selector | ${true} | ${true} | 5000 |
@@ -321,7 +321,7 @@ class CheckKeywords:
             | Send DOM (bool)                          | Sets if DOM information should be sent for this checkpoint                                                                                                      |    
             | Stitch Content (bool)                    | Determines if Eyes will scroll this element to take a full element screenshot, when the element is scrollable                                                   |    
             | Match Level (str)                        | The match level for the comparison of this checkpoint - can be STRICT, LAYOUT, CONTENT or EXACT                                                                 |
-            | Is Disabled (bool)                       | Determines whether or not interactions with Eyes will be silently ignored                                                                                       |    
+            | Is Disabled (bool)                       | Determines whether or not interactions with Eyes will be silently ignored for this checkpoint                                                                   |    
 
         *Example:*
             | Check Eyes Region In Frame By Selector | FrameName | .first.expanded.dropdown | Css Element | css selector | ${true} | ${true} | 5000 |

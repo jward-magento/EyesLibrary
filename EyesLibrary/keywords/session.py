@@ -56,32 +56,32 @@ class SessionKeywords(object):
         Some of the following arguments may also be defined on library import.
         See `Before running tests` or `Importing`.
 
-            | =Arguments=                       | =Description=                                                                                                                            |
-            | API Key (str)                     | *Mandatory* - User's Applitools Eyes key                                                                                                 |
-            | Application Name (str)            | *Mandatory* - The name of the application under test                                                                                     |
-            | Test Name (str)                   | *Mandatory* - The test name                                                                                                              |  
-            | Library (str)                     | Library to test (Either SeleniumLibrary or AppiumLibrary)                                                                                |
-            | Width (int)                       | The width of the browser window e.g. 1280                                                                                                |
-            | Height (int)                      | The height of the browser window e.g. 1000                                                                                               |
-            | Operating System (str)            | The operating system of the test, can be used to override the OS name to allow cross OS verification                                     |
-            | Browser Name (str)                | The browser name for the test, can be used to override the browser name to allow cross browser verification                              |
+            | =Arguments=                       | =Description=                                                                                                                               |
+            | API Key (str)                     | *Mandatory* - User's Applitools Eyes key                                                                                                    |
+            | Application Name (str)            | *Mandatory* - The name of the application under test                                                                                        |
+            | Test Name (str)                   | *Mandatory* - The test name                                                                                                                 |  
+            | Library (str)                     | Library to test (Either SeleniumLibrary or AppiumLibrary)                                                                                   |
+            | Width (int)                       | The width of the browser window e.g. 1280                                                                                                   |
+            | Height (int)                      | The height of the browser window e.g. 1000                                                                                                  |
+            | Operating System (str)            | The operating system of the test, can be used to override the OS name to allow cross OS verification                                        |
+            | Browser Name (str)                | The browser name for the test, can be used to override the browser name to allow cross browser verification                                 |
             | Match Level (str)                 | The match level for the comparison of this test's checkpoints - can be STRICT, LAYOUT, CONTENT or EXACT                                     |
-            | Enable Eyes Log (bool)            | Determines if the trace logs of Applitools Eyes SDK are activated for this session                                                       |
-            | Enable HTTP Debug Log (bool)      | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable                                            |
-            | Baseline Name (str)               | Name of the branch where the baseline reference will be taken from and where new and accepted steps will be saved to                     |
-            | Batch (str or BatchInfo)          | The name of the batch                                                                                                                    |
-            | Branch Name (str)                 | The branch to use to check test                                                                                                          |
-            | Parent Branch (str)               | Parent Branch to base the new Branch on                                                                                                  |
-            | Server URL (str)                  | The URL of the Eyes server. If not provided then your test will run on the public cloud                                                  |
-            | Force Full Page Screenshot (bool) | Will force the browser to take a screenshot of whole page                                                                                |
-            | Stitch Mode (str)                 | Type of stitching used for full page screenshots - can be CSS or SCROLL                                                                  |
-            | Match Timeout (int)               | Determines how much time in milliseconds Eyes continues to retry the matching before declaring a mismatch on this test checkpoints        |
-            | Hide Scrollbars (bool)            | Sets if the scrollbars are hidden this session's tests, by passing 'True' or 'False' in the variable                                     |
-            | Save New Tests (bool)             | Sets if the new checkpoints on this session are automatically accepted, by passing 'True' or 'False' in the variable                           |
-            | Wait Before Screenshots (int)     | Determines the number of milliseconds that Eyes will wait before capturing a screenshot on this test checkpoints                         |
-            | Send DOM (bool)                   | Sets if DOM information should be sent for this session's checkpoints                                                                    |    
+            | Enable Eyes Log (bool)            | Determines if the trace logs of Applitools Eyes SDK are activated for this session                                                          |
+            | Enable HTTP Debug Log (bool)      | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable                                               |
+            | Baseline Name (str)               | Name of the branch where the baseline reference will be taken from and where new and accepted steps will be saved to                        |
+            | Batch (str or BatchInfo)          | The name of the batch                                                                                                                       |
+            | Branch Name (str)                 | The branch to use to check test                                                                                                             |
+            | Parent Branch (str)               | Parent Branch to base the new Branch on                                                                                                     |
+            | Server URL (str)                  | The URL of the Eyes server. If not provided then your test will run on the public cloud                                                     |
+            | Force Full Page Screenshot (bool) | Will force the browser to take a screenshot of whole page                                                                                   |
+            | Stitch Mode (str)                 | Type of stitching used for full page screenshots - can be CSS or SCROLL                                                                     |
+            | Match Timeout (int)               | Determines how much time in milliseconds Eyes continues to retry the matching before declaring a mismatch on this test checkpoints          |
+            | Hide Scrollbars (bool)            | Sets if the scrollbars are hidden this session's tests, by passing 'True' or 'False' in the variable                                        |
+            | Save New Tests (bool)             | Sets if the new checkpoints on this session are automatically accepted, by passing 'True' or 'False' in the variable                        |
+            | Wait Before Screenshots (int)     | Determines the number of milliseconds that Eyes will wait before capturing a screenshot on this test checkpoints                            |
+            | Send DOM (bool)                   | Sets if DOM information should be sent for this session's checkpoints                                                                       |    
             | Stitch Content (bool)             | If this test checkpoint's elements/region are scrollable, determines if Eyes will scroll this them to take a full region/element screenshot |    
-            | Is Disabled (bool)                | Determines whether or not interactions with Eyes will be silently ignored                                                                |    
+            | Is Disabled (bool)                | Determines whether or not interactions with Eyes will be silently ignored for this test                                                     |    
 
         *Mandatory Arguments:* They may be defined through this keyword, or when importing the library.
         In order to run a test, provide at least the API Key, Application Name and Test Name.
@@ -199,15 +199,18 @@ class SessionKeywords(object):
             variables.eyes.send_dom = send_dom
         if stitchcontent is not False:
             variables.stitchcontent = stitchcontent
-        if isdisabled is not None:
-            variables.eyes.is_disabled = isdisabled
-
+        
         if width is None and height is None:
             variables.driver = variables.eyes.open(driver, appname, testname)
         else:
             variables.driver = variables.eyes.open(
                 driver, appname, testname, {"width": int(width), "height": int(height)}
             )
+
+        # Workaround - This property has to be called after opening session
+        # Otherwise, the checks will throw exceptions
+        if isdisabled is not None:
+            variables.eyes.is_disabled = isdisabled
 
     def close_eyes_session(
         self, raise_exception=True, enable_eyes_log=None, enable_http_debug_log=None
