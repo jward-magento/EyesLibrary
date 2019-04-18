@@ -17,6 +17,12 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
     = Table of contents =
     - `Before running tests`
     - `Writing tests`
+    - - `Test case example`
+    - - `Open vs Check keyword arguments`
+    - - `Check keywords`
+    - - `Using selectors`
+    - - `Defining Ignore and Floating regions`
+    - - `Group tests into batches`
     - `Analysing the test results`
     - `Importing`
     - `Shortcuts`
@@ -72,7 +78,7 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
 
     See `Close Eyes Session`.
     	
-    == Test Case Example ==
+    == Test case example ==
 
     Above, we consider the *structure of a test*. For each test (=session), there may be as many checkpoints as you want. Here's a test case example:
 
