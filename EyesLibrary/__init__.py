@@ -141,6 +141,60 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
         | {target}=         | Floating Region By Selector  | //div[@id='my_element'] | xpath | 20  | 10  | 10 | 20 | {target} |
         | Check Eyes Window | Google Homepage              | target={target}         |          
     
+    == Group tests into batches ==
+
+    You can group your tests into batches, as shown in this [https://help.applitools.com/hc/en-us/articles/360006914772-Batching|article].
+    
+    The standard way to batch tests together is to run them together in the same execution run (See `Same Execution Run`).
+    However, sometimes you may need to batch them together even if running separately (See `Tests Executed Separately`).
+    
+    === Same Execution Run ===
+
+    You'll need to pass the desired batch as argument of `Open Eyes Session`.
+    You can do it by passing a string with the desired batch name, or by passing a batch object, created through `Create Eyes Batch` keyword.
+    
+    - String with name
+
+    Choose the desired batch name and define it on `Open Eyes Session` of the tests you want to group, through the batch argument.
+
+    _Example_:
+
+        | Open Eyes Session | YourApplitoolsKey | AppName | TestName | batch=BatchName |
+
+    - Batch object
+
+    If you want more control over the batch, you can create a BatchInfo object through `Create Eyes Batch`.
+    You can define the batch name, start time, or none of them if you want the default values.
+
+    On `Open Eyes Session` of the tests you want to group, pass this object as batch argument.
+    This object may be created on: Test Suite Setup or Test Case.
+    
+    If this object is created on each Test Case execution, make sure it has the same name and start time, in order to identify the correct batch, given that the object instance is different.
+        
+    _Example_:
+
+        | ${batch}=         | Create Eyes Batch | BatchName | 2019-01-01 10:00:00 |
+        | Open Eyes Session | YourApplitoolsKey | AppName   | TestName            | batch=${batch} |
+
+    For more information, read this [https://applitools.com/docs/topics/working-with-test-batches/how-to-group-tests-into-batches.html|document].
+
+    === Tests Executed Separately ===
+
+    In order to group tests into the same batch when running in different executions, the batch ID has to be the same amongst them.
+
+    A batch object has to be created through `Create Eyes Batch`, with a given batch ID.
+    Then, you must pass the batch object into `Open Eyes Session`.
+    On subsequent runs, create batches with the same ID to group them together.
+
+    It is recommended that the name is the same, however, the ID still binds them together.
+
+    _Example_:
+
+        | ${batch}=         | Create Eyes Batch | BatchName | batch_id=UniqueId |
+        | Open Eyes Session | YourApplitoolsKey | AppName   | TestName          | batch=${batch} |
+
+    For more information, read this [https://applitools.com/docs/topics/working-with-test-batches/batching-tests-in-a-distributed-environment.html|document].
+    
     = Analysing the test results =
 
     In order to review and analyse the test results, you have to access the  [https://eyes.applitools.com/app/test-results/|Test Manager].

@@ -48,7 +48,7 @@ class SessionKeywords(object):
         send_dom=None,
         stitchcontent=False,
         isdisabled=None,
-        batch_id=0
+        batch_id=0,
     ):
         """
         Starts a session with Applitools.
@@ -69,7 +69,7 @@ class SessionKeywords(object):
             | Enable Eyes Log (bool)            | Determines if the trace logs of Applitools Eyes SDK are activated for this session                                                          |
             | Enable HTTP Debug Log (bool)      | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable                                               |
             | Baseline Name (str)               | Name of the branch where the baseline reference will be taken from and where new and accepted steps will be saved to                        |
-            | Batch (str or BatchInfo)          | The name of the batch                                                                                                                       |
+            | Batch (str or BatchInfo)          | The desired batch. See `Group tests into batches`                                                                                           |
             | Branch Name (str)                 | The branch to use to check test                                                                                                             |
             | Parent Branch (str)               | Parent Branch to base the new Branch on                                                                                                     |
             | Server URL (str)                  | The URL of the Eyes server. If not provided then your test will run on the public cloud                                                     |
@@ -169,7 +169,10 @@ class SessionKeywords(object):
             else:
                 # Check for batch with same name and date
                 for batch_element in batches_list:
-                    if batch_element.name == batch.name and batch_element.started_at == batch.started_at:
+                    if (
+                        batch_element.name == batch.name
+                        and batch_element.started_at == batch.started_at
+                    ):
                         variables.eyes.batch = batch_element
                         break
                 # If the list doesn't contain a batch with the same name and date
@@ -199,7 +202,7 @@ class SessionKeywords(object):
             variables.eyes.send_dom = send_dom
         if stitchcontent is not False:
             variables.stitchcontent = stitchcontent
-        
+
         if width is None and height is None:
             variables.driver = variables.eyes.open(driver, appname, testname)
         else:
@@ -278,7 +281,7 @@ class SessionKeywords(object):
         *Example:*
             | Add Eyes Property | Language | PT |                         
         """
-        
+
         variables.eyes.add_property(name, value)
 
     def get_viewport_size(self, enable_eyes_log=None, enable_http_debug_log=None):
@@ -302,16 +305,18 @@ class SessionKeywords(object):
 
     def create_eyes_batch(self, name=None, started_at=None, batch_id=None):
         """
-        TODO Documentation
+        Returns a BatchInfo object that may be used as batch argument on `Open Eyes Session`. For more information, read `Group tests into batches`.
 
-            | =Arguments=                  | =Description=                                                                        |
-            | Name (str)                   | The name of the batch                                                                |
-            | Started At (str or datetime) | TODO The date and time that will be displayed in the Test Manager as the batch start time |
-            | Batch ID (str)               | This argument groups together tests ran in different executions                      |
+            | =Arguments=                  | =Description=                                                                              |
+            | Name (str)                   | The name of the batch                                                                      |
+            | Started At (str or datetime) | The date and time that will be displayed in the Test Manager as the batch start time *(*)* |
+            | Batch ID (str)               | This argument groups together tests ran in different executions                            |
 
-        Started At as String:
-        TODO: What format is in - Timestamp
-        Link to DateTime library
+        The *Started At* argument may be passed as:
+        - String: YYYY-mm-dd HH:MM:SS
+        - Datetime variable: See [https://robotframework.org/robotframework/latest/libraries/DateTime.html|DateTime library]
+
+        *(*)* Currently, due to a problem with Eyes, the Test Manager always shows the default batch start time, even when setting a custom one.
 
         *Example:*
             | ${batch}= | Create Eyes Batch |      
@@ -322,7 +327,7 @@ class SessionKeywords(object):
                 started_at = str(started_at)
 
             if isinstance(started_at, str):
-                started_at = datetime.strptime(started_at, '%Y-%m-%d %H:%M:%S')
+                started_at = datetime.strptime(started_at, "%Y-%m-%d %H:%M:%S")
 
         if name is not None and started_at is not None:
             batch = BatchInfo(name, started_at)
