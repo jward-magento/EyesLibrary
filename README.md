@@ -70,14 +70,13 @@ To uninstall EyesLibrary use the following pip command:
 
 ## Usage
 
-To write tests with Robot Framework and EyesLibrary,
-EyesLibrary must be imported into your Robot test suite.
-See [Robot Framework User Guide](http://code.google.com/p/robotframework/wiki/UserGuide) for more information.
+In order to use this library,
+you must import it into your Robot test suite.
+See [Robot Framework User Guide](http://code.google.com/p/robotframework/wiki/UserGuide) and [EyesLibrary Keyword Documentation](https://joel-oliveira.github.io/EyesLibrary/) for more information.
 
-**Note** - You must create a [free account](https://applitools.com/sign-up/) with Applitools in order to run the
-EyesLibrary and return results. The Applitools site will
-allow you to sign up and you will then be provide with your own API key.
-This will then need to be added to the Robot Framework resource file common.robot, by removing 'YourApplitoolsKey' and replacing with your API Key.
+**Note** - You must create a [free account](https://applitools.com/sign-up/) with Applitools in order to run
+EyesLibrary and return results. After signing up, you will be provided with your own API key.
+Then you will need to copy the API key to the tests, as mentioned on the [Keyword Documentation](https://joel-oliveira.github.io/EyesLibrary/).
 
 ## Running the Demo
 

@@ -17,12 +17,12 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
     = Table of contents =
     - `Before running tests`
     - `Writing tests`
-    - - `Test case example`
-    - - `Open vs Check keyword arguments`
-    - - `Check keywords`
-    - - `Using selectors`
-    - - `Defining Ignore and Floating regions`
-    - - `Group tests into batches`
+    - > `Test case example`
+    - > `Open vs Check keyword arguments`
+    - > `Check keywords`
+    - > `Using selectors`
+    - > `Defining Ignore and Floating regions`
+    - > `Group tests into batches`
     - `Analysing the test results`
     - `Importing`
     - `Shortcuts`
