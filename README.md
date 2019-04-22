@@ -21,8 +21,10 @@ In order to use EyesLibrary, you are required to [sign up](https://applitools.co
 
 - Information about EyesLibrary keywords can be found on the [Keyword Documentation](https://joel-oliveira.github.io/EyesLibrary/) page.
 
-- The [Eyes Selenium](https://pypi.org/project/eyes-selenium/) page provides more information for that library.
+- The [Applitools Documentation](https://pypi.org/project/eyes-selenium/) may be consulted in order to understand how Eyes works.
+
 - More information about the SeleniumLibrary can be found on the [SeleniumLibrary Repo](https://github.com/robotframework/SeleniumLibrary) and in the [Keyword Documentation](http://robotframework.org/SeleniumLibrary/SeleniumLibrary.html).
+
 - More information about the AppiumLibrary can be found on the [AppiumLibrary Repo](https://github.com/serhatbolsu/robotframework-appiumlibrary) and in the [Keyword Documentation](http://serhatbolsu.github.io/robotframework-appiumlibrary/AppiumLibrary.html).
 
 ## Requirements
@@ -70,13 +72,13 @@ To uninstall EyesLibrary use the following pip command:
 
 ## Usage
 
-In order to use this library,
-you must import it into your Robot test suite.
-See [Robot Framework User Guide](http://code.google.com/p/robotframework/wiki/UserGuide) and [EyesLibrary Keyword Documentation](https://joel-oliveira.github.io/EyesLibrary/) for more information.
+You must create a [free account](https://applitools.com/sign-up/) with Applitools in order to run
+EyesLibrary and return results.
 
-**Note** - You must create a [free account](https://applitools.com/sign-up/) with Applitools in order to run
-EyesLibrary and return results. After signing up, you will be provided with your own API key.
-Then you will need to copy the API key to the tests, as mentioned on the [Keyword Documentation](https://joel-oliveira.github.io/EyesLibrary/).
+Then, to use the library, follow [EyesLibrary Keyword Documentation](https://joel-oliveira.github.io/EyesLibrary/).
+
+This is a Robot Framework library. If you're not familiarized with Robot Framework, 
+please consult [Robot Framework User Guide](http://code.google.com/p/robotframework/wiki/UserGuide).
 
 ## Running the Demo
 
@@ -98,7 +100,7 @@ For instance, you may want to use a different Remote URL than the one provided i
 
     ${REMOTE URL}          http://${CREDENTIALS}@hub.testingbot.com/wd/hub
 
-Before running the Mobile Hybrid App tests, you need to install the Demo App (APK found at _tests/resources_) in your device.
+Before running the Android Hybrid App tests, you need to install the Demo App (APK found at _tests/resources_) in your device.
 
 For in depth detail on how the keywords function, read the Keyword documentation found here: [Keyword Documentation](https://joel-oliveira.github.io/EyesLibrary/)
 
@@ -111,13 +113,14 @@ For example, to run the Test Suite for Web:
 
     robot web.robot
 
-**Note:** It is assumed that anyone who wants to use this demo script is already able to execute robot tests using Google Chrome.
+**Note:** It is assumed that anyone who wants to use this demo is already able to execute robot tests using SeleniumLibrary (for web tests) and/or AppiumLibrary (for mobile tests). The browser used to navigate with SeleniumLibrary is Google Chrome.
 
 ## Things to Note When Using Applitools
 
-- The tests will be accepted automatically by Applitools Eyes after the first run because a new baseline is being created. A second test run will show a successful comparison between screens.
-- Changing the Applitools' Application Name variable value will create a new test entry in Applitools test result screen and a new baseline will be accepted automatically by Applitools Eyes on the first run.
-- The viewport size should not be set to greater values than the maximum size of the device's window. (For more information on using viewports, https://applitools.com/docs/topics/general-concepts/using-viewports-in-eyes.html)
+- The tests will be accepted automatically by Applitools Eyes after the first run because a new baseline is being created. A second test run will show a comparison between screens.
+- Changing the Applitools baseline parameters will create a new baseline, that is automatically accepted on the first run. (For more information, read the article: [What is a ‘baseline’ and how is a baseline created?](https://help.applitools.com/hc/en-us/articles/360007188691-What-is-a-baseline-and-how-is-a-baseline-created-)
+- The viewport size should not be set to greater values than the maximum size of the device's window.
+(For more information on using viewports, consult [Using viewports in Eyes](https://applitools.com/docs/topics/general-concepts/using-viewports-in-eyes.html))
 
 ## Getting Help
 
