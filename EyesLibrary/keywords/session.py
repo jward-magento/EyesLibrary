@@ -14,6 +14,7 @@ from applitools.selenium.webelement import EyesWebElement
 from applitools.selenium.positioning import StitchMode
 from robot.api import logger as loggerRobot
 from datetime import datetime
+from ..version import __version__
 from EyesLibrary.resources import variables, utils
 
 
@@ -209,7 +210,7 @@ class SessionKeywords(object):
             variables.driver = variables.eyes.open(
                 driver, appname, testname, {"width": int(width), "height": int(height)}
             )
-
+        
         # Workaround - This property has to be called after opening session
         # Otherwise, the checks will throw exceptions
         if isdisabled is not None:
@@ -341,4 +342,16 @@ class SessionKeywords(object):
         if batch_id is not None:
             batch.id = batch_id
         return batch
+
+    def get_eyes_property(self, name):
+        """
+        Returns the value of a given variable of Eyes. For a list of Eyes properties, consult [https://applitools.com/docs/api/eyes-sdk/index-gen/class-eyes-selenium-python.html|Eyes Documentation]
+
+            | =Arguments= | =Description=            |
+            | Name (str)  | The name of the variable |
+      
+        *Example:*
+            | ${value}= | Get Eyes Property | send_dom |      
+        """
+        return vars(variables.eyes)[name]
 

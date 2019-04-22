@@ -2,9 +2,7 @@
 
 from .keywords import SessionKeywords, CheckKeywords, TargetKeywords
 from .resources import variables
-from .version import VERSION
-
-_version_ = VERSION
+from .version import __version__
 
 
 class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
@@ -210,7 +208,7 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
     """
 
     ROBOT_LIBRARY_SCOPE = "GLOBAL"
-    ROBOT_LIBRARY_VERSION = VERSION
+    ROBOT_LIBRARY_VERSION = __version__
 
     def __init__(
         self,

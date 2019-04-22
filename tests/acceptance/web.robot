@@ -72,9 +72,21 @@ Match Level
     Check Eyes Window                         Full Page Layout
     [Teardown]                                Teardown
 
+Is Disabled
+    [Setup]                                   Setup                                                               Web - Is Disabled
+    Check Eyes Window                         Google Homepage
+    Check Eyes Window                         Disabled Google Homepage                                            isdisabled=${true}
+    [Teardown]                                Teardown
+
 Stitch Content
     [Setup]                                   Setup for Stitch Mode                                               Stitch Content
     Check Eyes Region By Selector             overflowing-div-image                                               Div                                        stitchcontent=${true}
+    [Teardown]                                Teardown
+
+Get Property
+    [Setup]                                   Setup                                                               Get Property
+    ${batch}=                                 Get Eyes Property                                                   batch
+    Should Be Equal                           ${batch.name}                                                       Web Testing
     [Teardown]                                Teardown
 
 Sapo Noticias
