@@ -52,7 +52,7 @@ class SessionKeywords(object):
         batch_id=0,
     ):
         """
-        Starts a session with Applitools.
+        Starts a session (=test) with Applitools.
 
         Some of the following arguments may also be defined on library import.
         See `Before running tests` or `Importing`.
@@ -86,16 +86,8 @@ class SessionKeywords(object):
 
         *Mandatory Arguments:* They may be defined through this keyword, or when importing the library.
         In order to run a test, provide at least the API Key, Application Name and Test Name.
-
-        Creates an instance of the AppiumLibrary or SeleniumLibrary webdriver, given the library argument.
-
-        Defines a global driver and sets it to the webdriver found.
-
-        Checks if there has been a width or height value passed in.
-        If there no are values passed in, eyes calls the method open without the width and height values.
-        Otherwise, Eyes calls open with the width and height values defined.
  
-        *Note:* When opening the session on a mobile browser or hybrid app, the context must be set to WEBVIEW in order to retrieve the correct viewport size. Geolocation of the device may have to be set after switching context.
+        When opening the session on a mobile browser or hybrid app, the context must be set to WEBVIEW in order to retrieve the correct viewport size. Geolocation of the device may have to be set after switching context.
 
         *Example:*                                                                                                                                                                                                                               
             | Open Eyes Session | YourApplitoolsKey | AppName | TestName | SeleniumLibrary | 1024 | 768 | OSOverrideName | BrowserOverrideName | layout | ${true} | batchname=BatchName | serverurl=https://myserver.com |
@@ -210,7 +202,7 @@ class SessionKeywords(object):
             variables.driver = variables.eyes.open(
                 driver, appname, testname, {"width": int(width), "height": int(height)}
             )
-        
+
         # Workaround - This property has to be called after opening session
         # Otherwise, the checks will throw exceptions
         if isdisabled is not None:

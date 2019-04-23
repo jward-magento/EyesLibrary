@@ -8,7 +8,7 @@ from .version import __version__
 class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
     """
     EyesLibrary is a visual verification library for [http://robotframework.org/|Robot Framework] that leverages
-    [https://applitools.com/docs/api/eyes-sdk/index-gen/classindex-selenium-python.html|Eyes-Selenium] and
+    [https://applitools.com/docs/api/eyes-sdk/index-gen/classindex-selenium-python.html|Applitools Eyes Python SDK] and
     [http://robotframework.org/SeleniumLibrary/SeleniumLibrary.html|SeleniumLibrary] / 
     [http://serhatbolsu.github.io/robotframework-appiumlibrary/AppiumLibrary.html|AppiumLibrary].
 
@@ -29,7 +29,7 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
     = Before running tests =
 
     In order to run EyesLibrary, you have to create a [https://applitools.com/sign-up/|free account] with Applitools, to retrieve your API key.
-    After signing up, you can get it from the [https://eyes.applitools.com/app/test-results/|Applitools Eyes Test Manager].
+    After signing up, you can get it from the [https://eyes.applitools.com/app/test-results/|Applitools Eyes Test Manager] (on user menu, click "My API Key").
         
     You may want to read [https://applitools.com/docs|Applitools documentation] in order to better understand how Eyes works.
     
@@ -60,7 +60,9 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
     
     1. *Open Eyes Session* 
 
-    A browser or application must be running when opening the session. To open a browser/application, consult the documentation for SeleniumLibrary and/or AppiumLibrary.
+    A browser or application must be running when opening the session. 
+    To open a browser/application, consult the documentation for [http://robotframework.org/SeleniumLibrary/SeleniumLibrary.html|SeleniumLibrary] 
+    and/or [http://serhatbolsu.github.io/robotframework-appiumlibrary/AppiumLibrary.html|AppiumLibrary].
     
     Afterwards, the session may be opened. See `Open Eyes Session`.                                                                                                      
 
@@ -126,16 +128,16 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
 
     A *Floating Region* defines an inner region to be matched and outer bounds in which the inner region can move and still be considered matching.
 
-    To get more details, consult [https://applitools.com/docs/api/eyes-sdk/index-gen/classindex-selenium-python.html|Eyes Selenium SDK Documentation]
+    To get more details, consult [https://applitools.com/docs/api/eyes-sdk/index-gen/classindex-selenium-python.html|Eyes Selenium SDK Documentation].
 
     These regions may be defined using the following keywords:
     - `Ignore Region By Coordinates`
     - `Ignore Region By Element`
     - `Ignore Region By Selector`
+    - `Ignore Caret`
     - `Floating Region By Coordinates`
     - `Floating Region By Element`
     - `Floating Region By Selector`
-    - `Ignore Caret`
 
     All of these keywords return a Target object, that must be passed as an argument of the chosen Check keyword.
     
@@ -225,7 +227,7 @@ class EyesLibrary(SessionKeywords, CheckKeywords, TargetKeywords):
         save_new_tests=True,
     ):
         """
-        EyesLibrary can be imported with optional arguments.
+        EyesLibrary can be imported with optional arguments. These may also be defined in `Open Eyes Session`.
         
         - ``apikey``: Applitools API key
         - ``appname``: Application name
