@@ -17,7 +17,7 @@ Check Window
 Check Region
     [Setup]                                         Setup                                                               Android Browser - Check Region
     ${location}=                                    Get Element Location                                                ${LOGO.id}
-    Check Eyes Region                               ${location['x']}                                                    ${location['y']}                                       300                                            200              Google Logo
+    Check Eyes Region                               ${location['x']}                                                    ${location['y']}                                       300                                            200              Google Region
     [Teardown]                                      Teardown
 
 Check Region By Element
@@ -73,7 +73,7 @@ Setup
     ...                                             automationName=UiAutomator2
     Go To Url                                       http://www.google.pt
     Set Location                                    10                                                                  10
-    Open Eyes Session                               ${API KEY}                                                          EyesLibrary                                            ${test name}                                   AppiumLibrary    enable_eyes_log=${true}
+    Open Eyes Session                               ${API KEY}                                                          EyesLibrary                                            ${test name}                                   AppiumLibrary    enable_eyes_log=${true}    batch=Android Browser
 
 Setup for Check Region in Frame
     [Arguments]                                     ${test name}
@@ -87,16 +87,17 @@ Setup for Check Region in Frame
     Set Location                                    10                                                                  10
     Integrate SeleniumLibrary with AppiumLibrary
     Accept Cookies
-    Open Eyes Session                               ${API KEY}                                                          EyesLibraryBaseline                                    ${test name}                                   AppiumLibrary    enable_eyes_log=${true}
+    Open Eyes Session                               ${API KEY}                                                          EyesLibraryBaseline                                    ${test name}                                   AppiumLibrary    enable_eyes_log=${true}    batch=Android Browser
 
 Integrate SeleniumLibrary with AppiumLibrary
     Import Library                                  SeleniumLibrary
-    Set Library Search Order                        SeleniumLibrary
+    Set Library Search Order                        AppiumLibrary
     ${AppiumLibInstance}=                           Get Library Instance                                                AppiumLibrary
     ${SeleniumLibInstance}=                         Get Library Instance                                                SeleniumLibrary
     Call Method                                     ${SeleniumLibInstance._cache}                                       register                                               ${AppiumLibInstance._current_application()}    Appium
 
 Accept Cookies
+    Set Library Search Order                        SeleniumLibrary
     Click Element                                   xpath=//*[@id="sncmp-banner-btn-agree"]
     Select Frame                                    xpath=//iframe[@id="iframeResult"]
     Select Frame                                    xpath=//iframe[@src="https://www.w3schools.com"]
@@ -104,6 +105,7 @@ Accept Cookies
     Click Element                                   xpath=//*[@id="sncmp-banner-btn-agree"]
     Unselect Frame
     Unselect Frame
+    Set Library Search Order                        AppiumLibrary
 
 Teardown
     Close Application

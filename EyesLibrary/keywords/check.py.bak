@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
-from __future__ import absolute_import
 import os
-import six.moves.http_client
+import httplib
 import base64
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -16,7 +15,6 @@ from .session import SessionKeywords
 from applitools.selenium.positioning import StitchMode
 from robot.api import logger as loggerRobot
 from EyesLibrary.resources import variables, utils
-import six
 
 
 class CheckKeywords:
@@ -345,7 +343,7 @@ class CheckKeywords:
         original_properties = utils.save_current_properties()
         utils.update_properties(None, enable_eyes_log, enable_http_debug_log, hidescrollbars, wait_before_screenshots, send_dom, matchlevel, stitchcontent, isdisabled)
 
-        if type(framereference) is six.text_type:
+        if type(framereference) is unicode:
             try:
                 framereference = int(framereference)
             except:

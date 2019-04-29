@@ -29,11 +29,13 @@ In order to use EyesLibrary, you are required to [sign up](https://applitools.co
 
 ## Requirements
 
-- Python 2.7.14
+The following versions were used to test the library:
+
+- Python 2.7.14 or 3.6.0
 - Robot Framework 3.1.1
 - Eyes-Selenium 3.16.2
 - SeleniumLibrary 3.3.1 (For Web Tests)
-- AppiumLibrary 1.5.0.2 (For Mobile Tests)
+- AppiumLibrary 1.5.0.3 (For Mobile Tests)
 
 ## Installation
 

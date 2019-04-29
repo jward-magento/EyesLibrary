@@ -1,5 +1,4 @@
-from __future__ import absolute_import
-import six.moves.http_client
+import httplib
 import os
 import logging
 from applitools.core import logger, StdoutLogger
@@ -8,7 +7,7 @@ from applitools.core import EyesIllegalArgument
 from applitools.selenium.positioning import StitchMode
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import InvalidElementStateException
-from . import variables
+import variables
 
 
 def get_match_level(matchlevel):
@@ -85,16 +84,16 @@ def manage_logging(enable_eyes_log=None, enable_http_debug_log=None):
         logger.set_logger(None)
 
     if enable_http_debug_log is True:
-        six.moves.http_client.HTTPConnection.debuglevel = 1
+        httplib.HTTPConnection.debuglevel = 1
     elif enable_http_debug_log is False:
-        six.moves.http_client.HTTPConnection.debuglevel = 0
+        httplib.HTTPConnection.debuglevel = 0
 
 
 def save_current_properties():
     return {
         "force_full_page_screenshot": variables.eyes.force_full_page_screenshot,
         "enable_eyes_log": logger._logger_to_use is not None,
-        "enable_http_debug_log": six.moves.http_client.HTTPConnection.debuglevel > 0,
+        "enable_http_debug_log": httplib.HTTPConnection.debuglevel > 0,
         "hidescrollbars": variables.eyes.hide_scrollbars,
         "wait_before_screenshots": variables.eyes.wait_before_screenshots,
         "send_dom": variables.eyes.send_dom,
@@ -106,7 +105,7 @@ def save_current_properties():
 def save_current_logging_properties():
     return {
         "enable_eyes_log": logger._logger_to_use is not None,
-        "enable_http_debug_log": six.moves.http_client.HTTPConnection.debuglevel > 0,
+        "enable_http_debug_log": httplib.HTTPConnection.debuglevel > 0,
     }
 
 def update_properties(

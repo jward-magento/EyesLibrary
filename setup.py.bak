@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-from __future__ import absolute_import
 import sys
 
 # from distutils.core import setup
@@ -11,7 +10,7 @@ from os.path import join, dirname
 
 sys.path.append(join(dirname(__file__), "EyesLibrary"))
 
-exec(compile(open("EyesLibrary/version.py").read(), "EyesLibrary/version.py", 'exec'))
+execfile("EyesLibrary/version.py")
 
 with io.open("README.md", encoding="utf-8") as f:
     long_description = f.read()
@@ -37,6 +36,6 @@ setup(
         "Topic :: Software Development :: Testing",
         "Topic :: Software Development :: Quality Assurance",
     ],
-    install_requires=["robotframework >= 3.1.1", "eyes-selenium >= 3.16.2", "six >= 1.12.0", "robotframework-seleniumlibrary >= 3.3.1", "robotframework-appiumlibrary >= 1.5.0.3"],
+    install_requires=["robotframework >= 3.1.1", "eyes-selenium >= 3.16.2"],
     packages=find_packages(exclude=["tests", "docs"]),
 )

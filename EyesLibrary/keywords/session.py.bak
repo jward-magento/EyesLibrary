@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
-from __future__ import absolute_import
 import os
-import six.moves.http_client
+import httplib
 import base64
 from selenium import webdriver
 from robot.libraries.BuiltIn import BuiltIn
@@ -17,7 +16,6 @@ from robot.api import logger as loggerRobot
 from datetime import datetime
 from ..version import __version__
 from EyesLibrary.resources import variables, utils
-import six
 
 
 class SessionKeywords(object):
@@ -144,7 +142,7 @@ class SessionKeywords(object):
         if baselinename is not None:
             variables.eyes.baseline_branch_name = baselinename
         if batch is not None:
-            if type(batch) is six.text_type:
+            if type(batch) is unicode:
                 batch = str(batch)
             batches_list = variables.batches
 
@@ -318,7 +316,7 @@ class SessionKeywords(object):
         """
 
         if started_at is not None:
-            if type(started_at) is six.text_type:
+            if type(started_at) is unicode:
                 started_at = str(started_at)
 
             if isinstance(started_at, str):
