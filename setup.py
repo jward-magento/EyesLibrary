@@ -31,6 +31,7 @@ setup(
     classifiers=[
         "License :: OSI Approved :: Apache Software License",
         "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.6",
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         "Framework :: Robot Framework :: Library",
