@@ -51,7 +51,6 @@ class SessionKeywords(object):
         send_dom=None,
         stitchcontent=False,
         isdisabled=None,
-        batch_id=0,
     ):
         """
         Starts a session (=test) with Applitools.
