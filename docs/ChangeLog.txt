@@ -30,3 +30,13 @@ Version 2.0 - EyesLibrary
 - Updated README to make it compliant with the changes, and the Keyword Documentation
 - Organized files and folders and reviewed naming conventions
 - Updated the acceptance tests. Available test suites: web, android/ios browser, android/ios app and android/ios hybrid app
+
+Version 2.1
+-----------
+- Added Check keyword: Check Region In Frame By Selector
+- Created Ignore and Floating Region keywords
+- Added other keywords: Abort Eyes Session If Not Closed, Add Eyes Property, Create Eyes Batch, Get Eyes Property, Get Viewport Size
+- Included properties: force_full_page_screenshot, server_url, match_timeout, hide_scrollbars, save_new_tests, wait_before_screenshots, match_level (on Check keywords), send_dom
+- Added Python 3 support (while maintaining Python 2.7.14 compability)
+- Updated README and Keyword Documentation
+- Updated the acceptance tests to include the new functionalities
