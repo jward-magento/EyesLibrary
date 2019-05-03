@@ -210,16 +210,16 @@ class SessionKeywords(object):
             variables.eyes.is_disabled = isdisabled
 
     def close_eyes_session(
-        self, raise_exception=True, enable_eyes_log=None, enable_http_debug_log=None
+        self, enable_eyes_log=None, enable_http_debug_log=None, raise_exception=True, 
     ):
         """
         Closes a session and returns the results of the session.
         If a test is running, aborts it. Otherwise, does nothing.
 
-            | =Arguments=                  | =Description=                                                                                                          |
-            | Raise Exception (bool)       | If you don't want an exception to be thrown if there are new, missing or mismatched steps, pass 'False in the variable |
-            | Enable Eyes Log (bool)       | The Eyes logs will not be included by default. To activate, pass 'True' in the variable                                |
-            | Enable HTTP Debug Log (bool) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable                          |
+            | =Arguments=                  | =Description=                                                                                                           |
+            | Enable Eyes Log (bool)       | The Eyes logs will not be included by default. To activate, pass 'True' in the variable                                 |
+            | Enable HTTP Debug Log (bool) | The HTTP Debug logs will not be included by default. To activate, pass 'True' in the variable                           |
+            | Raise Exception (bool)       | If you don't want an exception to be thrown if there are new, missing or mismatched steps, pass 'False' in the variable |
 
         *Example:*
             | Close Eyes Session | ${false} |                                 
