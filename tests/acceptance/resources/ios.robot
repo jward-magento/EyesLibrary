@@ -1,4 +1,4 @@
 *** Variables ***
 ${PLATFORM NAME}       iOS
-${PLATFORM VERSION}    10.3
-${DEVICE NAME}         iPhone SE
+${PLATFORM VERSION}    12.1
+${DEVICE NAME}         iPhone 6

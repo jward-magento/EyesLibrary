@@ -19,7 +19,7 @@ with io.open("README.md", encoding="utf-8") as f:
 setup(
     name="robotframework-eyeslibrary",
     version=__version__,
-    description="Visual Verification testing library for Robot Framework",
+    description="Visual verification testing library for Robot Framework",
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Joel Oliveira, Sofia Nunes",
