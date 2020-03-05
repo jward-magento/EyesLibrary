@@ -130,7 +130,7 @@ class SessionKeywords(object):
             if library == "AppiumLibrary":
                 driver = libraryInstance._current_application()
             else:
-                driver = libraryInstance._current_browser()
+                driver = libraryInstance.driver
         except RuntimeError:
             raise Exception("%s instance not found" % library)
 
