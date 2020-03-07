@@ -23,7 +23,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Joel Oliveira, Sofia Nunes",
-    author_email="<joel.oliveira@criticalsoftware.com>, <sofia.nunes@criticalsoftware.com>",
+    author_email="<oliveira.joel@gmail.com>, <sofia.nunes@criticalsoftware.com>",
     url="https://github.com/joel-oliveira/EyesLibrary",
     license="Apache License 2.0",
     keywords="robotframework testing testautomation eyes-selenium selenium appium visual-verification",
