@@ -40,7 +40,7 @@ setup(
     ],
     install_requires=[
         "robotframework > 3.0, < 4",
-        "eyes-selenium >= 3.16.2, < 4",
+        "eyes-selenium",
         "six > 1.0.0, < 2",
         "robotframework-seleniumlibrary",
         "robotframework-appiumlibrary",
