@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 
 from __future__ import absolute_import
-from applitools.geometry import Region
-from applitools.selenium.target import (
-    Target,
-    IgnoreRegionByElement,
-    IgnoreRegionBySelector,
-    FloatingRegion,
-    FloatingRegionByElement,
-    FloatingRegionBySelector,
-    FloatingBounds,
-)
+from applitools.selenium import Eyes, Target, Region, positioning, webelement, StitchMode
+# from applitools.selenium.target import (
+#     Target,
+#     IgnoreRegionByElement,
+#     IgnoreRegionBySelector,
+#     FloatingRegion,
+#     FloatingRegionByElement,
+#     FloatingRegionBySelector,
+#     FloatingBounds,
+# )
 from EyesLibrary.resources import utils
 
 

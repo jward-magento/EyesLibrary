@@ -40,3 +40,7 @@ Version 2.1
 - Added Python 3 support (while maintaining Python 2.7.14 compability)
 - Updated README and Keyword Documentation
 - Updated the acceptance tests to include the new functionalities
+
+Version 3.0 - EyesLibrary
+-----------
+- Updated the library's source code in order to use eyes-selenium 4.1.25

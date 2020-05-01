@@ -8,12 +8,14 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import InvalidElementStateException
 from robot.libraries.BuiltIn import BuiltIn
-from applitools.core import logger
-from applitools.geometry import Region
-from applitools.eyes import Eyes, BatchInfo
-from applitools.selenium.webelement import EyesWebElement
+# from applitools.core import logger
+# from applitools.geometry import Region
+# from applitools.eyes import Eyes, BatchInfo
+# from applitools.selenium.webelement import EyesWebElement
+# from applitools.selenium.positioning import StitchMode
+from applitools.selenium import Eyes, Target, Region, positioning, webelement, StitchMode
+from applitools.common import logger, StdoutLogger, BatchInfo, FileLogger
 from .session import SessionKeywords
-from applitools.selenium.positioning import StitchMode
 from robot.api import logger as loggerRobot
 from EyesLibrary.resources import variables, utils
 import six

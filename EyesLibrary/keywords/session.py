@@ -6,13 +6,16 @@ import six.moves.http_client
 import base64
 from selenium import webdriver
 from robot.libraries.BuiltIn import BuiltIn
-from applitools import logger
-from applitools.logger import StdoutLogger
-from applitools.logger import FileLogger
-from applitools.geometry import Region
-from applitools.eyes import Eyes, BatchInfo
+# from applitools import logger
+# from applitools.logger import StdoutLogger
+# from applitools.logger import FileLogger
+# from applitools.geometry import Region
+# from applitools.eyes import Eyes, BatchInfo
+# from applitools.selenium.positioning import StitchMode
+from applitools.selenium import Eyes, Target, Region, positioning, webelement, StitchMode
+from applitools.common import logger, StdoutLogger, BatchInfo, FileLogger
+
 from applitools.selenium.webelement import EyesWebElement
-from applitools.selenium.positioning import StitchMode
 from robot.api import logger as loggerRobot
 from datetime import datetime
 from ..version import __version__

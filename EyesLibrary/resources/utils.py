@@ -2,10 +2,14 @@ from __future__ import absolute_import
 import six.moves.http_client
 import os
 import logging
-from applitools.core import logger, StdoutLogger
-from applitools.eyes import MatchLevel
-from applitools.core import EyesIllegalArgument
-from applitools.selenium.positioning import StitchMode
+# from applitools.core import logger, StdoutLogger
+# from applitools.eyes import MatchLevel
+# from applitools.core import EyesIllegalArgument
+# from applitools.selenium.positioning import StitchMode
+from applitools.selenium import Eyes, Target, Region, positioning, webelement, StitchMode
+from applitools.common import logger, StdoutLogger, BatchInfo, FileLogger
+
+
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import InvalidElementStateException
 from . import variables
